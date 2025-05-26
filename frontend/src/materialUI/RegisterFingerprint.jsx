@@ -33,7 +33,7 @@ const RegisterFingerprint = () => {
         const csrfToken = await fetchCSRFToken();
 
         const res = await axios.get(
-          "http://localhost:8000/api/create/fingerprint/",
+          "https://ontech-systems.onrender.com/api/create/fingerprint/",
           {
             headers: {
               Authorization: `Token ${token}`,

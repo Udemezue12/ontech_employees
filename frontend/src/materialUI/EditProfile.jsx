@@ -38,12 +38,9 @@ const EditProfile = () => {
   const navigate = useNavigate();
   async function fetchCSRFToken() {
     try {
-      await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true,
+      });
       return cookies.get("csrftoken");
     } catch (err) {
       console.error("Failed to get CSRF token", err);
@@ -174,7 +171,7 @@ const EditProfile = () => {
       const csrfToken = await fetchCSRFToken();
       const profileId = localStorage.getItem("ProfileId");
       await axios.put(
-        `http://localhost:8000/api/my/profile/${profileId}/`,
+        `https://ontech-systems.onrender.com/api/my/profile/${profileId}/`,
         data,
         {
           headers: {

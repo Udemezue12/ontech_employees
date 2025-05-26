@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Box,
   Typography,
@@ -78,71 +78,134 @@ export default function BiometricAttendance() {
   }, [token]);
 
   // Fetch biometric status
-  const fetchBiometricStatus = async () => {
-    const csrfToken = await fetchCSRFToken();
-    try {
-      const response = await axios.get(
-        "http://localhost:8000/api/attendance/biometric/",
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-            "X-CSRFToken": csrfToken,
-          },
-          withCredentials: true,
-        }
-      );
+  // const fetchBiometricStatus = async () => {
+  //   const csrfToken = await fetchCSRFToken();
+  //   try {
+  //     const response = await axios.get(
+  //       "http://localhost:8000/api/attendance/biometric/",
+  //       {
+  //         headers: {
+  //           Authorization: `Token ${token}`,
+  //           "X-CSRFToken": csrfToken,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
 
-      console.log("Biometric Status Response:", response.data);
+  //     console.log("Biometric Status Response:", response.data);
 
-      setCanCheckIn(response.data.can_check_in ?? false);
-      setCanCheckOut(response.data.can_check_out ?? false);
-      setDoneForToday(response.data.done_for_today ?? false);
-      setOvertimeHours(response.data.overtime_hours ?? null);
+  //     setCanCheckIn(response.data.can_check_in ?? false);
+  //     setCanCheckOut(response.data.can_check_out ?? false);
+  //     setDoneForToday(response.data.done_for_today ?? false);
+  //     setOvertimeHours(response.data.overtime_hours ?? null);
 
-      if (response.data.manual_attendance) {
-        setUseManual(true);
+  //     if (response.data.manual_attendance) {
+  //       setUseManual(true);
+  //     }
+  //   } catch (error) {
+  //     const message =
+  //       error.response?.data?.error || "Failed to load attendance data.";
+  //     console.error("Biometric Status Error:", error);
+  //     if (message.includes("manual")) {
+  //       setUseManual(true);
+  //     }
+  //     showSnackbar(message, false);
+  //   }
+  // };
+
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   fetchBiometricStatus();
+
+  //   let timer;
+  //   if (!canCheckIn && !doneForToday && !useManual) {
+  //     // Calculate time remaining until 1 hour after check-in
+  //     const checkInTime = new Date(); // Replace with actual check-in time from API if available
+  //     checkInTime.setHours(checkInTime.getHours() + 1); // 1 hour from now
+  //     const timeUntilCheckOut = checkInTime - new Date();
+
+  //     if (timeUntilCheckOut > 0) {
+  //       timer = setTimeout(() => {
+  //         fetchBiometricStatus();
+  //       }, timeUntilCheckOut);
+  //     }
+  //   }
+
+  //   const interval = setInterval(() => {
+  //     if (!canCheckIn && !doneForToday && !useManual) {
+  //       console.log("Polling biometric status...");
+  //       fetchBiometricStatus();
+  //     }
+  //   }, 30000);
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (timer) clearTimeout(timer);
+  //   };
+  // }, [token, canCheckIn, doneForToday, useManual]);
+const fetchBiometricStatus = useCallback(async () => {
+  const csrfToken = await fetchCSRFToken();
+  try {
+    const response = await axios.get(
+      "https://ontech-systems.onrender.com/api/attendance/biometric/",
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          "X-CSRFToken": csrfToken,
+        },
+        withCredentials: true,
       }
-    } catch (error) {
-      const message =
-        error.response?.data?.error || "Failed to load attendance data.";
-      console.error("Biometric Status Error:", error);
-      if (message.includes("manual")) {
-        setUseManual(true);
-      }
-      showSnackbar(message, false);
+    );
+
+    console.log("Biometric Status Response:", response.data);
+
+    setCanCheckIn(response.data.can_check_in ?? false);
+    setCanCheckOut(response.data.can_check_out ?? false);
+    setDoneForToday(response.data.done_for_today ?? false);
+    setOvertimeHours(response.data.overtime_hours ?? null);
+
+    if (response.data.manual_attendance) {
+      setUseManual(true);
     }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    fetchBiometricStatus();
-
-    let timer;
-    if (!canCheckIn && !doneForToday && !useManual) {
-      // Calculate time remaining until 1 hour after check-in
-      const checkInTime = new Date(); // Replace with actual check-in time from API if available
-      checkInTime.setHours(checkInTime.getHours() + 1); // 1 hour from now
-      const timeUntilCheckOut = checkInTime - new Date();
-
-      if (timeUntilCheckOut > 0) {
-        timer = setTimeout(() => {
-          fetchBiometricStatus();
-        }, timeUntilCheckOut);
-      }
+  } catch (error) {
+    const message =
+      error.response?.data?.error || "Failed to load attendance data.";
+    console.error("Biometric Status Error:", error);
+    if (message.includes("manual")) {
+      setUseManual(true);
     }
+    showSnackbar(message, false);
+  }
+}, [token]); // Include all dependencies
 
-    const interval = setInterval(() => {
-      if (!canCheckIn && !doneForToday && !useManual) {
-        console.log("Polling biometric status...");
+useEffect(() => {
+  fetchBiometricStatus();
+
+  let timer;
+  if (!canCheckIn && !doneForToday && !useManual) {
+    const checkInTime = new Date();
+    checkInTime.setHours(checkInTime.getHours() + 1);
+    const timeUntilCheckOut = checkInTime - new Date();
+
+    if (timeUntilCheckOut > 0) {
+      timer = setTimeout(() => {
         fetchBiometricStatus();
-      }
-    }, 30000);
+      }, timeUntilCheckOut);
+    }
+  }
 
-    return () => {
-      clearInterval(interval);
-      if (timer) clearTimeout(timer);
-    };
-  }, [token, canCheckIn, doneForToday, useManual]);
+  const interval = setInterval(() => {
+    if (!canCheckIn && !doneForToday && !useManual) {
+      console.log("Polling biometric status...");
+      fetchBiometricStatus();
+    }
+  }, 30000);
+
+  return () => {
+    clearInterval(interval);
+    if (timer) clearTimeout(timer);
+  };
+}, [fetchBiometricStatus, canCheckIn, doneForToday, useManual]);
 
   const showSnackbar = (message, success = true) => {
     setSnackbarMessage(`${success ? "✔️" : "❌"} ${message}`);
@@ -171,7 +234,7 @@ export default function BiometricAttendance() {
 
     try {
       const { data: optionsData } = await axios.get(
-        "http://localhost:8000/api/fingerprint/request-options/",
+        "https://ontech-systems.onrender.com/api/fingerprint/request-options/",
         {
           headers: {
             Authorization: `Token ${token}`,

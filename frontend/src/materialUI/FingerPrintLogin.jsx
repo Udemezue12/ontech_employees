@@ -10,12 +10,9 @@ function FingerprintLogin() {
   const navigate = useNavigate();
   async function fetchCSRFToken() {
     try {
-     await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true, // ensure cookies are sent
-        }
-      );
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true, // ensure cookies are sent
+      });
       return cookies.get("csrftoken"); // Fetch it after Django sets it
     } catch (err) {
       console.error("Failed to get CSRF token", err);
@@ -62,7 +59,7 @@ function FingerprintLogin() {
 
       const credentialId = credential.id;
       const authResponse = await axios.post(
-        "http://localhost:8000/api/fingerprint/auth/",
+        "https://ontech-systems.onrender.com/api/fingerprint/auth/",
         {
           credential_id: credentialId,
         },

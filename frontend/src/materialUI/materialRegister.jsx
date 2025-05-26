@@ -35,7 +35,7 @@ import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 //         password: formData.password,
 //       };
 
-//       await axios.post("http://localhost:8000/api/register/", payload);
+//       await axios.post("https://ontech-systems.onrender.com/api/register/", payload);
 //       setMessage("Registration successful! Redirecting to login...");
 //       setTimeout(() => navigate("/login"), 2000);
 //     } catch (error) {
@@ -156,7 +156,10 @@ function MaterialRegister() {
 
       console.log("Payload being sent:", payload);
 
-      await axios.post("https://ontech-systems.onrender.com/api/register/", payload);
+      await axios.post(
+        "https://ontech-systems.onrender.com/api/register/",
+        payload
+      );
       setMessage("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {

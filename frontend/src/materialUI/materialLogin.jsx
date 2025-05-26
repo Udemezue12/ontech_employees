@@ -53,7 +53,7 @@ import { cookies } from "./Cookie";
 
 // //       // ✅ 3. Knox Login
 // //       const response = await axios.post(
-// //         "http://localhost:8000/api/login/",
+// //         "https://ontech-systems.onrender.com/api/login/",
 // //         {
 // //           email: data.email,
 // //           password: data.password,
@@ -84,7 +84,7 @@ import { cookies } from "./Cookie";
 
 // //       // ✅ 5. Django session login
 // //       await axios.post(
-// //         "http://localhost:8000/api/session-login/",
+// //         "https://ontech-systems.onrender.com/api/session-login/",
 // //         {
 // //           email: data.email,
 // //           password: data.password,
@@ -215,7 +215,7 @@ import { cookies } from "./Cookie";
 
 //       // 1. Knox Login
 //       const response = await axios.post(
-//         "http://localhost:8000/api/login/",
+//         "https://ontech-systems.onrender.com/api/login/",
 //         {
 //           email: data.email,
 //           password: data.password,
@@ -248,7 +248,7 @@ import { cookies } from "./Cookie";
 
 //       // ✅ 3. Session Login for @login_required views
 //       await axios.post(
-//         "http://localhost:8000/api/session-login/",
+//         "https://ontech-systems.onrender.com/api/session-login/",
 //         {
 //           email: data.email,
 //           password: data.password,
@@ -322,12 +322,9 @@ export default function MaterialLogin() {
   const { control, handleSubmit } = useForm();
   async function fetchCSRFToken() {
     try {
-      await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true, // ensure cookies are sent
-        }
-      );
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true, // ensure cookies are sent
+      });
       return cookies.get("csrftoken"); // Fetch it after Django sets it
     } catch (err) {
       console.error("Failed to get CSRF token", err);
@@ -372,7 +369,7 @@ export default function MaterialLogin() {
 
       // ✅ 3. Session Login for @login_required views
       await axios.post(
-        "http://localhost:8000/api/session-login/",
+        "https://ontech-systems.onrender.com/api/session-login/",
         {
           email: data.email,
           password: data.password,

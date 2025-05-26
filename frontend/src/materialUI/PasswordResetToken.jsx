@@ -24,7 +24,7 @@ import axios from "axios";
 //   }
 
 //   try {
-//     const response = await axios.post("http://localhost:8000/api/password_reset/confirm/", {
+//     const response = await axios.post("https://ontech-systems.onrender.com/api/password_reset/confirm/", {
 //       email: queryParams.get("email"), // ✅ Include email
 //       token: queryParams.get("token"), // ✅ Include token
 //       password: data.password,
@@ -38,8 +38,6 @@ import axios from "axios";
 //     console.error("Password reset error:", error.response?.data || error);
 //   }
 // };
-
-  
 
 //   return (
 //     <div className="background">
@@ -84,13 +82,7 @@ import axios from "axios";
 
 // export default PasswordResetToken;
 
-
-
 ////////////////////////////////////////////
-
-
-
-
 
 export const PasswordReset = () => {
   const location = useLocation();
@@ -127,11 +119,14 @@ export const PasswordReset = () => {
     }
 
     try {
-      await axios.post("https://ontech-systems.onrender.com/api/password_reset/confirm/", {
-        email,
-        token,
-        password: newPassword,
-      });
+      await axios.post(
+        "https://ontech-systems.onrender.com/api/password_reset/confirm/",
+        {
+          email,
+          token,
+          password: newPassword,
+        }
+      );
 
       setMessage("✨ Password reset successful!");
       setTimeout(() => navigate("/login"), 2000);
@@ -153,7 +148,9 @@ export const PasswordReset = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
       <div className="bg-white shadow-xl rounded-3xl p-8 w-full max-w-lg transition duration-300 ease-in-out transform hover:scale-[1.01]">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">🔐 Reset Password</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          🔐 Reset Password
+        </h2>
 
         {errorMessage && (
           <div className="mb-4 px-4 py-3 rounded bg-red-100 text-red-700 font-medium">
@@ -169,7 +166,10 @@ export const PasswordReset = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="newPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               New Password
             </label>
             <input
@@ -185,7 +185,10 @@ export const PasswordReset = () => {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
             <input

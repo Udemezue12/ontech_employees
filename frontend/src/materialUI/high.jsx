@@ -22,7 +22,7 @@
 // // // useEffect(() => {
 // // //   const fetchStatus = async () => {
 // // //     try {
-// // //       const { data } = await axios.get("http://localhost:8000/api/attendance/biometric/status/", {
+// // //       const { data } = await axios.get("https://ontech-systems.onrender.com/api/attendance/biometric/status/", {
 // // //         headers: { Authorization: Token ${token} },
 // // //         withCredentials: true,
 // // //       });
@@ -79,7 +79,7 @@
 // // //     try {
 // // //       // Get WebAuthn request options
 // // //       const { data: optionsData } = await axios.get(
-// // //         "http://localhost:8000/api/fingerprint/request-options/",
+// // //         "https://ontech-systems.onrender.com/api/fingerprint/request-options/",
 // // //         {
 // // //           headers: {
 // // //             Authorization: Token ${token},
@@ -102,7 +102,7 @@
 
 // // //       // Submit biometric action
 // // //       const { data: resp } = await axios.post(
-// // //         "http://localhost:8000/api/attendance/biometric/",
+// // //         "https://ontech-systems.onrender.com/api/attendance/biometric/",
 // // //         {
 // // //           credential_id: credentialId,
 // // //           action,
@@ -207,7 +207,7 @@
 // //     const fetchStatus = async () => {
 // //       try {
 // //         const { data } = await axios.get(
-// //           "http://localhost:8000/api/attendance/biometric/status/",
+// //           "https://ontech-systems.onrender.com/api/attendance/biometric/status/",
 // //           {
 // //             headers: { Authorization: `Token ${token}` },
 // //             withCredentials: true,
@@ -243,7 +243,7 @@
 //       const csrfToken = await fetchCSRFToken();
 //       try {
 //         const response = await axios.get(
-//           "http://localhost:8000/api/attendance/check-method/",
+//           "https://ontech-systems.onrender.com/api/attendance/check-method/",
 //           {
 //             headers: {
 //               Authorization: `Token ${token}`,

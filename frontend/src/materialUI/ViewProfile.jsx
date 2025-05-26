@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {
   Container,
@@ -32,12 +32,9 @@ const ViewProfile = () => {
 
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true,
+      });
       return cookies.get("csrftoken");
     } catch (err) {
       console.error("Failed to get CSRF token", err);
@@ -45,10 +42,11 @@ const ViewProfile = () => {
     }
   }
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     setLoading(true);
     try {
       const csrfToken = await fetchCSRFToken();
+
       const response = await axios.get(
         "https://ontech-systems.onrender.com/api/view/profile/",
         {
@@ -59,6 +57,7 @@ const ViewProfile = () => {
           withCredentials: true,
         }
       );
+
       setProfile(response.data);
     } catch (error) {
       console.error(
@@ -68,7 +67,12 @@ const ViewProfile = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]); 
+
+ 
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   if (loading) return <LoadingDots />;
 
