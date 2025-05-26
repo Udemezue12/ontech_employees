@@ -22,17 +22,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import LogoutIcon from "@mui/icons-material/Logout";
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AxiosInstance } from "./AxiosInstance";
+
 import useAutoLogout from "./AutoLogout"; // Ensure it's being imported correctly
-import axios from "axios";
-import Swal from "./../../node_modules/sweetalert2/src/sweetalert2";
-import { cookies } from "./Cookie";
+
 import { logoutUser } from "./materialLogout";
 import { confirmAndLogout } from "./confirmAndLogout";
 
@@ -41,7 +39,7 @@ const drawerWidth = 240;
 export function MaterialNavBars(props) {
   const { window, content } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage] = React.useState("");
   const location = useLocation();
   const path = location.pathname;
   const navigate = useNavigate();

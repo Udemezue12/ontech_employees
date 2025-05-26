@@ -2,22 +2,22 @@ import React from "react";
 import "./material.css";
 import Box from "@mui/material/Box";
 import TextFields from "./forms/TextField";
-import PasswordFields from "./forms/PasswordField";
+
 import ButtonFields from "./forms/ButtonField";
-import { Link, useNavigate } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
-import { AxiosInstance } from "./AxiosInstance";
+
 import MyMessage from "./Message";
 import axios from "axios";
 import { cookies } from "./Cookie";
 
 function PasswordResetRequest() {
-  const navigate = useNavigate();
+
   const { control, handleSubmit } = useForm();
   const [showMessage, setShowMessage] = React.useState(false);
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+      await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true,
@@ -37,7 +37,7 @@ function PasswordResetRequest() {
         email: data.email,
       };
 
-      const response = await axios.post(
+      await axios.post(
         "https://ontech-systems.onrender.com/api/password_reset/",
         payload,
         {

@@ -1,5 +1,5 @@
 //
-import React, { useEffect } from "react";
+import React from "react";
 import "./material.css";
 import Box from "@mui/material/Box";
 import TextFields from "./forms/TextField";
@@ -322,7 +322,7 @@ export default function MaterialLogin() {
   const { control, handleSubmit } = useForm();
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+      await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true, // ensure cookies are sent

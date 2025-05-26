@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import Swal from "./../../node_modules/sweetalert2/src/sweetalert2";
+
+const AUTO_LOGOUT_TIME = 16 * 60 * 1000;
 
 function useAutoLogout(logoutCallback) {
-  const AUTO_LOGOUT_TIME = 16 * 60 * 1000;
   const timeoutRef = useRef();
-  const navigate = useNavigate(); // 👈
+  const navigate = useNavigate();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const resetTimer = () => {
       clearTimeout(timeoutRef.current);

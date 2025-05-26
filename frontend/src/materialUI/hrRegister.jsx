@@ -5,7 +5,7 @@ import PasswordFields from "./forms/PasswordField";
 import ButtonFields from "./forms/ButtonField";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { AxiosInstance } from "./AxiosInstance";
+
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
@@ -18,7 +18,7 @@ function MaterialHrRegister() {
   const [message, setMessage] = useState("");
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+      await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true, // ensure cookies are sent

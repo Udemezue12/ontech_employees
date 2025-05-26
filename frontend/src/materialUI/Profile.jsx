@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 // import { getCurrentUserId } from "./utils/auth";
 
@@ -39,7 +39,7 @@ const Profile = () => {
 
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+       await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true,
@@ -124,7 +124,7 @@ const Profile = () => {
 
     try {
       const csrfToken = await fetchCSRFToken();
-      const response = await axios.post(
+      await axios.post(
         `https://ontech-systems.onrender.com/api/create/profile/`,
         data,
         {

@@ -1,7 +1,7 @@
 // pages/LogoutPage.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from "./materialLogout";
+
 import { confirmAndLogout } from "./confirmAndLogout";
 
 // export default function LogoutPage() {

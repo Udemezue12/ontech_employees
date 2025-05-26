@@ -44,7 +44,7 @@ export default function BiometricAttendance() {
     }
   };
 
-  // Fetch user attendance method
+  
   useEffect(() => {
     const fetchUserAttendanceMethod = async () => {
       const csrfToken = await fetchCSRFToken();
@@ -113,7 +113,7 @@ export default function BiometricAttendance() {
     }
   };
 
-  // Fetch biometric status on mount and poll after check-in
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchBiometricStatus();
 

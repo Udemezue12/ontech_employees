@@ -41,7 +41,7 @@ const CompanyProfileForm = () => {
 
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+       await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true,
@@ -67,7 +67,7 @@ const CompanyProfileForm = () => {
     const csrfToken = await fetchCSRFToken();
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://ontech-systems.onrender.com/api/company/profile/",
         payload,
         {

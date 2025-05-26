@@ -1,13 +1,8 @@
 import React from "react";
 import "./material.css";
-import Box from "@mui/material/Box";
-import TextFields from "./forms/TextField";
-import PasswordFields from "./forms/PasswordField";
-import ButtonFields from "./forms/ButtonField";
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { AxiosInstance } from "./AxiosInstance";
-import MyMessage from "./Message";
+
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { useState } from "react";
 // import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -132,7 +127,7 @@ export const PasswordReset = () => {
     }
 
     try {
-      const res = await axios.post("https://ontech-systems.onrender.com/api/password_reset/confirm/", {
+      await axios.post("https://ontech-systems.onrender.com/api/password_reset/confirm/", {
         email,
         token,
         password: newPassword,

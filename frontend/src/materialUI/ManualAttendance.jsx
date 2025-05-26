@@ -106,7 +106,7 @@ const ManualAttendanceForm = () => {
     }
   };
 
-  // Fetch on mount and poll every 30 seconds if checked in
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchAttendance();
     const interval = setInterval(() => {

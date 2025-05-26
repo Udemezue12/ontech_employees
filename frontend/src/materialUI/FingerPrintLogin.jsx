@@ -10,7 +10,7 @@ function FingerprintLogin() {
   const navigate = useNavigate();
   async function fetchCSRFToken() {
     try {
-      const response = await axios.get(
+     await axios.get(
         "https://ontech-systems.onrender.com/api/csrf/",
         {
           withCredentials: true, // ensure cookies are sent
