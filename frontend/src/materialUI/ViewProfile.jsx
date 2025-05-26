@@ -67,13 +67,11 @@ const ViewProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]); 
+  }, [token]);
 
- 
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
-
   if (loading) return <LoadingDots />;
 
   return (
