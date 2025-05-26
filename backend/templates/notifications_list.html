@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+<h2>Alerts</h2>
+
+<ul class="list-group">
+    {% for notification in notifications %}
+        <a href="{% url 'read_notification' notification.id %}" class="text-decoration-none">
+            <li class="list-group-item {% if not notification.is_read %}fw-bold text-dark{% else %}text-secondary{% endif %}">
+                {{ notification.message }} 
+                <br>
+                <small class="text-muted">{{ notification.timestamp|naturaltime }}</small>
+            </li>
+        </a>
+    {% empty %}
+        <li class="list-group-item">No notifications.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+{% comment %} //////////////// {% endcomment %}
+

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile_user.name }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ profile_user.name }}'s Profile</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> {{ profile_user.email }}</p>
+            <p><strong>Department:</strong> {{ profile_user.department }}</p>
+            <p><strong>Phone Number:</strong> {{ profile_user.phone_number }}</p>
+
+            {% if profile %}
+                <hr>
+                <p><strong>Country:</strong> {{ profile.country }}</p>
+                <p><strong>State:</strong> {{ profile.state }}</p>
+
+                {% if profile.picture %}
+                    <p><strong>Picture:</strong><br>
+                        <img src="{{ profile.picture.url }}" alt="Profile Picture" class="img-thumbnail" width="150">
+                    </p>
+                {% endif %}
+
+                {% if profile.signature %}
+                    <p><strong>Signature:</strong><br>
+                        <img src="{{ profile.signature.url }}" alt="Signature" class="img-thumbnail" width="150">
+                    </p>
+                {% endif %}
+
+                {% if profile.resume %}
+                    <p><strong>Resume:</strong> 
+                        <a href="{{ profile.resume.url }}" class="btn btn-outline-info btn-sm" download>
+                            <i class="bi bi-download"></i> Download Resume
+                        </a>
+                    </p>
+                {% endif %}
+
+                {% if profile.personal_details %}
+                    <p><strong>Personal Details:</strong> {{ profile.personal_details }}</p>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-danger">Profile not found.</div>
+            {% endif %}
+
+            {% if request.user.role == 'Overall_Admin' or request.user.role == 'Manager' %}
+                <hr>
+                <a href="{% url 'create_tax_deduction' profile_user.id %}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-currency-dollar"></i> Create Deduction
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

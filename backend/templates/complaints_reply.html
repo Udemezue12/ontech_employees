@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Reply to Response</h2>
+  
+  <div class="card mb-4">
+    <div class="card-header">
+      Complaint: {{ complaint.subject }}
+    </div>
+    <div class="card-body">
+      <p><strong>Complaint Message:</strong></p>
+      <p>{{ complaint.message }}</p>
+      <hr>
+      <p><strong>Manager Response:</strong></p>
+      <p>{{ complaint.manager_response }}</p>
+    </div>
+  </div>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="user_reply" class="form-label">Your Reply</label>
+      <textarea name="user_reply" id="user_reply" rows="5" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit Reply</button>
+    <a href="{% url 'complaint_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

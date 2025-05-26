@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Attendance for {{ month }}</h2>
+
+    <!-- Month Filter Form -->
+    <form method="get" class="form-inline mb-3">
+        <label for="month" class="mr-2">Select Month:</label>
+        <input type="month" id="month" name="month" class="form-control mr-2" value="{{ month }}">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <!-- Manual Attendance Table -->
+    <h4 class="mt-4">Manual Attendance</h4>
+    {% if manual_attendance %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Worked Hours</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in manual_attendance %}
+            <tr>
+                <td>{{ record.employee.username }}</td>
+                <td>{{ record.date }}</td>
+                <td>{{ record.check_in|default:"—" }}</td>
+                <td>{{ record.check_out|default:"—" }}</td>
+                <td>{{ record.worked_hours }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No manual attendance records found.</p>
+    {% endif %}
+
+    <!-- Biometric Attendance Table -->
+    <h4 class="mt-5">Biometric Attendance</h4>
+    {% if biometric_attendance %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Worked Hours</th>
+                <th>Overtime</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in biometric_attendance %}
+            <tr>
+                <td>{{ record.employee.username }}</td>
+                <td>{{ record.date }}</td>
+                <td>{{ record.check_in|default:"—" }}</td>
+                <td>{{ record.check_out|default:"—" }}</td>
+                <td>{{ record.worked_hours }}</td>
+                <td>{{ record.overtime_hours }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No biometric attendance records found.</p>
+    {% endif %}
+</div>
+{% endblock %}

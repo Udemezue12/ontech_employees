@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+  <div class="card mx-auto" style="max-width: 600px;">
+    {% if employee.user_profile.picture %}
+      <img src="{{ employee.user_profile.picture.url }}" class="card-img-top" alt="Profile Picture">
+    {% endif %}
+    <div class="card-body">
+      <h4 class="card-title">{{ employee.name }}</h4>
+      <p class="card-text">
+        <strong>Email:</strong> {{ employee.email }}<br>
+        <strong>Phone:</strong> {{ employee.phone_number }}<br>
+        <strong>Country:</strong> {{ employee.user_profile.country }}<br>
+        <strong>State:</strong> {{ employee.user_profile.state }}<br>
+        <strong>Department:</strong> {{ employee.department }}<br>
+        <strong>Role:</strong> {{ employee.role }}
+      </p>
+
+      {% if employee.user_profile.resume %}
+        <p><a href="{{ employee.user_profile.resume.url }}" target="_blank" class="btn btn-info">View Resume</a></p>
+      {% endif %}
+
+      {% if employee.user_profile.signature %}
+        <p><strong>Signature:</strong><br><img src="{{ employee.user_profile.signature.url }}" height="60"></p>
+      {% endif %}
+
+      {% if employee.user_profile.personal_details %}
+        <hr>
+        <h5>Personal Details</h5>
+        <p>{{ employee.user_profile.personal_details }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

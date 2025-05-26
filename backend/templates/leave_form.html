@@ -1,0 +1,65 @@
+<!-- templates/leave/partials/leave_form.html -->
+{% extends 'base.html' %}
+{% load static widget_tweaks %}
+
+{% block content %}
+{% if messages %}
+<div class="mb-3">
+  {% for message in messages %}
+    <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<form
+  method="POST"
+  hx-post="{% url 'create_leave' %}"
+  hx-target="#leave-form-container"
+  hx-swap="outerHTML"
+  hx-on="htmx:beforeRequest: disableSubmit(this);
+         htmx:afterRequest: enableSubmit(this);
+         htmx:afterOnLoad: resetForm(this);"
+>
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  <div class="mb-3">
+    <label class="form-label">Leave Type</label>
+    {{ form.leave_type|add_class:"form-select" }}
+    {% for error in form.leave_type.errors %}
+      <div class="text-danger"><p>{{ error }}</p></div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Start Date</label>
+    {{ form.start_date|add_class:"form-control" }}
+    {% for error in form.start_date.errors %}
+      <div class="text-danger"><p>{{ error }}</p></div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">End Date</label>
+    {{ form.end_date|add_class:"form-control" }}
+    {% for error in form.end_date.errors %}
+      <div class="text-danger"><p>{{ error }}</p></div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Reason</label>
+    {{ form.reason|add_class:"form-control" }}
+    {% for error in form.reason.errors %}
+      <div class="text-danger"><p>{{ error }}</p></div>
+    {% endfor %}
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit Request</button>
+</form>
+
+
+
+{% endblock %}

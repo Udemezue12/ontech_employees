@@ -1,0 +1,57 @@
+<!-- templates/edit_salary.html -->
+{% extends "base.html" %}
+
+{% block title %}Edit Salary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Salary Record for {{ salary.employee.name }} ({{ salary.employee.email }})</h2>
+
+    <form method="post" class="bg-light p-4 rounded shadow-sm">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="basic_salary" class="form-label">Basic Salary:</label>
+                <input type="number" name="basic_salary" class="form-control" value="{{ form.basic_salary.value }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label for="overtime_hours" class="form-label">Overtime Hours:</label>
+                <input type="number" name="overtime_hours" class="form-control" value="{{ form.overtime_hours.value }}" step="0.01" required>
+            </div>
+
+            <div class="col-md-4">
+                <label for="bonuses" class="form-label">Bonuses:</label>
+                <input type="number" name="bonuses" class="form-control" value="{{ form.bonuses.value }}" step="0.01">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Provident Fund:</label>
+                <input type="text" class="form-control" value="{{ form.provident_fund.value }}" disabled>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Health Insurance:</label>
+                <input type="text" class="form-control" value="{{ form.health_insurance.value }}" disabled>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Income Tax:</label>
+                <input type="text" class="form-control" value="{{ form.income_tax.value }}" disabled>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Net Salary:</label>
+                <input type="text" class="form-control" value="{{ form.net_salary.value }}" disabled>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'salary_list' %}" class="btn btn-secondary">Back to Salary List</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load form_tags %}
+
+<div id="deduction-form-container">
+  <form
+    method="POST"
+    hx-post="{% url 'create_tax_deduction' employee.id %}"
+    hx-target="#form-message"
+    hx-swap="innerHTML"
+    hx-on="htmx:afterOnLoad: refreshDeductionList()"
+  >
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      <label>Income Tax</label>
+      {{ form.income_tax|add_class:"form-control" }}
+      {% for error in form.income_tax.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>Provident Fund</label>
+      {{ form.provident_fund|add_class:"form-control" }}
+      {% for error in form.provident_fund.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>Health Insurance</label>
+      {{ form.health_insurance|add_class:"form-control" }}
+      {% for error in form.health_insurance.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+
+<div id="form-message"></div>
+
+<script>
+  function refreshDeductionList() {
+    htmx.ajax("GET", '{% url "get_tax_deductions" %}', {
+      target: "#deduction-list",
+    });
+  }
+</script>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">My Tax Deduction Details</h2>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ user.name }}</h5>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Department:</strong> {{ user.department }}</p>
+
+      <hr>
+      <h5>Profile Info</h5>
+      <p><strong>Country:</strong> {{ profile.country }}</p>
+      <p><strong>State:</strong> {{ profile.state }}</p>
+
+      <hr>
+      <h5>Tax Deductions</h5>
+      <ul class="list-group">
+        <li class="list-group-item">Income Tax: ₦{{ tax.income_tax }}</li>
+        <li class="list-group-item">Provident Fund: ₦{{ tax.provident_fund }}</li>
+        <li class="list-group-item">Health Insurance: ₦{{ tax.health_insurance }}</li>
+        <li class="list-group-item bg-light"><strong>Total Deductions: ₦{{ tax.total_deductions }}</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

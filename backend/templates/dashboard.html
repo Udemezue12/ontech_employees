@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <!-- Sidebar -->
+  <div class="col-lg-3 mb-4">
+    <div class="card shadow border-0 p-3" style="background-color: #1e293b; color: white;">
+      <h5 class="mb-4"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard Menu</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link text-light" href="#"><i class="fa-solid fa-users me-2"></i>Manage Employees</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-light" href="#"><i class="fa-solid fa-briefcase me-2"></i>Departments</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-light" href="#"><i class="fa-solid fa-calendar-check me-2"></i>Attendance</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope-open-text me-2"></i>Complaints</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-light" href="#"><i class="fa-solid fa-gear me-2"></i>Settings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="col-lg-9">
+    <!-- Top Row: Summary Cards -->
+    <div class="row g-4">
+      <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm border-0 p-4 h-100">
+          <div class="d-flex align-items-center">
+            <div class="icon bg-primary text-white rounded-circle p-3 me-3">
+              <i class="fa-solid fa-users fa-lg"></i>
+            </div>
+            <div>
+              <h6 class="mb-0">Total Employees</h6>
+              <h4 class="fw-bold">124</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm border-0 p-4 h-100">
+          <div class="d-flex align-items-center">
+            <div class="icon bg-success text-white rounded-circle p-3 me-3">
+              <i class="fa-solid fa-building fa-lg"></i>
+            </div>
+            <div>
+              <h6 class="mb-0">Departments</h6>
+              <h4 class="fw-bold">6</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm border-0 p-4 h-100">
+          <div class="d-flex align-items-center">
+            <div class="icon bg-warning text-dark rounded-circle p-3 me-3">
+              <i class="fa-solid fa-calendar-check fa-lg"></i>
+            </div>
+            <div>
+              <h6 class="mb-0">Today's Attendance</h6>
+              <h4 class="fw-bold">93%</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complaints Summary -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card border-0 shadow-sm p-4">
+          <h5 class="mb-3"><i class="fa-solid fa-envelope-open-text me-2"></i>Recent Complaints</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fa-solid fa-user text-muted me-2"></i> John Doe – Login issues</span>
+              <span class="badge bg-info">Pending</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fa-solid fa-user text-muted me-2"></i> Jane Smith – Leave denial</span>
+              <span class="badge bg-warning">Under Review</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fa-solid fa-user text-muted me-2"></i> Mark Lee – Payroll error</span>
+              <span class="badge bg-success">Resolved</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

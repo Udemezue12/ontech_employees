@@ -1,0 +1,32 @@
+<h2>Pending Leave Requests</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Type</th>
+            <th>Dates</th>
+            <th>Reason</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leave in pending_requests %}
+        <tr>
+            <td>{{ leave.employee.name }}</td>
+            <td>{{ leave.leave_type }}</td>
+            <td>{{ leave.start_date }} to {{ leave.end_date }}</td>
+            <td>{{ leave.reason }}</td>
+            <td>
+                <form method="post" action="{% url 'approve_leave_request' leave.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn btn-success btn-sm">Approve</button>
+                </form>
+                <form method="post" action="{% url 'decline_leave_request' leave.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm">Decline</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

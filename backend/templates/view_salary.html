@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}View Salary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow border-0 p-4 rounded-4 bg-white">
+    <h3 class="mb-4 text-success fw-bold">
+      <i class="fa-solid fa-eye me-2"></i>
+      Salary Details
+    </h3>
+    <p class="text-muted mb-3">For <strong>{{ salary.employee.name|default:salary.employee.email }}</strong></p>
+
+    <table class="table table-bordered shadow-sm align-middle">
+      <tbody class="table-light">
+        <tr>
+          <th scope="row"><i class="fa-solid fa-coins me-2 text-primary"></i> Basic Salary</th>
+          <td>{{ salary.basic_salary }}</td>
+        </tr>
+        <tr>
+          <th scope="row"><i class="fa-solid fa-gift me-2 text-info"></i> Bonuses</th>
+          <td>{{ salary.bonuses }}</td>
+        </tr>
+        <tr>
+          <th scope="row"><i class="fa-solid fa-clock me-2 text-warning"></i> Overtime Hours</th>
+          <td>{{ salary.overtime_hours }}</td>
+        </tr>
+        <tr>
+          <th scope="row"><i class="fa-solid fa-chart-line me-2 text-success"></i> Gross Salary</th>
+          <td>{{ salary.gross_salary }}</td>
+        </tr>
+        <tr>
+          <th scope="row"><i class="fa-solid fa-minus-circle me-2 text-danger"></i> Total Deductions</th>
+          <td>{{ salary.total_deductions }}</td>
+        </tr>
+        <tr class="table-success">
+          <th scope="row"><i class="fa-solid fa-wallet me-2 text-dark"></i> Net Salary</th>
+          <td class="fw-bold fs-5">{{ salary.net_salary }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <a href="{% url 'salary_list' %}" class="btn btn-outline-secondary mt-3">
+      <i class="fa-solid fa-arrow-left me-1"></i> Back to Salary List
+    </a>
+  </div>
+</div>
+{% endblock %}

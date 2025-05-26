@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .user-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        min-height: 320px;
+    }
+
+    .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    .btn-sm {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">All Users</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for user in users %}
+        <div class="col">
+            <div class="card user-card h-100 shadow-sm rounded-3">
+                <div class="card-body d-flex flex-column justify-content-between p-4">
+                    <div class="mb-3">
+                        <h5 class="card-title">{{ user.name }}</h5>
+                        <span class="badge bg-secondary">{{ user.role }}</span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'user_profile' user.id %}" class="btn btn-info btn-sm">View Profile</a>
+
+                        {% if request.user.role == 'Overall_Admin' or request.user.role == 'Manager' %}
+                        <a href="{% url 'create_tax_deduction' user.id %}" class="btn btn-outline-primary btn-sm">Create Deduction</a>
+                        {% comment %} <a href="{% url 'create_bonus' user.id %}" class="btn btn-outline-primary btn-sm">Create Bonus</a> {% endcomment %}
+
+                        <a href="{% url 'create_salary' user.id %}" class="btn btn-outline-primary btn-sm">Create Salary</a>
+                        <a href="{% url 'update_leave_balance' user.id %}" class="btn btn-outline-primary btn-sm">Update Leave Balance</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <div class="alert alert-info text-center">No users found.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

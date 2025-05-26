@@ -1,0 +1,74 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }} {% if user_role in ['manager',
+  'overall_admin', 'hr'] %}
+  <div>
+    <h3>Sign your signature below:</h3>
+    <canvas
+      id="signature-canvas"
+      width="400"
+      height="150"
+      style="border: 1px solid #000"
+    ></canvas>
+  </div>
+  <button type="button" id="clear-button">Clear</button>
+  <button type="submit">Save Signature</button>
+  <input type="hidden" name="signature" id="signature-image" />
+  {% else %}
+  <p>You are not authorized to sign the profile.</p>
+  {% endif %}
+</form>
+
+<script>
+  // Get the canvas and context
+  const canvas = document.getElementById("signature-canvas");
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+
+  // Set canvas properties
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#000";
+
+  // Start drawing when mouse is pressed down
+  canvas.addEventListener("mousedown", (e) => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  // Draw while the mouse is moving and pressed down
+  canvas.addEventListener("mousemove", (e) => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+
+  // Stop drawing when the mouse button is released
+  canvas.addEventListener("mouseup", () => {
+    drawing = false;
+  });
+
+  // Clear the canvas when the "Clear" button is pressed
+  document.getElementById("clear-button").addEventListener("click", () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+
+  // Convert the drawing to a base64 image and set it in the hidden input field before form submission
+  document.querySelector("form").addEventListener("submit", (e) => {
+    // Prevent the form from submitting immediately
+    e.preventDefault();
+
+    // Convert the canvas drawing to base64 data URL
+    const signatureImage = canvas.toDataURL();
+    document.getElementById("signature-image").value = signatureImage;
+
+    // Submit the form after setting the signature
+    e.target.submit();
+  });
+</script>
+
+{% endblock %}

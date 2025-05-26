@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Tax Deductions</h2>
+
+<!-- Search Form -->
+<form
+  id="search-form"
+  hx-get="{% url 'view_tax_deductions' %}"
+  hx-target="#deduction-list"
+  hx-trigger="submit"
+>
+  <div class="mb-3">
+    <label for="search" class="form-label">Search by Employee Name or Department:</label>
+    <input type="text" class="form-control" id="search" name="search" placeholder="Search...">
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<!-- Deduction List -->
+<div id="deduction-list" hx-get="{% url 'get_tax_deductions' %}" hx-trigger="load">
+  <div class="text-muted">Loading...</div>
+</div>
+
+{% endblock %}

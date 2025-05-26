@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h2 class="text-center my-4">Staff in {{ request.user.department }} Department</h2>
+
+  {% if page_obj %}
+    <div class="row justify-content-center">
+      {% for employee in page_obj %}
+       <div class="col-md-4 d-flex align-items-stretch mb-4">
+  <div class="card w-100 shadow-sm">
+    {% if employee.user_profile.picture %}
+      <img src="{{ employee.user_profile.picture.url }}" class="card-img-top" alt="Profile Picture">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ employee.name }}</h5>
+      <p class="card-text">
+        <strong>Email:</strong> {{ employee.email }}<br>
+        <strong>Country:</strong> {{ employee.user_profile.country }}<br>
+        <strong>State:</strong> {{ employee.user_profile.state }}
+      </p>
+      <a href="{% url 'employee_profile_detail' employee.pk %}" class="btn btn-primary">View Full Profile</a>
+      <a href="{% url 'send_message' employee.pk %}" class="btn btn-outline-primary btn-sm mt-2">Send Message</a>
+    </div>
+  </div>
+</div>
+
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Employee pagination" class="text-center">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% else %}
+    <p class="text-center">No employees found in your department.</p>
+  {% endif %}
+</div>
+{% endblock %}

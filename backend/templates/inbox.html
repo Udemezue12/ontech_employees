@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Inbox</h2>
+
+{% if messages %}
+    <ul class="list-group">
+    {% for msg in messages %}
+        <li class="list-group-item {% if not msg.is_read %}list-group-item-warning{% endif %}">
+            <a href="{% url 'message_detail' msg.id %}">
+                <strong>{{ msg.subject }}</strong> from {{ msg.sender.name }} - {{ msg.sent_at|date:"M d, Y H:i" }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no messages.</p>
+{% endif %}
+
+<a href="{% url 'manager_team_view' %}" class="btn btn-secondary mt-3">Back to Team</a>
+{% endblock %}

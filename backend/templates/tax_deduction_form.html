@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block content %}
+  {% include 'tax_deduction_form_partial.html' %}
+{% endblock %}
+
+
+<div class="card shadow-sm rounded-4 p-4">
+  <form
+    method="post"
+    hx-post="{% url 'create_tax_deduction' employee.id %}"
+    hx-target="#deduction-form-container"
+    hx-swap="outerHTML"
+  >
+    {% csrf_token %}
+
+    <h5 class="mb-4 text-primary">Create Tax Deduction</h5>
+
+    <div class="mb-3">
+      <label for="{{ form.income_tax.id_for_label }}" class="form-label">
+        {{ form.income_tax.label }}
+      </label>
+      {{ form.income_tax|add_class:"form-control" }}
+      {% if form.income_tax.errors %}
+        <div class="text-danger small mt-1">{{ form.income_tax.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.provident_fund.id_for_label }}" class="form-label">
+        {{ form.provident_fund.label }}
+      </label>
+      {{ form.provident_fund|add_class:"form-control" }}
+      {% if form.provident_fund.errors %}
+        <div class="text-danger small mt-1">{{ form.provident_fund.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.health_insurance.id_for_label }}" class="form-label">
+        {{ form.health_insurance.label }}
+      </label>
+      {{ form.health_insurance|add_class:"form-control" }}
+      {% if form.health_insurance.errors %}
+        <div class="text-danger small mt-1">{{ form.health_insurance.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-success">💾 Save Deductions</button>
+    </div>
+  </form>
+</div>

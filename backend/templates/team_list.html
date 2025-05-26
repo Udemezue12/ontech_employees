@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Team Members in {{ request.user.department }}</h2>
+
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <strong>Your Profile</strong>
+    </div>
+    <div class="card-body">
+      <p><strong>Name:</strong> {{ request.user.name }}</p>
+      <p><strong>Email:</strong> {{ request.user.email }}</p>
+      <p><strong>Department:</strong> {{ request.user.department }}</p>
+      {% if manager_profile and manager_profile.picture %}
+        <img src="{{ manager_profile.picture.url }}" width="100" alt="Your Profile Picture">
+      {% else %}
+        <p class="text-muted">No profile picture.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="list-group">
+    {% for item in team_data %}
+      <div class="list-group-item">
+        <h5 class="mb-1">{{ item.user.role }}</h5>
+        <p><strong>Name:</strong> {{ item.user.name }}</p>
+        <p><strong>Email:</strong> {{ item.user.email }}</p>
+        <p><strong>Department:</strong> {{ item.user.department }}</p>
+        <p><strong>Role:</strong> {{ item.user.role }}</p>
+        
+        {% if item.profile and item.profile.picture %}
+          <img src="{{ item.profile.picture.url }}" width="100" alt="Profile Picture">
+        {% else %}
+          <p class="text-muted">No profile picture.</p>
+        {% endif %}
+
+        <a href="{% url 'send_message' item.user.id %}" class="btn btn-outline-primary btn-sm mt-2">
+          Send Message
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

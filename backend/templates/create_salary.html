@@ -1,0 +1,110 @@
+{% extends "base.html" %} 
+{% block title %}Create Salary{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow border-0 p-4 rounded-4 bg-light">
+    <h3 class="mb-4 text-primary fw-bold">
+      <i class="fa-solid fa-money-check-dollar me-2"></i>
+      Create Salary Record
+    </h3>
+    <p class="mb-4 text-muted">
+      For <strong>{{ target_user.name }}</strong> ({{ target_user.email }})
+    </p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Basic Salary</label>
+          <input
+            type="number"
+            name="basic_salary"
+            class="form-control shadow-sm"
+            value="{{ form.basic_salary.value }}"
+            required
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Overtime Hours</label>
+          <input
+            type="number"
+            name="overtime_hours"
+            class="form-control shadow-sm"
+            value="{{ form.overtime_hours.value }}"
+            step="0.01"
+            required
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Bonuses</label>
+          <input
+            type="number"
+            name="bonuses"
+            class="form-control shadow-sm"
+            value="{{ form.bonuses.value }}"
+            step="0.01"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >Provident Fund (Calculated)</label
+          >
+          <input
+            type="text"
+            class="form-control shadow-sm bg-white"
+            value="{{ form.provident_fund.value }}"
+            readonly
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >Health Insurance (Calculated)</label
+          >
+          <input
+            type="text"
+            class="form-control shadow-sm bg-white"
+            value="{{ form.health_insurance.value }}"
+            readonly
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Income Tax (Calculated)</label>
+          <input
+            type="text"
+            class="form-control shadow-sm bg-white"
+            value="{{ form.income_tax.value }}"
+            readonly
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Net Salary (Calculated)</label>
+          <input
+            type="text"
+            class="form-control shadow-sm bg-white"
+            value="{{ form.net_salary.value }}"
+            readonly
+          />
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary shadow-sm px-4">
+          <i class="fa-solid fa-plus me-1"></i> Create Record
+        </button>
+        <a
+          href="{% url 'salary_list' %}"
+          class="btn btn-outline-secondary px-4"
+        >
+          <i class="fa-solid fa-arrow-left me-1"></i> Back to List
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

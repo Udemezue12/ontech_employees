@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Department</th>
+      <th>Income Tax</th>
+      <th>Provident Fund</th>
+      <th>Health Insurance</th>
+      <th>Total Deductions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for deduction in deductions %}
+    <tr>
+      <td>{{ deduction.employee.name }}</td>
+      <td>{{ deduction.employee.department }}</td>
+      <td>{{ deduction.income_tax }}</td>
+      <td>{{ deduction.provident_fund }}</td>
+      <td>{{ deduction.health_insurance }}</td>
+      <td>{{ deduction.total_deductions }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center text-muted">No deductions found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

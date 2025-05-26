@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>My Complaints</h2>
+
+  {% if complaints %}
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Sender</th>
+        <th>Position</th>
+        <th>Subject</th>
+        <th>Submitted At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for complaint in complaints %}
+      <tr>
+        <td>{{ complaint.sender.name }}</td>
+        <td>{{ complaint.sender_role }}</td>
+        <td>{{ complaint.subject }}</td>
+        <td>{{ complaint.submitted_at }}</td>
+        <td>
+          {% if complaint.manager_response %}
+          <span class="badge bg-success">Answered</span>
+          {% else %}
+          <span class="badge bg-warning">Pending</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if request.user.role != 'Employee' and not complaint.manager_response %}
+            <a href="{% url 'respond_complaint' complaint.id %}" class="btn btn-sm btn-primary">
+              Respond
+            </a>
+          {% elif request.user == complaint.sender and complaint.manager_response and not complaint.user_reply %}
+            <a href="{% url 'reply_complaint' complaint.id %}" class="btn btn-sm btn-warning">
+              Reply
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No complaints to display.</p>
+  {% endif %}
+</div>
+{% endblock %}

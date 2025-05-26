@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Employees Leave Requests</h2>
+
+      {% if leaves %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Employee</th>
+              <th>Position</th>
+              <th>Department</th>
+              <th>Reason</th>
+              <th>Leave Type</th>
+              <th>Dates</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for leave in leaves %}
+            <tr>
+              <td>{{ leave.employee.name }}</td>
+              <td>{{ leave.employee.role }}</td>
+              <td>{{ leave.employee.department }}</td>
+              <td>{{ leave.leave_type }}</td>
+              <td>{{ leave.reason }}</td>
+              <td>{{ leave.start_date }} - {{ leave.end_date }}</td>
+              <td>{{ leave.status }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info">No leave requests found.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Eligible Employees for Record Creation</h2>
+
+    {% if users %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name|default:user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.department }}</td>
+                    <td>
+                        <a href="{% url 'create_employee' user.id %}" class="btn btn-success btn-sm">
+                            <i class="bi bi-file-earmark-plus"></i> Create Record
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No employees available for record creation.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

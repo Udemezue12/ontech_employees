@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Performance Reviews</h2>
+
+  {% if reviews %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Employee Name</th>
+            <th>Employee Email</th>
+            <th>Employee Role</th>
+            <th>Employee Department</th>
+            <th>Reviewer Name</th>
+            <th>Reviewer Department</th>
+            <th>Reviewer Role</th>
+            <th>Reviewer Email </th>
+            <th>Date</th>
+            <th>Work Quality</th>
+            <th>Attendance</th>
+            <th>Productivity</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for review in reviews %}
+            <tr>
+              <td>{{ review.employee.name }}</td>
+              <td>{{ review.employee.email }}</td>
+              <td>{{ review.employee.role }}</td>
+              <td>{{ review.employee.department}}</td>
+              <td>{{ review.reviewer.name }}</td>
+              <td>{{ review.reviewer.department }}</td>
+              <td>{{ review.reviewer.role }}</td>
+              <td>{{ review.reviewer.email }}</td>
+              <td>{{ review.date }}</td>
+              <td>{{ review.work_quality }}</td>
+              <td>{{ review.attendance }}</td>
+              <td>{{ review.productivity }}</td>
+              <td>{{ review.comments|linebreaksbr }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      No performance reviews available.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

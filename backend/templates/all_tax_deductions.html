@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">All Employee Tax Deductions</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Country</th>
+        <th>State</th>
+        <th>Income Tax</th>
+        <th>Provident Fund</th>
+        <th>Health Insurance</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in tax_list %}
+      <tr>
+        <td>{{ entry.user.name }}</td>
+        <td>{{ entry.user.email }}</td>
+        <td>{{ entry.user.department }}</td>
+        <td>{{ entry.profile.country }}</td>
+        <td>{{ entry.profile.state }}</td>
+        <td>₦{{ entry.tax.income_tax }}</td>
+        <td>₦{{ entry.tax.provident_fund }}</td>
+        <td>₦{{ entry.tax.health_insurance }}</td>
+        <td><strong>₦{{ entry.tax.total_deductions }}</strong></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

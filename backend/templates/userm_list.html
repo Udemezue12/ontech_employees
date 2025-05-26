@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>User List</h2>
+  <ul>
+    {% for user in users %}
+      <li>
+        <a hx-get="{% url 'user_profile' user.id %}" hx-target="#profile-detail" hx-swap="innerHTML">
+          {{ user.name }} ({{ user.role }})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <div id="profile-detail">
+    <!-- User profile will be loaded here -->
+  </div>
+{% endblock %}

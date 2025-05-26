@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Team Performance Reviews</h2>
+
+  <!-- Filter Form -->
+  <form method="get" class="row g-3 mb-3">
+    <!-- Month Dropdown -->
+    <div class="col-md-2">
+      <select name="month" class="form-select">
+        <option value="">Month</option>
+        {% for num, name in month_names %}
+          <option value="{{ num }}" {% if month == num|stringformat:"i" %}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Year Dropdown -->
+    <div class="col-md-2">
+      <select name="year" class="form-select">
+        <option value="">Year</option>
+        {% for y in year_options %}
+          <option value="{{ y }}" {% if year == y|stringformat:"i" %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Search Input -->
+    <div class="col-md-4">
+      <input type="text" name="search" value="{{ search_query }}" placeholder="Search..." class="form-control" />
+    </div>
+
+    <!-- Filter Button -->
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="col-md-1">
+      <a href="{% url 'team-review-list' %}" class="btn btn-secondary w-100">Reset</a>
+    </div>
+
+    <!-- This Month Button -->
+    <div class="col-md-1">
+      <button type="button" class="btn btn-outline-info w-100" onclick="setThisMonth()">This Month</button>
+    </div>
+  </form>
+
+  <!-- Review Cards -->
+  {% for review in page_obj %}
+    <div class="card mb-3">
+      <div class="card-header">
+        Comments by {{ review.manager.role }} on {{ review.month|date:"F Y" }}
+      </div>
+      <div class="card-body">
+        <p>{{ review.review_text }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No reviews found.</p>
+  {% endfor %}
+
+  <!-- Pagination -->
+  <div class="pagination justify-content-center">
+    <span class="page-links">
+      {% if page_obj.has_previous %}
+        <a href="?{% if month %}month={{ month }}&{% endif %}{% if year %}year={{ year }}&{% endif %}{% if search_query %}search={{ search_query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span class="mx-2">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a href="?{% if month %}month={{ month }}&{% endif %}{% if year %}year={{ year }}&{% endif %}{% if search_query %}search={{ search_query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+
+<!-- "This Month" Script -->
+<script>
+  function setThisMonth() {
+    const month = "{{ current_month }}";
+    const year = "{{ current_year }}";
+
+    const form = document.querySelector('form');
+    form.querySelector('[name="month"]').value = month;
+    form.querySelector('[name="year"]').value = year;
+    form.submit();
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- templates/leave/create_leave.html -->
+
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4>Apply for Leave</h4>
+    </div>
+    <div class="card-body">
+
+      <!-- ✅ Success/Error Messages or Re-rendered Form will show here -->
+      <div id="leave-form-container">
+        {% include "leave_form.html" %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

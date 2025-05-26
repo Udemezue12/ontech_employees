@@ -1,0 +1,59 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4>My Leave Requests</h4>
+    </div>
+    <div class="card-body">
+      {% if leaves %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Leave Type</th>
+              <th>Dates</th>
+
+              <th>Days</th>
+              <th>Status</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for leave in leaves %}
+            <tr>
+              <td>{{ leave.leave_type }}</td>
+              <td>{{ leave.start_date }} to {{ leave.end_date }}</td>
+              <td>{{ leave.days }}</td>
+              <td>{{leave.status}}</td>
+              <td>
+                {% if leave.status == "PENDING" %}
+                <form
+                  method="post"
+                  action="{% url 'delete_leave_request' leave.id %}"
+                >
+                  {% csrf_token %}
+                  <button
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Delete this leave request?')"
+                  >
+                    Delete
+                  </button>
+                </form>
+                {% else %}
+                {% comment %} <span class="text-muted">No Action</span> {% endcomment %}
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-muted">You have not submitted any leave requests yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

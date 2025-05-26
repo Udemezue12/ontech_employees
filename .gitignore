@@ -1,0 +1,64 @@
+.qodo
+.vscode
+# === Python & Django ===
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+pay.db
+
+# Virtual Environment
+env/
+venv/
+payroll-env/
+ENV/
+env.bak/
+*.env
+
+# Django static/media
+staticfiles/
+media/
+mediafiles/
+static/
+
+# Secret files
+.env
+.env.*
+
+# Django migrations
+**/migrations/
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# === Node.js & React ===
+frontend/node_modules/
+
+
+# React log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# === macOS, Windows, Linux ===
+.DS_Store
+Thumbs.db
+
+# === IDEs ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === Render Deploy Files ===
+*.sqlite3
+render.yaml  # (optional, if you're not versioning it)
+
+# === Compiled files ===
+
+

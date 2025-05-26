@@ -1,0 +1,20 @@
+<!-- templates/confirm_delete_salary.html -->
+{% extends "base.html" %}
+
+{% block title %}Delete Salary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-warning shadow p-4 rounded">
+        <h4 class="alert-heading">Confirm Deletion</h4>
+        <p>Are you sure you want to delete the salary record for:</p>
+        <p><strong>{{ salary.employee.name }} ({{ salary.employee.email }})</strong>?</p>
+
+        <form method="post" class="d-flex gap-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'salary_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

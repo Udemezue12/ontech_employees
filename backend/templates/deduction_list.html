@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Tax Deductions</h2>
+
+<!-- Search Form -->
+<form
+  id="search-form"
+  hx-get="{% url 'search/tax/deductions' %}"
+  hx-target="#deduction-list"
+  hx-trigger="submit"
+>
+  <div class="form-group">
+    <label for="search">Search by Employee Name or Department:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="search"
+      name="search"
+      placeholder="Search..."
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<div id="deduction-form-section">
+  {% include 'tax_deduction_form_partial.html' %}
+</div>
+
+<div
+  id="deduction-list"
+  hx-get="{% url 'get_tax_deductions' %}"
+  hx-trigger="load"
+>
+  <!-- Initial list loaded here -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th>Department</th>
+        <th>Income Tax</th>
+        <th>Provident Fund</th>
+        <th>Health Insurance</th>
+        <th>Total Deductions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for deduction in deductions %}
+      <tr>
+        <td>{{ deduction.employee.name }}</td>
+        <td>{{ deduction.employee.department }}</td>
+        <td>{{ deduction.income_tax }}</td>
+        <td>{{ deduction.provident_fund }}</td>
+        <td>{{ deduction.health_insurance }}</td>
+        <td>{{ deduction.total_deductions }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center text-muted">No deductions found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

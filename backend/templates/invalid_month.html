@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Invalid Month{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-warning text-center shadow-sm">
+        <h1 class="display-4 text-danger">Invalid Month Selected</h1>
+        <p class="lead">{{ message }}</p>
+        <a href="{% url "monthly_attendance" %}" class="btn btn-outline-primary mt-3">
+            <i class="bi bi-house-door"></i> Go Back
+        </a>
+    </div>
+</div>
+{% endblock %}

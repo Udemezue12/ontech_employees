@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4>Apply for Leave</h4>
+    </div>
+    <div class="card-body">
+      
+      <!-- Success and Error Messages -->
+      {% if messages %}
+        <div class="mb-3">
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Form -->
+      <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.non_field_errors }}
+
+        <!-- Leave Type -->
+        <div class="mb-3">
+          <label class="form-label">Leave Type</label>
+          {{ form.leave_type }}
+          {% if form.leave_type.errors %}
+            <div class="text-danger">
+              {% for error in form.leave_type.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Start Date -->
+        <div class="mb-3">
+          <label class="form-label">Start Date</label>
+          {{ form.start_date }}
+          {% if form.start_date.errors %}
+            <div class="text-danger">
+              {% for error in form.start_date.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- End Date -->
+        <div class="mb-3">
+          <label class="form-label">End Date</label>
+          {{ form.end_date }}
+          {% if form.end_date.errors %}
+            <div class="text-danger">
+              {% for error in form.end_date.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Reason -->
+        <div class="mb-3">
+          <label class="form-label">Reason</label>
+          {{ form.reason }}
+          {% if form.reason.errors %}
+            <div class="text-danger">
+              {% for error in form.reason.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Request</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
