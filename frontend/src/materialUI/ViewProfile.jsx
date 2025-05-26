@@ -26,9 +26,7 @@ const ViewProfile = () => {
   const department = localStorage.getItem("UserDepartment");
   const role = localStorage.getItem("UserRole");
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+  
 
   async function fetchCSRFToken() {
     try {
