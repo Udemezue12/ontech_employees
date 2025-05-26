@@ -37,7 +37,7 @@ static/
 
 # === Node.js & React ===
 frontend/node_modules/
-backend/attendance.log/
+
 
 # React log files
 npm-debug.log*
