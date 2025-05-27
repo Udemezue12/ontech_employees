@@ -1,16 +1,6 @@
 .qodo
 .vscode
-# === Python & Django ===
-__pycache__/
-*.py[cod]
-*.sqlite3
-*.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
-db.sqlite3
-pay.db
+
 
 # Virtual Environment
 env/
@@ -22,9 +12,9 @@ env.bak/
 
 # Django static/media
 staticfiles/
-media/
+
 mediafiles/
-static/
+
 
 # Secret files
 .env

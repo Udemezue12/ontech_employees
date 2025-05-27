@@ -82,7 +82,7 @@ export default function BiometricAttendance() {
   //   const csrfToken = await fetchCSRFToken();
   //   try {
   //     const response = await axios.get(
-  //       "http://localhost:8000/api/attendance/biometric/",
+  //       "https://ontech-systems.onrender.com/api/attendance/biometric/",
   //       {
   //         headers: {
   //           Authorization: `Token ${token}`,
@@ -254,7 +254,7 @@ useEffect(() => {
       const credential = await navigator.credentials.get({ publicKey });
 
       const { data: resp } = await axios.post(
-        "http://localhost:8000/api/attendance/biometric/",
+        "https://ontech-systems.onrender.com/api/attendance/biometric/",
         {
           credential_id: credential.id,
           action,
