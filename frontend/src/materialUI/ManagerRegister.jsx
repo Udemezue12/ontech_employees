@@ -21,12 +21,13 @@ export const fetchCSRFToken = async () => {
     return null;
   }
 };
-const csrfToken = await fetchCSRFToken();
+
 function ManagerRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [setCsrfToken] = useState("")
 
   const submit = async (formData) => {
     setError("");
@@ -40,7 +41,8 @@ function ManagerRegister() {
     } else {
       setMessage(validation.message);
     }
-
+    const csrfToken = await fetchCSRFToken();
+    setCsrfToken(csrfToken)
     try {
       const payload = {
         username: formData.username,

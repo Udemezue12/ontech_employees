@@ -21,12 +21,12 @@ export const fetchCSRFToken = async () => {
     return null;
   }
 };
-const csrfToken = await fetchCSRFToken();
 function MaterialEmployeeRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [setCsrfToken] = useState("");
 
   const submit = async (formData) => {
     setError("");
@@ -40,6 +40,8 @@ function MaterialEmployeeRegister() {
     } else {
       setMessage(validation.message);
     }
+    const csrfToken = await fetchCSRFToken();
+    setCsrfToken(csrfToken);
 
     try {
       const payload = {
@@ -59,7 +61,7 @@ function MaterialEmployeeRegister() {
         payload,
         {
           headers: {
-            "X-CSRFToken": csrfToken, 
+            "X-CSRFToken": csrfToken,
           },
           withCredentials: true,
         }

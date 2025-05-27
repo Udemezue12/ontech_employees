@@ -23,9 +23,10 @@ export const fetchCSRFToken = async () => {
     return null;
   }
 };
-const csrfToken = await fetchCSRFToken();
+// const csrfToken = await fetchCSRFToken();
 const CompanyProfileForm = () => {
   const userRole = localStorage.getItem("UserRole");
+  const [setCsrfToken] = useState("");
 
   const [formData, setFormData] = useState({
     company_name: "",
@@ -50,7 +51,6 @@ const CompanyProfileForm = () => {
     setFormData((prev) => ({ ...prev, company_logo: e.target.files[0] }));
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -61,8 +61,9 @@ const CompanyProfileForm = () => {
     Object.entries(formData).forEach(([key, value]) => {
       if (value) payload.append(key, value);
     });
-
-    
+    const csrfToken = await fetchCSRFToken();
+    setCsrfToken(csrfToken);
+    console.log("CSRF Token:", csrfToken);
 
     try {
       await axios.post(

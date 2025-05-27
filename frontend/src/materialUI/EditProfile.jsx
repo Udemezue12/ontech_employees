@@ -26,7 +26,7 @@ export const fetchCSRFToken = async () => {
     return null;
   }
 };
-const csrfToken = await fetchCSRFToken();
+// const csrfToken = await fetchCSRFToken();
 const EditProfile = () => {
   const [formData, setFormData] = useState({
     personal_details: "",
@@ -35,7 +35,6 @@ const EditProfile = () => {
     country: "",
     state: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({
     resume: "",
@@ -47,7 +46,8 @@ const EditProfile = () => {
   const token = localStorage.getItem("Token");
 
   const navigate = useNavigate();
- 
+  const [setCsrfToken] = useState("");
+
   useEffect(() => {
     // Get userId and token from localStorage
     if (!userId) {
@@ -63,6 +63,9 @@ const EditProfile = () => {
     }
 
     const fetchProfile = async () => {
+      const csrfToken = await fetchCSRFToken();
+      setCsrfToken(csrfToken);
+      console.log("CSRF Token:", csrfToken);
       setIsLoading(true);
       if (!token) return;
       try {
@@ -98,7 +101,7 @@ const EditProfile = () => {
     };
 
     fetchProfile();
-  }, [userId, token]);
+  }, [userId, token, setCsrfToken]);
 
   const handleInputChange = (e) => {
     const { name, type, value, files } = e.target;
@@ -166,9 +169,11 @@ const EditProfile = () => {
       }
     });
     data.append("user", userId);
+    const csrfToken = await fetchCSRFToken();
+    setCsrfToken(csrfToken);
+    console.log("CSRF Token:", csrfToken);
 
     try {
-      
       const profileId = localStorage.getItem("ProfileId");
       await axios.put(
         `https://ontech-systems.onrender.com/api/my/profile/${profileId}/`,

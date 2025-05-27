@@ -21,16 +21,15 @@ export const fetchCSRFToken = async () => {
     return null;
   }
 };
-const csrfToken = await fetchCSRFToken();
 function OverallAdminRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  
+  const [ setCsrfToken] = useState("");
+
 
   const submit = async (formData) => {
-
     setError("");
     setMessage("");
 
@@ -53,7 +52,8 @@ function OverallAdminRegister() {
         name: formData.name,
         department: formData.department,
       };
-
+      const csrfToken = await fetchCSRFToken();
+      setCsrfToken(csrfToken)
       console.log("Payload being sent:", payload);
 
       await axios.post(
@@ -61,7 +61,7 @@ function OverallAdminRegister() {
         payload,
         {
           headers: {
-            "X-CSRFToken": csrfToken, 
+            "X-CSRFToken": csrfToken,
           },
           withCredentials: true,
         }
