@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 export default class CookieApp extends Component {
- constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       email: "",
@@ -18,8 +18,8 @@ export default class CookieApp extends Component {
     this.getSession();
   };
   getSession = () => {
-    fetch("http://localhost:8000/payroll/session", {
-      credentials: 'same-origin',
+    fetch("https://ontech-systems.onrender.com/payroll/session", {
+      credentials: "same-origin",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -40,7 +40,7 @@ export default class CookieApp extends Component {
       });
   };
   whoami = () => {
-    fetch("http://localhost:8000/payroll/whoami", {
+    fetch("https://ontech-systems.onrender.com/payroll/whoami", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -80,7 +80,7 @@ export default class CookieApp extends Component {
   login = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    fetch("http://localhost:8000/payroll/login_view", {
+    fetch("https://ontech-systems.onrender.com/payroll/login_view", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

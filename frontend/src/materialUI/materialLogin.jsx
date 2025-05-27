@@ -322,6 +322,7 @@ export default function MaterialLogin() {
   const { control, handleSubmit } = useForm();
   async function fetchCSRFToken() {
     try {
+      // await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
         withCredentials: true, // ensure cookies are sent
       });
@@ -370,11 +371,16 @@ export default function MaterialLogin() {
       // ✅ 3. Session Login for @login_required views
       await axios.post(
         "https://ontech-systems.onrender.com/api/session-login/",
+        // "https://ontech-systems.onrender.com/api/session-login/",
         {
           email: data.email,
           password: data.password,
         },
         {
+          headers: {
+            "X-CSRFToken": csrfToken,
+          },
+
           withCredentials: true, // send/receive cookies (sessionid)
         }
       );

@@ -93,8 +93,6 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 
 CSRF_COOKIE_NAME = 'csrftoken'
-#    "https://yourdomain.com",
-#     "https://www.yourdomain.com",
 
 # Templates and Static
 REACT_BUILD_DIR = os.path.join(BASE_DIR, 'frontend', 'build')
@@ -166,6 +164,8 @@ ALLOWED_HOSTS = [
 CORS_ALLOWED_ORIGINS = [
     "https://ontech-systems.onrender.com",
     "https://www.ontech-systems.onrender.com",
+    "localhost",
+    "127.0.0.1"
 ]
 
 CSRF_TRUSTED_ORIGINS = [

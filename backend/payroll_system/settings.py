@@ -270,3 +270,86 @@ LOGGING = {
         },
     },
 }
+
+
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+ALLOWED_HOSTS = []
+WEBAUTHN_RP_ID = "localhost"  # or your domain (no protocol)
+WEBAUTHN_ALLOWED_ORIGINS = [
+    "http://localhost:7000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    # "https://your-dev-domain.com",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:7000",
+    "http://192.168.1.100:3000",
+    "http://127.0.0.1:3000",  # React frontend
+    "http://127.0.0.1:7000",  # React frontend
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:7001"
+]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",  # React frontend URL
+    "http://192.168.1.100:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:7000",  # React frontend # React frontend URL
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:7001",
+    "http://localhost:7000"
+
+]
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Astrotech'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'attendance.log',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = False
+
+CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_COOKIE_NAME = 'csrftoken'

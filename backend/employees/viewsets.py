@@ -17,6 +17,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.core.mail import send_mail
 from django.db import transaction
+from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
@@ -58,7 +59,33 @@ class SessionLoginView(View):
             return JsonResponse({'error': 'Invalid credentials'}, status=400)
         except Exception as e:
             logger.error(f"Error: {e}")
-            return HttpResponse({'error': str(e)}, status=500)
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+# Ensures CSRF cookie is set
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class SessionView(APIView):
+    permission_classes = []  # Allow all users (unauthenticated) to access
+
+    def post(self, request):
+        try:
+            email = request.data.get('email')
+            password = request.data.get('password')
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                django_login(request, user)
+                # Optional: regenerate CSRF after login
+                csrf_token = get_token(request)
+                return Response({'message': 'Session login successful', 'csrfToken': csrf_token})
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logger.error(f"Login error: {e}")
+            return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
 
 
 @require_POST
@@ -181,13 +208,13 @@ class LoginViewSet(viewsets.ViewSet):
             return JsonResponse({'error': str(e)}, status=500)
 
 
-@ensure_csrf_cookie
-def get_csrf_token(request):
-    try:
+# @ensure_csrf_cookie
+# def get_csrf_token(request):
+#     try:
 
-        return JsonResponse({"detail": "CSRF cookie set"})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+#         return JsonResponse({"detail": "CSRF cookie set"})
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
@@ -223,19 +250,19 @@ class RegisterViewSet(viewsets.ModelViewSet):
 
     # queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
-    # permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
         # Override to prevent accessing the list of users
         # This will return an empty queryset, effectively blocking the list view.
         return CustomUser.objects.none()
 
-    def get_permissions(self):
-        # This ensures that only the `create` action is accessible, blocking `list` and `retrieve`
-        if self.action == 'create':
-            # You can replace this with your desired permission
-            return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated()]
+    # def get_permissions(self):
+    #     # This ensures that only the `create` action is accessible, blocking `list` and `retrieve`
+    #     if self.action == 'create':
+    #         # You can replace this with your desired permission
+    #         return [permissions.AllowAny()]
+    #     return [permissions.IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         try:
@@ -565,6 +592,7 @@ class ViewProfileViewSet(viewsets.ViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class MyProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -575,11 +603,14 @@ class MyProfileView(APIView):
 
     def put(self, request):
         profile = Profile.objects.get(user=request.user)
-        serializer = EditProfileSerializer(profile, data=request.data, partial=True)
+        serializer = EditProfileSerializer(
+            profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class ViewAllProfilesViewSet(viewsets.ViewSet):
     def list(self, request):
         # Fetch all profiles
@@ -779,7 +810,7 @@ def check_method(request):
         manual_today = ManualAttendance.objects.filter(
             user=user,
             date=today,
-            method='manual'  
+            method='manual'
         ).exists()
 
         if manual_today:
@@ -1095,8 +1126,6 @@ class FingerprintAuthenticateView(APIView):
             credential = WebAuthnCredential.objects.get(
                 credential_id=credential_id)
             user = credential.user
-
-            
 
             # Log the user in
             django_login(request, user)

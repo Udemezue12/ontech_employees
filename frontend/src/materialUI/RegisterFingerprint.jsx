@@ -14,7 +14,7 @@ const RegisterFingerprint = () => {
   const token = localStorage.getItem("Token");
   async function fetchCSRFToken() {
     try {
-      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      await axios.get("http://localhost:8000/api/csrf/", {
         withCredentials: true,
       });
       return cookies.get("csrftoken");
@@ -33,7 +33,7 @@ const RegisterFingerprint = () => {
         const csrfToken = await fetchCSRFToken();
 
         const res = await axios.get(
-          "https://ontech-systems.onrender.com/api/create/fingerprint/",
+          "http://localhost:8000/api/create/fingerprint/",
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -108,7 +108,7 @@ const RegisterFingerprint = () => {
       );
 
       const response = await axios.post(
-        "https://ontech-systems.onrender.com/api/create/fingerprint/",
+        "http://localhost:8000/api/create/fingerprint/",
         {
           credential_id: credentialId,
           public_key: publicKey,

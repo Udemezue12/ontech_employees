@@ -6,7 +6,13 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'payroll_system.settings')
+    env = os.getenv('DJANGO_ENV', 'dev')  # Defaults to 'dev' if not set
+
+    if env == 'production':
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'payroll_system.production_settings')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'payroll_system.settings')
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

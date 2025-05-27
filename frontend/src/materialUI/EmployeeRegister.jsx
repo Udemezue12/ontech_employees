@@ -55,12 +55,16 @@ function MaterialEmployeeRegister() {
 
       console.log("Payload being sent:", payload);
 
-      await axios.post("https://ontech-systems.onrender.com/api/employee_register", payload, {
-        headers: {
-          "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
-        },
-        withCredentials: true,
-      });
+      await axios.post(
+        "https://ontech-systems.onrender.com/api/employee_register",
+        payload,
+        {
+          headers: {
+            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+          },
+          withCredentials: true,
+        }
+      );
       setMessage("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {

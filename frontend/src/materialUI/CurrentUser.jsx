@@ -4,7 +4,7 @@ import { cookies } from "./Cookie";
 
 // Set up axios instance to handle the base URL and credentials
 // const axiosInstance = axios.create({
-//   baseURL: "http://localhost:8000", // Use the backend URL
+//   baseURL: "https://ontech-systems.onrender.com", // Use the backend URL
 //   withCredentials: true, // Include cookies (session, csrf)
 // });
 
@@ -48,12 +48,15 @@ const CurrentUser = () => {
     }
 
     try {
-      const res = await axios.get("http://localhost:8000/current_user/", {
-        headers: {
-          "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
-          Authorization: `Token ${token}`,
-        },
-      });
+      const res = await axios.get(
+        "https://ontech-systems.onrender.com/current_user/",
+        {
+          headers: {
+            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
 
       console.log("Response from /current_user:", res); // Log full response
 

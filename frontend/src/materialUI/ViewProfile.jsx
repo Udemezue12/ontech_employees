@@ -26,8 +26,6 @@ const ViewProfile = () => {
   const department = localStorage.getItem("UserDepartment");
   const role = localStorage.getItem("UserRole");
 
-  
-
   async function fetchCSRFToken() {
     try {
       await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
@@ -91,7 +89,7 @@ const ViewProfile = () => {
             <Avatar
               src={
                 profile?.picture
-                  ? `http://localhost:8000${profile.picture}`
+                  ? `https://ontech-systems.onrender.com${profile.picture}`
                   : defaultAvatar
               }
               alt="Profile"
@@ -174,7 +172,7 @@ const ViewProfile = () => {
               </Typography>
               {profile?.resume ? (
                 <a
-                  href={`http://localhost:8000${profile.resume}`}
+                  href={`https://ontech-systems.onrender.com${profile.resume}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ textDecoration: "none", color: "#1DA1F2" }}
