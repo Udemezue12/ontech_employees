@@ -6,10 +6,17 @@ import { cookies } from "./Cookie";
 import "./material.css";
 export const fetchCSRFToken = async () => {
   try {
-    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+    const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       withCredentials: true,
     });
-    return cookies.get("csrftoken");
+    console.log("CSRF endpoint response:", response.data); // Debug response
+    const csrfToken = cookies.get("csrftoken");
+    if (!csrfToken) {
+      console.error("CSRF token not found in cookies after fetching.");
+      throw new Error("CSRF token not found");
+    }
+    console.log("Fetched CSRF Token:", csrfToken); // Debug token
+    return csrfToken;
   } catch (err) {
     console.error("CSRF fetch error:", err);
     return null;
@@ -69,83 +76,84 @@ const RegisterFingerprint = () => {
   // }
 
   const registerFingerprint = async () => {
-    setIsSubmitting(true);
+  setIsSubmitting(true);
 
-    if (!userId || !token || !deviceFingerprint) {
-      alert("User not authenticated or device passkey not available.");
-      setIsSubmitting(false);
-      return;
+  if (!userId || !token || !deviceFingerprint) {
+    alert("User not authenticated or device passkey not available.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  try {
+    const credential = await navigator.credentials.create({
+      publicKey: {
+        rp: { name: "Astro", id: "ontech-systems.onrender.com" }, // Match WEBAUTHN_RP_ID
+        user: {
+          id: new TextEncoder().encode(userId.toString()),
+          name: userId,
+          displayName: userId,
+        },
+        challenge: crypto.getRandomValues(new Uint8Array(32)),
+        pubKeyCredParams: [
+          { type: "public-key", alg: -7 },
+          { type: "public-key", alg: -257 },
+        ],
+        timeout: 70000,
+        attestation: "direct",
+        authenticatorSelection: {
+          authenticatorAttachment: "platform",
+          userVerification: "required",
+        },
+      },
+    });
+
+    const csrfToken = await fetchCSRFToken();
+    if (!csrfToken) {
+      throw new Error("Failed to fetch CSRF token");
     }
 
-    try {
-      const credential = await navigator.credentials.create({
-        publicKey: {
-          rp: { name: "Astro" },
-          user: {
-            id: new TextEncoder().encode(userId.toString()),
-            name: userId,
-            displayName: userId,
-          },
-          challenge: crypto.getRandomValues(new Uint8Array(32)),
-          pubKeyCredParams: [
-            { type: "public-key", alg: -7 },
-            { type: "public-key", alg: -257 },
-          ],
-          timeout: 70000,
-          attestation: "direct",
-          authenticatorSelection: {
-            authenticatorAttachment: "platform",
-            userVerification: "required",
-          },
+    const credentialId = credential.id;
+    const attestationObject = credential.response.attestationObject;
+    const publicKey = btoa(
+      String.fromCharCode(...new Uint8Array(attestationObject))
+    );
+
+    console.log("Sending POST with CSRF Token:", csrfToken); // Debug token
+    const response = await axios.post(
+      "https://ontech-systems.onrender.com/api/create/fingerprint/",
+      {
+        credential_id: credentialId,
+        public_key: publicKey,
+        device_fingerprint: deviceFingerprint,
+      },
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          "X-CSRFToken": csrfToken,
         },
-      });
-      const csrfToken = await fetchCSRFToken();
-
-      const credentialId = credential.id;
-      const attestationObject = credential.response.attestationObject;
-
-      const publicKey = btoa(
-        String.fromCharCode(...new Uint8Array(attestationObject))
-      );
-
-      const response = await axios.post(
-        "https://ontech-systems.onrender.com/api/create/fingerprint/",
-        {
-          credential_id: credentialId,
-          public_key: publicKey,
-          device_fingerprint: deviceFingerprint,
-        },
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-            "X-CSRFToken": csrfToken,
-          },
-          withCredentials: true,
-        }
-      );
-
-      console.log("Backend response:", response.data);
-      alert("Passkey created successfully!");
-
-      // Optional: refresh context or redirect
-      window.location.reload();
-    } catch (error) {
-      console.error("Error creating Passkey:", error);
-
-      if (
-        error.response &&
-        error.response.status === 400 &&
-        error.response.data
-      ) {
-        const messages = Object.values(error.response.data).flat().join(" ");
-        alert(`Error: ${messages}`);
-      } else {
-        alert("Passkey creation failed. Please try again.");
+        withCredentials: true,
       }
-    } finally {
-      setIsSubmitting(false);
+    );
+
+    console.log("Backend response:", response.data);
+    alert("Passkey created successfully!");
+    window.location.reload();
+  } catch (error) {
+    console.error("Error creating Passkey:", error);
+    if (error.message === "Failed to fetch CSRF token") {
+      alert("Failed to fetch CSRF token. Please refresh and try again.");
+    } else if (error.response && error.response.status === 403) {
+      alert("CSRF token error. Please refresh and try again.");
+    } else if (error.response && error.response.status === 400 && error.response.data) {
+      const messages = Object.values(error.response.data).flat().join(" ");
+      alert(`Error: ${messages}`);
+    } else {
+      alert("Passkey creation failed. Please try again.");
     }
-  };
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="finger">
