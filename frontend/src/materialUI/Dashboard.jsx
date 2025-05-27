@@ -22,7 +22,7 @@ function DashboardLink() {
         Once you're ready, click the link below to access your dashboard and get started.
       </p>
       <div style={{ marginTop: "1.5rem" }}>
-        <a href="http://localhost:8000/Ontech/dashboard" style={{ fontSize: "1.1rem", color: "#1e90ff", textDecoration: "none", fontWeight: "bold" }}>
+        <a href="https://ontech-systems.onrender.com/Ontech/dashboard" style={{ fontSize: "1.1rem", color: "#1e90ff", textDecoration: "none", fontWeight: "bold" }}>
           ➤ Go to Dashboard
         </a>
       </div>
