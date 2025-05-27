@@ -9,121 +9,23 @@ import { useForm, Controller } from "react-hook-form";
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
-// function MaterialRegister() {
-//   const navigate = useNavigate();
-//   const { control, handleSubmit } = useForm();
-//   const [error, setError] = useState("");
-//   const [message, setMessage] = useState("");
-
-//   const submit = async (formData) => {
-//     setError("");
-//     setMessage("");
-
-//     const validation = validateRegisterForm(formData);
-//     if (!validation.valid) {
-//       setError(validation.message);
-//       setMessage(validation.message)
-//       return;
-//     } else {
-//       setMessage(validation.message); // ✅ Success message from validator
-//     }
-
-//     try {
-//       const payload = {
-//         username: formData.username,
-//         email: formData.email,
-//         password: formData.password,
-//       };
-
-//       await axios.post("https://ontech-systems.onrender.com/api/register/", payload);
-//       setMessage("Registration successful! Redirecting to login...");
-//       setTimeout(() => navigate("/login"), 2000);
-//     } catch (error) {
-//       const response = error.response?.data;
-
-//       if (response) {
-//         if (response.email?.[0]) {
-//           setError("Email already in use.");
-//         } else if (response.username?.[0]) {
-//           setError("Username already taken.");
-//           // } else if (response.phoneNumber?.[0]) {
-//           //   setError("Phone number already exists.");
-//         } else {
-//           setError("Registration failed. Please check your inputs.");
-//         }
-//       } else {
-//         setError("Something went wrong. Please try again.");
-//       }
-
-//       console.error("Registration Failed:", response);
-//     }
-//   };
-
-//   return (
-//     <div className="background">
-//       <form onSubmit={handleSubmit(submit)}>
-//         <Box className="whiteBox">
-//           <Box className="itemBox">
-//             <Box className="title">REGISTER</Box>
-//           </Box>
-
-//           {error && (
-//             <Box className="itemBox">
-//               <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-//             </Box>
-//           )}
-
-//           {message && (
-//             <Box className="itemBox">
-//               <p style={{ color: "green", fontWeight: "bold" }}>{message}</p>
-//             </Box>
-//           )}
-
-//           <Box className="itemBox">
-//             <TextFields label="Email" name="email" control={control} />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <TextFields label="Username" name="username" control={control} />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <PasswordFields
-//               label="Password"
-//               name="password"
-//               control={control}
-//             />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <PasswordFields
-//               label="Confirm Password"
-//               name="confirmPassword"
-//               control={control}
-//             />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <ButtonFields label="Register" type="submit" />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <Link to="/login" className="link">
-//               Already have an account?
-//             </Link>
-//           </Box>
-//         </Box>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default MaterialRegister;
-
-// /////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////
+import { cookies } from "./Cookie";
 //
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
 
+
+// Fetch CSRF token at module level (consider moving to component or global state if needed)
+const csrfToken = await fetchCSRFToken();
 function MaterialRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
@@ -158,7 +60,14 @@ function MaterialRegister() {
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/register/",
-        payload
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken,
+          },
+          withCredentials: true,
+        }
       );
       setMessage("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);

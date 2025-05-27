@@ -12355,3 +12355,4 @@ INFO 2025-05-27 19:07:10,912 viewsets GET request: user=Uchechukwu Udemezue,date
 WARNING 2025-05-27 19:07:11,283 log Forbidden: /attendance/
 INFO 2025-05-27 19:07:11,301 viewsets GET request: user=Uchechukwu Udemezue,date=2025-05-27
 WARNING 2025-05-27 19:07:11,965 log Forbidden: /attendance/
+INFO 2025-05-27 19:50:36,550 autoreload Watching for file changes with StatReloader

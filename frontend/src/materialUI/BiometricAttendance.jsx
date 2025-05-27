@@ -11,6 +11,19 @@ import axios from "axios";
 import { cookies } from "./Cookie";
 import "./material.css";
 
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
+
 export default function BiometricAttendance() {
   const token = localStorage.getItem("Token");
   const [loadingAction, setLoadingAction] = useState("");
@@ -22,6 +35,7 @@ export default function BiometricAttendance() {
   const [overtimeHours, setOvertimeHours] = useState(null);
   const [clock, setClock] = useState(new Date().toLocaleTimeString());
   const [useManual, setUseManual] = useState(false);
+  
 
   // Update clock every second
   useEffect(() => {
@@ -31,22 +45,8 @@ export default function BiometricAttendance() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch CSRF token
-  const fetchCSRFToken = async () => {
-    try {
-      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-        withCredentials: true,
-      });
-      return cookies.get("csrftoken");
-    } catch (err) {
-      console.error("CSRF fetch error:", err);
-      return null;
-    }
-  };
-
   useEffect(() => {
     const fetchUserAttendanceMethod = async () => {
-      const csrfToken = await fetchCSRFToken();
       try {
         const response = await axios.get(
           "https://ontech-systems.onrender.com/api/attendance/check-method/",
@@ -76,74 +76,7 @@ export default function BiometricAttendance() {
     fetchUserAttendanceMethod();
   }, [token]);
 
-  // Fetch biometric status
-  // const fetchBiometricStatus = async () => {
-  //   const csrfToken = await fetchCSRFToken();
-  //   try {
-  //     const response = await axios.get(
-  //       "https://ontech-systems.onrender.com/api/attendance/biometric/",
-  //       {
-  //         headers: {
-  //           Authorization: `Token ${token}`,
-  //           "X-CSRFToken": csrfToken,
-  //         },
-  //         withCredentials: true,
-  //       }
-  //     );
-
-  //     console.log("Biometric Status Response:", response.data);
-
-  //     setCanCheckIn(response.data.can_check_in ?? false);
-  //     setCanCheckOut(response.data.can_check_out ?? false);
-  //     setDoneForToday(response.data.done_for_today ?? false);
-  //     setOvertimeHours(response.data.overtime_hours ?? null);
-
-  //     if (response.data.manual_attendance) {
-  //       setUseManual(true);
-  //     }
-  //   } catch (error) {
-  //     const message =
-  //       error.response?.data?.error || "Failed to load attendance data.";
-  //     console.error("Biometric Status Error:", error);
-  //     if (message.includes("manual")) {
-  //       setUseManual(true);
-  //     }
-  //     showSnackbar(message, false);
-  //   }
-  // };
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => {
-  //   fetchBiometricStatus();
-
-  //   let timer;
-  //   if (!canCheckIn && !doneForToday && !useManual) {
-  //     // Calculate time remaining until 1 hour after check-in
-  //     const checkInTime = new Date(); // Replace with actual check-in time from API if available
-  //     checkInTime.setHours(checkInTime.getHours() + 1); // 1 hour from now
-  //     const timeUntilCheckOut = checkInTime - new Date();
-
-  //     if (timeUntilCheckOut > 0) {
-  //       timer = setTimeout(() => {
-  //         fetchBiometricStatus();
-  //       }, timeUntilCheckOut);
-  //     }
-  //   }
-
-  //   const interval = setInterval(() => {
-  //     if (!canCheckIn && !doneForToday && !useManual) {
-  //       console.log("Polling biometric status...");
-  //       fetchBiometricStatus();
-  //     }
-  //   }, 30000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //     if (timer) clearTimeout(timer);
-  //   };
-  // }, [token, canCheckIn, doneForToday, useManual]);
   const fetchBiometricStatus = useCallback(async () => {
-    const csrfToken = await fetchCSRFToken();
     try {
       const response = await axios.get(
         "https://ontech-systems.onrender.com/api/attendance/biometric/",
@@ -223,7 +156,6 @@ export default function BiometricAttendance() {
   };
 
   const handleAction = async (action) => {
-    const csrfToken = await fetchCSRFToken();
     if (!csrfToken) {
       showSnackbar("CSRF token missing", false);
       return;

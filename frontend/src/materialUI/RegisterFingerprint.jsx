@@ -4,7 +4,18 @@ import { Box, Typography, Button } from "@mui/material";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { cookies } from "./Cookie";
 import "./material.css";
-
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 const RegisterFingerprint = () => {
   const [deviceFingerprint, setDeviceFingerprint] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,17 +23,7 @@ const RegisterFingerprint = () => {
 
   const userId = localStorage.getItem("UserId");
   const token = localStorage.getItem("Token");
-  async function fetchCSRFToken() {
-    try {
-      await axios.get("http://localhost:8000/api/csrf/", {
-        withCredentials: true,
-      });
-      return cookies.get("csrftoken");
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
+
   useEffect(() => {
     const loadFingerprintAndCheck = async () => {
       try {
@@ -30,10 +31,9 @@ const RegisterFingerprint = () => {
         const result = await fp.get();
         const fingerprint = result.visitorId;
         setDeviceFingerprint(fingerprint);
-        const csrfToken = await fetchCSRFToken();
 
         const res = await axios.get(
-          "http://localhost:8000/api/create/fingerprint/",
+          "https://ontech-systems.onrender.com/api/create/fingerprint/",
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -76,8 +76,6 @@ const RegisterFingerprint = () => {
     }
 
     try {
-      const csrfToken = await fetchCSRFToken();
-
       const credential = await navigator.credentials.create({
         publicKey: {
           rp: { name: "Astro" },
@@ -108,7 +106,7 @@ const RegisterFingerprint = () => {
       );
 
       const response = await axios.post(
-        "http://localhost:8000/api/create/fingerprint/",
+        "https://ontech-systems.onrender.com/api/create/fingerprint/",
         {
           credential_id: credentialId,
           public_key: publicKey,

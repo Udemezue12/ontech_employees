@@ -8,8 +8,20 @@ import { useForm, Controller } from "react-hook-form";
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
-import { csrfToken } from "./FetchCsrfToken";
 
+import { cookies } from "./Cookie";
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 function ManagerRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
@@ -42,12 +54,16 @@ function ManagerRegister() {
 
       console.log("Payload being sent:", payload);
 
-      await axios.post("https://ontech-systems.onrender.com/api/manager_register/", payload, {
-        headers: {
-          "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
-        },
-        withCredentials: true,
-      });
+      await axios.post(
+        "https://ontech-systems.onrender.com/api/manager_register/",
+        payload,
+        {
+          headers: {
+            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+          },
+          withCredentials: true,
+        }
+      );
       setMessage("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {

@@ -4,21 +4,22 @@ import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonFields from "./forms/ButtonField";
 import { cookies } from "./Cookie";
-
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 function FingerprintLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  async function fetchCSRFToken() {
-    try {
-      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-        withCredentials: true, // ensure cookies are sent
-      });
-      return cookies.get("csrftoken"); // Fetch it after Django sets it
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
+ 
 
   const base64urlToBuffer = (base64url) => {
     const padding = "=".repeat((4 - (base64url.length % 4)) % 4);
@@ -32,7 +33,7 @@ function FingerprintLogin() {
   };
 
   const handleFingerprintLogin = async () => {
-    const csrfToken = await fetchCSRFToken();
+    
     setError("");
 
     try {

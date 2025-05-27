@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { getCurrentUserId } from "./utils/auth";
-
 import LoadingDots from "./Loading";
 import {
   Container,
@@ -12,10 +10,21 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import "./material.css";
 import { cookies } from "./Cookie";
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 const Profile = () => {
   const navigate = useNavigate();
 
@@ -36,18 +45,6 @@ const Profile = () => {
 
   const userId = localStorage.getItem("UserId");
   const token = localStorage.getItem("Token");
-
-  async function fetchCSRFToken() {
-    try {
-      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-        withCredentials: true,
-      });
-      return cookies.get("csrftoken");
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
 
   const handleInputChange = (e) => {
     const { name, type, value, files } = e.target;
@@ -120,7 +117,6 @@ const Profile = () => {
     console.log("Payload being sent (file names only):", debugPayload);
 
     try {
-      const csrfToken = await fetchCSRFToken();
       await axios.post(
         `https://ontech-systems.onrender.com/api/create/profile/`,
         data,

@@ -15,7 +15,18 @@ import { useNavigate } from "react-router-dom";
 import "./material.css";
 import { cookies } from "./Cookie";
 // import { csrfToken } from "./FetchCsrfToken";
-
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 const EditProfile = () => {
   const [formData, setFormData] = useState({
     personal_details: "",
@@ -36,18 +47,7 @@ const EditProfile = () => {
   const token = localStorage.getItem("Token");
 
   const navigate = useNavigate();
-  async function fetchCSRFToken() {
-    try {
-      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-        withCredentials: true,
-      });
-      return cookies.get("csrftoken");
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
-
+ 
   useEffect(() => {
     // Get userId and token from localStorage
     if (!userId) {
@@ -66,7 +66,7 @@ const EditProfile = () => {
       setIsLoading(true);
       if (!token) return;
       try {
-        const csrfToken = await fetchCSRFToken();
+        
         const response = await axios.put(
           `https://ontech-systems.onrender.com/api/my/profile/`,
 
@@ -168,7 +168,7 @@ const EditProfile = () => {
     data.append("user", userId);
 
     try {
-      const csrfToken = await fetchCSRFToken();
+      
       const profileId = localStorage.getItem("ProfileId");
       await axios.put(
         `https://ontech-systems.onrender.com/api/my/profile/${profileId}/`,

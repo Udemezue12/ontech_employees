@@ -10,29 +10,26 @@ import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { cookies } from "./Cookie";
-
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 function OverallAdminRegister() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  async function fetchCSRFToken() {
-    try {
-      await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true, // ensure cookies are sent
-        }
-      );
-      return cookies.get("csrftoken"); // Fetch it after Django sets it
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
+  
 
   const submit = async (formData) => {
-    const csrfToken = await fetchCSRFToken();
 
     setError("");
     setMessage("");
@@ -64,7 +61,7 @@ function OverallAdminRegister() {
         payload,
         {
           headers: {
-            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+            "X-CSRFToken": csrfToken, 
           },
           withCredentials: true,
         }

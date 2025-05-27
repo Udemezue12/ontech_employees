@@ -12,7 +12,18 @@ import {
 import axios from "axios";
 import { cookies } from "./Cookie";
 import "./material.css";
-
+export const fetchCSRFToken = async () => {
+  try {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      withCredentials: true,
+    });
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
+    return null;
+  }
+};
+const csrfToken = await fetchCSRFToken();
 const CompanyProfileForm = () => {
   const userRole = localStorage.getItem("UserRole");
 
@@ -39,20 +50,7 @@ const CompanyProfileForm = () => {
     setFormData((prev) => ({ ...prev, company_logo: e.target.files[0] }));
   };
 
-  async function fetchCSRFToken() {
-    try {
-       await axios.get(
-        "https://ontech-systems.onrender.com/api/csrf/",
-        {
-          withCredentials: true,
-        }
-      );
-      return cookies.get("csrftoken");
-    } catch (err) {
-      console.error("Failed to get CSRF token", err);
-      return null;
-    }
-  }
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -64,7 +62,7 @@ const CompanyProfileForm = () => {
       if (value) payload.append(key, value);
     });
 
-    const csrfToken = await fetchCSRFToken();
+    
 
     try {
       await axios.post(
