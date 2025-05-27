@@ -45,7 +45,7 @@ const Profile = () => {
 
   const userId = localStorage.getItem("UserId");
   const token = localStorage.getItem("Token");
-  const [ setCsrfToken] = useState("");
+
 
   const handleInputChange = (e) => {
     const { name, type, value, files } = e.target;
@@ -117,7 +117,7 @@ const Profile = () => {
 
     console.log("Payload being sent (file names only):", debugPayload);
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken)
+  
 
     try {
       await axios.post(

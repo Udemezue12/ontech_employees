@@ -26,7 +26,6 @@ export const fetchCSRFToken = async () => {
 // const csrfToken = await fetchCSRFToken();
 const CompanyProfileForm = () => {
   const userRole = localStorage.getItem("UserRole");
-  const [setCsrfToken] = useState("");
 
   const [formData, setFormData] = useState({
     company_name: "",
@@ -62,7 +61,7 @@ const CompanyProfileForm = () => {
       if (value) payload.append(key, value);
     });
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken);
+
     console.log("CSRF Token:", csrfToken);
 
     try {

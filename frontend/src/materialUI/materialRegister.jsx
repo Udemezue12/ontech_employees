@@ -28,7 +28,6 @@ function MaterialRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [setCsrfToken] = useState("");
 
   const submit = async (formData) => {
     setError("");
@@ -56,7 +55,6 @@ function MaterialRegister() {
 
       console.log("Payload being sent:", payload);
       const csrfToken = await fetchCSRFToken();
-      setCsrfToken(csrfToken);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/register/",

@@ -27,7 +27,7 @@ function MaterialHrRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [setCsrfToken] = useState("")
+ 
   
   const submit = async (formData) => {
     console.log("Form Data Submitted:", formData);
@@ -56,7 +56,7 @@ function MaterialHrRegister() {
         department: "Human Resources",
       };
       const csrfToken = await fetchCSRFToken();
-      setCsrfToken(csrfToken)
+      
       console.log("Payload being sent:", payload);
       console.log("CSRF Token:", csrfToken);
 

@@ -22,8 +22,7 @@ const RegisterFingerprint = () => {
 
   const userId = localStorage.getItem("UserId");
   const token = localStorage.getItem("Token");
-  const [setcsrfToken] = useState("");
-
+  //
   useEffect(() => {
     const loadFingerprintAndCheck = async () => {
       try {
@@ -33,7 +32,7 @@ const RegisterFingerprint = () => {
         setDeviceFingerprint(fingerprint);
         const csrfToken = await fetchCSRFToken();
 
-        setcsrfToken(csrfToken);
+        //
 
         const res = await axios.get(
           "https://ontech-systems.onrender.com/api/create/fingerprint/",
@@ -55,7 +54,7 @@ const RegisterFingerprint = () => {
     };
 
     loadFingerprintAndCheck();
-  }, [token, setcsrfToken]);
+  }, [token]);
 
   // async function fetchCSRFToken() {
   //   try {
@@ -101,7 +100,6 @@ const RegisterFingerprint = () => {
         },
       });
       const csrfToken = await fetchCSRFToken();
-      setcsrfToken(csrfToken);
 
       const credentialId = credential.id;
       const attestationObject = credential.response.attestationObject;

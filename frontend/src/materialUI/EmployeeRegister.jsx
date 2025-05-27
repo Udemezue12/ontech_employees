@@ -26,7 +26,6 @@ function MaterialEmployeeRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [setCsrfToken] = useState("");
 
   const submit = async (formData) => {
     setError("");
@@ -41,7 +40,6 @@ function MaterialEmployeeRegister() {
       setMessage(validation.message);
     }
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken);
 
     try {
       const payload = {

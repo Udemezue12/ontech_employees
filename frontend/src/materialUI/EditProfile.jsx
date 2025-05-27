@@ -46,7 +46,6 @@ const EditProfile = () => {
   const token = localStorage.getItem("Token");
 
   const navigate = useNavigate();
-  const [setCsrfToken] = useState("");
 
   useEffect(() => {
     // Get userId and token from localStorage
@@ -64,12 +63,11 @@ const EditProfile = () => {
 
     const fetchProfile = async () => {
       const csrfToken = await fetchCSRFToken();
-      setCsrfToken(csrfToken);
+
       console.log("CSRF Token:", csrfToken);
       setIsLoading(true);
       if (!token) return;
       try {
-        
         const response = await axios.put(
           `https://ontech-systems.onrender.com/api/my/profile/`,
 
@@ -101,7 +99,7 @@ const EditProfile = () => {
     };
 
     fetchProfile();
-  }, [userId, token, setCsrfToken]);
+  }, [userId, token]);
 
   const handleInputChange = (e) => {
     const { name, type, value, files } = e.target;
@@ -170,7 +168,7 @@ const EditProfile = () => {
     });
     data.append("user", userId);
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken);
+
     console.log("CSRF Token:", csrfToken);
 
     try {

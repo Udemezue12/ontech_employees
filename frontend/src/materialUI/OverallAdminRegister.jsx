@@ -26,7 +26,7 @@ function OverallAdminRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [ setCsrfToken] = useState("");
+
 
 
   const submit = async (formData) => {
@@ -53,7 +53,7 @@ function OverallAdminRegister() {
         department: formData.department,
       };
       const csrfToken = await fetchCSRFToken();
-      setCsrfToken(csrfToken)
+    
       console.log("Payload being sent:", payload);
 
       await axios.post(

@@ -19,7 +19,7 @@ export const fetchCSRFToken = async () => {
 function FingerprintLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [setCsrfToken] = useState("")
+  
 
   const base64urlToBuffer = (base64url) => {
     const padding = "=".repeat((4 - (base64url.length % 4)) % 4);
@@ -34,7 +34,7 @@ function FingerprintLogin() {
 
   const handleFingerprintLogin = async () => {
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken);
+
     console.log("CSRF Token:", csrfToken);
 
     setError("");
