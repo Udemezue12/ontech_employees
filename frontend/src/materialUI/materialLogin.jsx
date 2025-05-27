@@ -320,7 +320,7 @@ import { cookies } from "./Cookie";
 export default function MaterialLogin() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
-  const [setCsrfToken] = useState("")
+  // const [setCsrfToken] = useState("")
   async function fetchCSRFToken() {
     try {
       // await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
@@ -336,7 +336,7 @@ export default function MaterialLogin() {
 
   const submit = async (data) => {
     const csrfToken = await fetchCSRFToken();
-    setCsrfToken(csrfToken)
+    // setCsrfToken(csrfToken)
 
     try {
       // 1. Knox Login
