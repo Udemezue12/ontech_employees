@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Box } from "@mui/material";
+
 import { Link, useNavigate } from "react-router-dom";
-import ButtonFields from "./forms/ButtonField";
+import BootstrapButtonFields from "./forms/BootstrapButtonFields";
 import { cookies } from "./Cookie";
 export const fetchCSRFToken = async () => {
   try {
@@ -19,7 +19,6 @@ export const fetchCSRFToken = async () => {
 function FingerprintLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
 
   const base64urlToBuffer = (base64url) => {
     const padding = "=".repeat((4 - (base64url.length % 4)) % 4);
@@ -94,29 +93,32 @@ function FingerprintLogin() {
   };
 
   return (
-    <div className="background">
-      <Box className="whiteBox">
-        <Box className="itemBox"></Box>
-
+    <div className="container-fluid fringer min-vh-100 d-flex justify-content-center align-items-center">
+      <div
+        className="card shadow-lg p-4 rounded-4 border-0 w-100"
+        style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
+      >
         {error && (
-          <Box className="itemBox">
+          <div className="mb-3">
             <p style={{ color: "red" }}>{error}</p>
-          </Box>
+          </div>
         )}
 
-        <Box className="itemBox">
-          <ButtonFields
+        <div className="d-grid mb-3">
+          <BootstrapButtonFields
+            onClick={handleFingerprintLogin}
             label="Authenticate Passkey"
             type="button"
-            onClick={handleFingerprintLogin}
+            className="btn btn-primary rounded-pill"
           />
-        </Box>
-        <Box className="itemBox">
-          <Link to="/dasboard" className="link">
-            Login in Manually Here
-          </Link>
-        </Box>
-      </Box>
+        </div>
+        <div className="text-center">
+          <small>
+          <Link to="/login" className="text-decoration-non">
+            Login Manually
+          </Link></small>
+        </div>
+      </div>
     </div>
   );
 }
