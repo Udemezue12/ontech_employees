@@ -242,11 +242,11 @@ class GetCRSFToken(APIView):
 
     def get(self, request, format=None):
         try:
-            csrf_token = get_token(request)
-            logger.debug("Setting CSRF cookie for request: %s, token: %s", request, csrf_token)
+            csrfToken = get_token(request)
+            logger.debug("Setting CSRF cookie for request: %s, token: %s", request, csrfToken)
             return Response({
                 'success': 'CSRF cookie set',
-                'csrfToken': csrf_token
+                'csrfToken': csrfToken
             })
         except Exception as e:
             logger.error("Error setting CSRF cookie: %s", str(e))

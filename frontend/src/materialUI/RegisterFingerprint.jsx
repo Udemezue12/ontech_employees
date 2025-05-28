@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Typography, Button } from "@mui/material";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { cookies } from "./Cookie";
+// import { cookies } from "./Cookie";
 import "./material.css";
 export const fetchCSRFToken = async () => {
   try {
