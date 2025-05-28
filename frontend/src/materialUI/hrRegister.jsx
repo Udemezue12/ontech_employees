@@ -9,35 +9,49 @@ import { useForm } from "react-hook-form";
 
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
-
+import {cookies} from './Cookie'
 export const fetchCSRFToken = async () => {
   try {
-    const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       withCredentials: true,
-      headers: {
-        "Accept": "application/json",
-      }
+       headers: {
+          Accept: "application/json",
+        },
     });
-
-    if (
-      typeof response.data === "string" &&
-      response.data.includes("<!doctype html")
-    ) {
-      throw new Error("Received HTML instead of JSON");
-    }
-
-    const csrfToken = response.data.csrfToken;
-
-    if (!csrfToken) {
-      throw new Error("CSRF token not found in response");
-    }
-
-    return csrfToken;
-  } catch (error) {
-    console.error("Failed to fetch CSRF token:", error);
+    return cookies.get("csrftoken");
+  } catch (err) {
+    console.error("CSRF fetch error:", err);
     return null;
   }
 };
+// export const fetchCSRFToken = async () => {
+//   try {
+//     const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+//       withCredentials: true,
+//       headers: {
+//         "Accept": "application/json",
+//       }
+//     });
+
+//     if (
+//       typeof response.data === "string" &&
+//       response.data.includes("<!doctype html")
+//     ) {
+//       throw new Error("Received HTML instead of JSON");
+//     }
+
+//     const csrfToken = response.data.csrfToken;
+
+//     if (!csrfToken) {
+//       throw new Error("CSRF token not found in response");
+//     }
+
+//     return csrfToken;
+//   } catch (error) {
+//     console.error("Failed to fetch CSRF token:", error);
+//     return null;
+//   }
+// };
 
 function MaterialHrRegister() {
   const navigate = useNavigate();
