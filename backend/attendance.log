@@ -12418,3 +12418,59 @@ INFO 2025-05-28 11:58:34,685 viewsets  Authentication successful for user: udeme
 INFO 2025-05-28 11:58:34,722 viewsets  User udemezue0009@gmail.com logged in to session
 INFO 2025-05-28 11:58:34,799 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
 INFO 2025-05-28 12:15:34,637 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 12:17:33,651 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: XekCFn1GUZRKDvVwiYtoR4NcYXYOd4YOQLcBfXDQfSTxKxgMJeO8ZaIgwPKc9rqC
+INFO 2025-05-28 12:17:33,711 viewsets  Login attempt received
+DEBUG 2025-05-28 12:17:34,533 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 12:17:35,246 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 12:17:35,265 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 12:17:35,297 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 12:18:50,801 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: KQdhDem8EmbItExgnnWsMbRPF6lDtARECfuZ5FcxiHHIljNaT9BUFW7KZN0kXafQ
+INFO 2025-05-28 12:18:51,159 viewsets  Login attempt received
+DEBUG 2025-05-28 12:18:51,997 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 12:18:52,731 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 12:18:52,798 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 12:18:52,822 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 12:25:04,422 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: uOyDpG77erYLveWEhHirvQ37W3FvaWKIuALuJWOI2sJnFV9vDootcy1N5qO8CsCd
+DEBUG 2025-05-28 13:18:16,970 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: 3RXht6pdIvIpEwTZaZQG8bnj9qPfl4NqHoiLD9wcmEOMEtHvU8aBY8uN1FBfBNcl
+INFO 2025-05-28 13:18:17,384 viewsets  Login attempt received
+DEBUG 2025-05-28 13:18:18,122 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 13:18:18,898 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 13:18:18,925 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 13:18:18,972 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 13:18:43,071 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: vfPijBxn7LFDZ0FlF5R5notL13hlZP86OoBaRRan4JWV7ec1Bo2w6fEZlgPOBWTH
+INFO 2025-05-28 13:18:43,106 viewsets  Login attempt received
+DEBUG 2025-05-28 13:18:43,896 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 13:18:44,645 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 13:18:44,666 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 13:18:44,684 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 13:25:37,163 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: fKHCxnY2maq6lv4KPVt7uy4Q2mx94mG7blPJ3zl5zIaONjj7MIiZWAA0I4Bz4peN
+INFO 2025-05-28 13:25:37,872 viewsets  Login attempt received
+DEBUG 2025-05-28 13:25:38,647 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 13:25:39,424 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 13:25:39,446 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 13:25:39,479 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 13:27:10,800 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: xBW6VDlS3TlobH90RHHytL5nIGBm4rRZLRLGfkHay7kkXTp0eDHqkj4zwLN2mqkJ
+INFO 2025-05-28 17:19:32,939 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 17:29:04,255 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: 8AR5zoys0KQUeLOuiuUgzZz7eupSwGNhGlb5HH1YBHAZRxSQmldw42sNYmOwb9SG
+INFO 2025-05-28 17:29:04,623 viewsets  Login attempt received
+DEBUG 2025-05-28 17:29:05,360 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 17:29:06,061 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 17:29:06,079 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 17:29:06,103 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 17:35:49,619 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: Q7s1rlCJyiptosbAahsBw4akLaZK6NrhMAY7V8l2i6cmnWnYvVqccEICkopD76UW
+INFO 2025-05-28 17:35:50,282 viewsets  Login attempt received
+DEBUG 2025-05-28 17:35:51,007 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 17:35:51,942 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 17:35:51,962 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 17:35:52,001 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+DEBUG 2025-05-28 18:03:57,240 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: i3IlLDJpCTepaneslCcozMRTxS7ldVspnfBusbNmYjikkEMUJ03KBkJ0COrOdlrV
+DEBUG 2025-05-28 18:03:57,252 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: HAETv4eoCVvEUTROKV3zDlsLOjjv4krKne2mFUIqDJREM6D2lpuN6EN4HyNDbfCY
+DEBUG 2025-05-28 18:03:57,268 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: eybMoncf28t7r3nxnT0Za5QBIyoBnRrAUczfydGh3WP7jg9LYnrdDobUBNSJuMCO
+DEBUG 2025-05-28 18:03:57,303 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: KgHQmKPEEMzqFcQTwFALb3nF5nNAdQMeqU5jwAjGFAVqxpC7791ZEmIYYChIkLXs
+DEBUG 2025-05-28 18:06:25,963 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: zbqad7J7dXtvzNAggz5CSQFgIRRrnC9efPODnXd9eLPvr0muR3wQl90zB6lzuxks
+DEBUG 2025-05-28 18:28:23,051 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: Dt64Dm6iMgN9kasGwosjZcHryK0QyUETj7uxNcAkN499cneU7STxsv2KrZuYFPP7
+INFO 2025-05-28 18:28:23,081 viewsets  Login attempt received
+DEBUG 2025-05-28 18:28:23,758 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 18:28:24,419 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 18:28:24,454 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 18:28:24,496 viewsets  Token generated and user data serialized for udemezue0009@gmail.com

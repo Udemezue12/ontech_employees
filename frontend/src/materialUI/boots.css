@@ -1,0 +1,32 @@
+/* Dark mode */
+body.dark-mode {
+  background-color: #121212 !important;
+  color: #fff !important;
+}
+
+.dark-mode .card {
+  background-color: #1f1f1f !important;
+  color: #fff;
+  border-color: #333 !important;
+}
+
+.dark-mode a,
+.dark-mode .btn-outline-primary {
+  color: #fff !important;
+}
+.finger{
+  background-image: linear-gradient(120deg,rgb(94, 108, 141) 0%, #f68084 100%);
+}
+/* Hover effects and smooth transitions */
+.card {
+  transition: all 0.3s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+/* Illustration sizing */
+.onboarding-illustration {
+  max-height: 250px;
+}

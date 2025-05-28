@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import TextFields from "./forms/TextField";
-import PasswordFields from "./forms/PasswordField";
-import ButtonFields from "./forms/ButtonField";
+import BootstrapTextFields from "./forms/BootstrapTextFields";
+import BootstrapPasswordFields from "./forms/BootstrapPasswordFields";
+import BootstrapButtonFields from "./forms/BootstrapButtonFields";
+import BootstrapSelect from "./forms/BootstrapDropDown";
+import './bootstrap_style.css';
 import { Link, useNavigate } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
-import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+
 
 
 export const fetchCSRFToken = async () => {
@@ -106,127 +107,107 @@ function ManagerRegister() {
     }
   };
 
-  return (
-    <div className="backgrounder">
+ return (
+  <div className="container-fluid fringer min-vh-100 d-flex justify-content-center align-items-center">
+    <div
+      className="card shadow-lg p-4 rounded-4 border-0 w-100"
+      style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
+    >
       <form onSubmit={handleSubmit(submit)}>
-        <Box className="whiteBox">
-          <Box className="itemBox">
-            <Box className="title">REGISTER</Box>
-          </Box>
+        <h4 className="text-center fw-bold mb-4">Login for Auth App</h4>
 
-          {error && (
-            <Box className="itemBox">
-              <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
-            </Box>
-          )}
+        {error && (
+          <div className="alert alert-danger text-center py-2" role="alert">
+            {error}
+          </div>
+        )}
 
-          {message && (
-            <Box className="itemBox">
-              <p style={{ color: "green", fontWeight: "bold" }}>{message}</p>
-            </Box>
-          )}
+        {message && (
+          <div className="alert alert-success text-center py-2" role="alert">
+            {message}
+          </div>
+        )}
 
-          <Box className="itemBox">
-            <TextFields
-              label="Email"
-              name="email"
-              control={control}
-              defaultValue=""
-            />
-          </Box>
+        <div className="mb-3">
+          <BootstrapTextFields
+            label="Email"
+            name="email"
+            control={control}
+            placeholder="Enter your email"
+          />
+        </div>
 
-          <Box className="itemBox">
-            <TextFields
-              label="Username"
-              name="username"
-              control={control}
-              defaultValue=""
-            />
-          </Box>
+        <div className="mb-3">
+          <BootstrapTextFields
+            label="Username"
+            name="username"
+            control={control}
+            placeholder="Enter your username"
+          />
+        </div>
 
-          <Box className="itemBox">
-            <PasswordFields
-              label="Password"
-              name="password"
-              control={control}
-            />
-          </Box>
+        <div className="mb-3">
+          <BootstrapPasswordFields
+            label="Password"
+            name="password"
+            control={control}
+            placeholder="Enter your password"
+          />
+        </div>
 
-          <Box className="itemBox">
-            <PasswordFields
-              label="Confirm Password"
-              name="confirmPassword"
-              control={control}
-            />
-          </Box>
+        <div className="mb-3">
+          <BootstrapPasswordFields
+            label="Confirm Password"
+            name="confirmPassword"
+            control={control}
+          />
+        </div>
 
-          <Box className="itemBox">
-            <TextFields label="Name" name="name" control={control} />
-          </Box>
+        <div className="mb-3">
+          <BootstrapTextFields
+            label="Name"
+            name="name"
+            control={control}
+            placeholder="Enter your name"
+          />
+        </div>
 
-          <Box className="itemBox">
-            <TextFields
-              label="Phone Number"
-              name="phone_number"
-              control={control}
-            />
-          </Box>
+        <div className="mb-3">
+          <BootstrapTextFields
+            label="Phone Number"
+            name="phone_number"
+            control={control}
+            placeholder="Enter your phone number"
+          />
+        </div>
 
-          {/* <Box className="itemBox">
-                <FormControl fullWidth>
-                  <InputLabel id="role-label">Role</InputLabel>
-                  <Controller
-                    name="role"
-                    control={control}
-                    defaultValue="" 
-                    render={({ field }) => (
-                      <Select labelId="role-label" label="Role" {...field}>
-                        <MenuItem value="Hr_Manager">HR Manager</MenuItem>{" "}
-                        <MenuItem value="Manager">Manager</MenuItem>
-                        <MenuItem value="Employee">Employee</MenuItem>
-                        <MenuItem value="Overall_Admin">Overall Admin</MenuItem>
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              </Box> */}
-          <Box className="itemBox">
-            <FormControl fullWidth>
-              <InputLabel id="department-label">Department</InputLabel>
-              <Controller
-                name="department"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="department-label"
-                    label="Department"
-                    {...field}
-                  >
-                    <MenuItem value="Human Resources">Human Resources</MenuItem>{" "}
-                    {/* Updated value */}
-                    <MenuItem value="Engineering">Engineering</MenuItem>
-                    <MenuItem value="Sales">Sales</MenuItem>
-                    <MenuItem value="Marketing">Marketing</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
-          </Box>
+        <div className="mb-3">
+          <BootstrapSelect
+            label="Department"
+            name="department"
+            control={control}
+          />
+        </div>
 
-          <Box className="itemBox">
-            <ButtonFields label="Register" type="submit" />
-          </Box>
+        <div className="d-grid mb-3">
+          <BootstrapButtonFields
+            label="Login"
+            type="submit"
+            className="btn btn-primary rounded-pill"
+          />
+        </div>
 
-          <Box className="itemBox">
-            <Link to="/login" className="link">
+        <div className="text-center">
+          <small>
+            <Link to="/login" className="text-decoration-none">
               Already have an account?
             </Link>
-          </Box>
-        </Box>
+          </small>
+        </div>
       </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default ManagerRegister;

@@ -1,0 +1,7 @@
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.15);
+}
+.fringer{
+  background-image: linear-gradient(120deg,rgb(94, 108, 141) 0%, #f68084 100%);
+}

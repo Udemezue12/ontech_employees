@@ -1,169 +1,90 @@
-import React from "react";
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Button,
-  Grid,
-  IconButton,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import "./material.css";
+import "./boots.css"; // or your CSS file
 
-function MaterialHome() {
-  const [darkMode, setDarkMode] = React.useState(false);
+function HomePage() {
+  const [darkMode, setDarkMode] = useState(false);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    // Placeholder for context-based theme logic
-  };
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+  }, [darkMode]);
 
   return (
-    <div className="background">
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          px: 2,
-          py: 4,
-        }}
-      >
-        {/* Theme Toggle - Top Right */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: 20,
-            right: 20,
-          }}
-        >
-          <IconButton onClick={toggleTheme}>
-            {darkMode ? <DarkModeIcon /> : <LightModeIcon />}
-          </IconButton>
-        </Box>
+    <div className="container-fluid finger min-vh-100 d-flex flex-column justify-content-between px-3 py-5">
+      {/* Dark Mode Toggle */}
+      <div className="form-check form-switch position-absolute top-0 end-0 m-3">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          id="darkModeToggle"
+          onChange={() => setDarkMode(!darkMode)}
+          checked={darkMode}
+        />
+        <label className="form-check-label" htmlFor="darkModeToggle">
+          Dark Mode
+        </label>
+      </div>
 
-        {/* Main Content */}
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            mt: 4,
-            mb: 6,
-          }}
-        >
-          <Typography
-            variant="h4"
-            gutterBottom
-            sx={{ fontWeight: "bold", textAlign: "center" }}
-          >
-            Welcome to OnTech Employee Task and Management System
-          </Typography>
+      {/* Onboarding Illustration */}
+      <div className="text-center animate__animated animate__fadeInDown mb-4">
+      
 
-          <Typography
-            variant="body1"
-            sx={{
-              maxWidth: 700,
-              textAlign: "center",
-              mb: 6,
-              fontSize: "1.1rem",
-              lineHeight: 1.8,
-            }}
-          >
-            OnTech’s system is a secure and modern platform built for managing
-            employees, tracking daily attendance using biometric passkeys,
-            assigning tasks, overseeing project timelines, and maintaining
-            departmental records. Whether you're HR, a Manager, or an Employee —
-            this system provides streamlined tools to ensure efficiency,
-            accountability, and transparency across your organization.
-          </Typography>
+      </div>
 
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  boxShadow: 2,
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-                    Existing User
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 3 }}>
-                    Login securely using credentials or passkey to access
-                    your workspace.
-                  </Typography>
-                  <Button
-                    component={Link}
-                    to="/login"
-                    fullWidth
-                    variant="outlined"
-                    startIcon={<LoginIcon />}
-                  >
-                    Login
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
+      {/* Welcome Text */}
+      <div className="text-center animate__animated animate__fadeInUp mb-5">
+        <h1 className="fw-bold display-5 mb-3">
+          Welcome to OnTech Task & Employee Management System
+        </h1>
+        <p className="lead mx-auto" style={{ maxWidth: "900px" }}>
+          Manage your workforce, monitor attendance with biometrics, assign
+          tasks, and handle departments efficiently using OnTech’s unified
+          platform. Perfect for HR, Managers, and Employees alike.
+        </p>
+      </div>
 
-            <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  boxShadow: 2,
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-                    New Here?
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 3 }}>
-                    Join OnTech and start managing your tasks, employees, and
-                    department records today.
-                  </Typography>
-                  <Button
-                    component={Link}
-                    to="/register"
-                    fullWidth
-                    variant="outlined"
-                    startIcon={<PersonAddIcon />}
-                  >
-                    Register
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
+      {/* Cards */}
+      <div className="row g-4 justify-content-center animate__animated animate__fadeInUp">
+        {/* Login */}
+        <div className="col-12 col-md-5 col-lg-4">
+          <div className="card shadow-lg p-4 border-0 rounded-4 h-100">
+            <h5 className="fw-bold mb-2">Already Registered?</h5>
+            <p className="text-muted mb-4">
+              Log in securely with your credentials or biometric passkey.
+            </p>
+            <Link to="/login" className="btn btn-outline-primary w-100">
+              Login
+            </Link>
+          </div>
+        </div>
 
-        {/* Footer */}
-        <Box sx={{ textAlign: "center", py: 2, fontSize: "0.9rem" }}>
-          &copy; {new Date().getFullYear()} OnTech Corporation. All rights
-          reserved.
-        </Box>
-      </Box>
+        {/* Register */}
+        <div className="col-12 col-md-5 col-lg-4">
+          <div className="card shadow-lg p-4 border-0 rounded-4 h-100">
+            <h5 className="fw-bold mb-2">New Here?</h5>
+            <p className="text-muted mb-4">
+              Register now to join your team and start managing tasks.
+            </p>
+            <Link to="/register" className="btn btn-outline-primary w-100">
+              Register
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="text-center mt-5 pt-4 pb-2 small text-muted">
+        &copy; {new Date().getFullYear()} OnTech Corporation. All rights
+        reserved.
+      </footer>
     </div>
   );
 }
 
-export default MaterialHome;
+export default HomePage;
+
+
+
 
 export function MaterialAbout() {
   return (
