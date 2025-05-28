@@ -29,6 +29,7 @@ export default function MaterialLogin() {
   }
 
   const submit = async (data) => {
+    data.preventDefault()
     const csrfToken = await fetchCSRFToken();
   
 
