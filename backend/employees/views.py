@@ -366,7 +366,7 @@ def create_salary(request, user_id):
         messages.error(
             request, "error occured")
 
-        return redirect('create_salary')
+        return redirect('/dashboard')
 
 
 @login_required
@@ -450,7 +450,7 @@ def salary_list(request):
         messages.error(
             request, "error occured")
 
-        return redirect('create_salary')
+        return redirect('/dashboard')
 
 
 @login_required
@@ -509,7 +509,7 @@ def edit_salary(request, salary_id):
         messages.error(
             request, "An Error Occured")
 
-        return redirect('edit_salary')
+        return redirect('/dashboard')
 
 
 @login_required
@@ -559,7 +559,7 @@ def delete_salary(request, salary_id):
         messages.error(
             request, "error occured")
 
-        return redirect('delete_salary')
+        return redirect('/dashboard')
 
 
 # ///
@@ -638,7 +638,7 @@ def create_employee(request, user_id):
         messages.error(
             request, "An Error Occured")
 
-        return redirect('create_employee')
+        return redirect('/dashboard')
 
 
 @login_required
