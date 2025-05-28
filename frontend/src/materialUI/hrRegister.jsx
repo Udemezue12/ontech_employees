@@ -97,8 +97,8 @@ function MaterialHrRegister() {
       };
       const csrfToken = await fetchCSRFToken();
 
-      console.log("Payload being sent:", payload);
-      console.log("CSRF Token:", csrfToken);
+      // console.log("Payload being sent:", payload);
+      // console.log("CSRF Token:", csrfToken);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/hr_register/",

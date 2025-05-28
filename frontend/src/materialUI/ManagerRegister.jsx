@@ -95,7 +95,7 @@ function ManagerRegister() {
         department: formData.department,
       };
 
-      console.log("Payload being sent:", payload);
+      // console.log("Payload being sent:", payload);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/manager_register/",

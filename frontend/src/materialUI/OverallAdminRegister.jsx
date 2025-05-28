@@ -96,7 +96,7 @@ function OverallAdminRegister() {
       };
       const csrfToken = await fetchCSRFToken();
 
-      console.log("Payload being sent:", payload);
+      // console.log("Payload being sent:", payload);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/overallAdmin_register/",
