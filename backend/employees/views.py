@@ -1493,7 +1493,7 @@ def update_leave_balance(request, employee_id):
         messages.error(
             request, "An Error Occured")
 
-        return redirect('update_leave_balance')
+        return redirect('/dashboard')
 
 
 @login_required

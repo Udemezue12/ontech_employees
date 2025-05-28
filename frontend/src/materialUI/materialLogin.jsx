@@ -14,14 +14,14 @@ import { cookies } from "./Cookie";
 export default function MaterialLogin() {
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
-  // const [setCsrfToken] = useState("")
+  
   async function fetchCSRFToken() {
     try {
-      // await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+      
       await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-        withCredentials: true, // ensure cookies are sent
+        withCredentials: true, 
       });
-      return cookies.get("csrftoken"); // Fetch it after Django sets it
+      return cookies.get("csrftoken"); 
     } catch (err) {
       console.error("Failed to get CSRF token", err);
       return null;
@@ -30,10 +30,10 @@ export default function MaterialLogin() {
 
   const submit = async (data) => {
     const csrfToken = await fetchCSRFToken();
-    // setCsrfToken(csrfToken)
+  
 
     try {
-      // 1. Knox Login
+     
       const response = await axios.post(
         "https://ontech-systems.onrender.com/api/login/",
         {
@@ -44,7 +44,7 @@ export default function MaterialLogin() {
           headers: {
             "X-CSRFToken": csrfToken,
           },
-          withCredentials: true, // include cookies for CSRF
+          withCredentials: true, 
         }
       );
 
@@ -64,10 +64,10 @@ export default function MaterialLogin() {
 
       console.log("Login successful:", response.data);
 
-      // ✅ 3. Session Login for @login_required views
+      
       await axios.post(
         "https://ontech-systems.onrender.com/api/session-login/",
-        // "https://ontech-systems.onrender.com/api/session-login/",
+        
         {
           email: data.email,
           password: data.password,
@@ -77,11 +77,11 @@ export default function MaterialLogin() {
             "X-CSRFToken": csrfToken,
           },
 
-          withCredentials: true, // send/receive cookies (sessionid)
+          withCredentials: true, 
         }
       );
 
-      // 4. Navigate to homepage
+      
       navigate("/dashboard", { replace: true });
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);

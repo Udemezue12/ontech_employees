@@ -12382,3 +12382,5 @@ INFO 2025-05-28 07:06:32,444 autoreload C:\Users\DELL\Documents\payroll_system\b
 INFO 2025-05-28 07:06:34,290 autoreload Watching for file changes with StatReloader
 INFO 2025-05-28 07:06:42,061 autoreload C:\Users\DELL\Documents\payroll_system\backend\employees\viewsets.py changed, reloading.
 INFO 2025-05-28 07:06:43,779 autoreload Watching for file changes with StatReloader
+INFO 2025-05-28 08:16:35,662 autoreload C:\Users\DELL\Documents\payroll_system\backend\employees\views.py changed, reloading.
+INFO 2025-05-28 08:16:48,540 autoreload Watching for file changes with StatReloader
