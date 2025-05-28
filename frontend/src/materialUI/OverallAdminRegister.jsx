@@ -9,15 +9,32 @@ import { useForm, Controller } from "react-hook-form";
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
-import { cookies } from "./Cookie";
+
 export const fetchCSRFToken = async () => {
   try {
-    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+    const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       withCredentials: true,
+      headers: {
+        "Accept": "application/json",
+      }
     });
-    return cookies.get("csrftoken");
-  } catch (err) {
-    console.error("CSRF fetch error:", err);
+
+    if (
+      typeof response.data === "string" &&
+      response.data.includes("<!doctype html")
+    ) {
+      throw new Error("Received HTML instead of JSON");
+    }
+
+    const csrfToken = response.data.csrfToken;
+
+    if (!csrfToken) {
+      throw new Error("CSRF token not found in response");
+    }
+
+    return csrfToken;
+  } catch (error) {
+    console.error("Failed to fetch CSRF token:", error);
     return null;
   }
 };

@@ -12394,3 +12394,27 @@ INFO 2025-05-28 08:21:31,979 autoreload C:\Users\DELL\Documents\payroll_system\b
 INFO 2025-05-28 08:21:41,003 autoreload Watching for file changes with StatReloader
 INFO 2025-05-28 08:22:39,425 autoreload C:\Users\DELL\Documents\payroll_system\backend\employees\views.py changed, reloading.
 INFO 2025-05-28 08:22:46,560 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 11:18:16,660 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: AvhVBRFA6WmhAeNkTGonA4xINr2Z45hpBjUOdIglTT66ExCmf4WZdoUOFgDplbDx
+DEBUG 2025-05-28 11:18:16,678 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: 5gwZi4YitSq1fNq4hwKbBB7sXRGk0ejO649SUVz3gPaQj6f6DUiNeVuyPGhKhkFW
+DEBUG 2025-05-28 11:18:16,845 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: DiLjgm7ArmkTkaoEAwoN3v5PKiXWbksHE6ocSdIlej4IotdGWUWpGPsVC7ymsqOP
+DEBUG 2025-05-28 11:18:17,433 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: ykVO9PolNP9S847vX1E6MPK1Zrk07Pi3z8yHLGZ6AMTHcnWxjpcIp977RgVqoVEb
+DEBUG 2025-05-28 11:18:28,317 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: rDl6YQb0EUb84zVKfbxLoSjXyEVnf8E3srYZAHMLrRVX8SKMBz5n1cG3qtwNwe0b
+DEBUG 2025-05-28 11:18:28,321 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: f0wrJeoiDB9hhXvevKFMEzBrhyPj5YpugO9kl5Z3qyT6lgkgR8dohTYx9nqJm4LC
+DEBUG 2025-05-28 11:18:28,344 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: j0EltyVEF7AeMVny3hI1zZmPacpJC9PNkOhe5pwps4k3QecApFgDcjJV2109TfbV
+DEBUG 2025-05-28 11:18:28,406 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: NRELgduWMR8m9kuqmH04I1H0Pr3riVDdOFhES45HzOSbdDjsI5yGll46HgERz1Zl
+DEBUG 2025-05-28 11:22:14,526 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: zEWBpsjtdrRlOoStjZTpjLHppxutfc7OAszu1jUe0oBaSHHvFnr1W54vhm5TwitW
+DEBUG 2025-05-28 11:26:00,756 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: IRgSPrHJetfdOCzKC8dETmaJ6U6cTJuLT2aXbosZMcSbNHY4NKW9lMTCENHm6KCf
+INFO 2025-05-28 11:52:59,688 autoreload C:\Users\DELL\Documents\payroll_system\backend\employees\viewsets.py changed, reloading.
+INFO 2025-05-28 11:53:13,091 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 11:54:10,048 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: K05pMnfPiWFhzs8RtG1tGG9cXUwyGfVBx3LW7hWKDQj2MDEpCpDOAG5TEKhTnomq
+INFO 2025-05-28 11:55:31,504 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 11:55:33,919 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: 1Ede1N6ks6HkJMA1P1SHyWKbcIklw7xbdYzK2ViTjDbrNkqY4N8CFCkOq6NaKu7r
+INFO 2025-05-28 11:56:58,442 autoreload C:\Users\DELL\Documents\payroll_system\backend\employees\viewsets.py changed, reloading.
+INFO 2025-05-28 11:57:18,861 autoreload Watching for file changes with StatReloader
+DEBUG 2025-05-28 11:58:30,932 viewsets Setting CSRF cookie for request: <rest_framework.request.Request: GET '/api/csrf/'>, token: h7eQfLJXxLsNhxKDmDcflpYzugx9VaN1xAvzVvfzIxloVyXJ1nkOUMqT8ytAzf95
+INFO 2025-05-28 11:58:30,984 viewsets  Login attempt received
+DEBUG 2025-05-28 11:58:32,969 viewsets  Authenticating user with email: udemezue0009@gmail.com
+INFO 2025-05-28 11:58:34,685 viewsets  Authentication successful for user: udemezue0009@gmail.com
+INFO 2025-05-28 11:58:34,722 viewsets  User udemezue0009@gmail.com logged in to session
+INFO 2025-05-28 11:58:34,799 viewsets  Token generated and user data serialized for udemezue0009@gmail.com
+INFO 2025-05-28 12:15:34,637 autoreload Watching for file changes with StatReloader

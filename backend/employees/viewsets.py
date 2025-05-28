@@ -181,32 +181,43 @@ class LoginViewSet(viewsets.ViewSet):
     serializer_class = LoginSerializer
 
     def create(self, request):
+        logger.info(" Login attempt received")
+
         try:
-
             serializer = self.serializer_class(data=request.data)
-            if serializer.is_valid():
-                email = serializer.validated_data['email']
-                password = serializer.validated_data['password']
-                user = authenticate(request, email=email, password=password)
 
-                if user:
-                    # 🔐 Log the user into the Django session
-                    # ✅ This sets request.user and session
-                    django_login(request, user)
-
-                    _, token = AuthToken.objects.create(user)
-                    user_data = UserDetailSerializer(user).data
-
-                    return Response({
-                        'user': user_data,
-                        'token': token
-                    })
-                else:
-                    return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-            else:
+            if not serializer.is_valid():
+                logger.warning(f" Invalid login data: {serializer.errors}")
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
+            logger.debug(f" Authenticating user with email: {email}")
+
+            user = authenticate(request, email=email, password=password)
+
+            if user:
+                logger.info(f" Authentication successful for user: {user.email}")
+
+                django_login(request, user)
+                logger.info(f" User {user.email} logged in to session")
+
+                _, token = AuthToken.objects.create(user)
+                user_data = UserDetailSerializer(user).data
+
+                logger.info(f" Token generated and user data serialized for {user.email}")
+
+                return Response({
+                    'user': user_data,
+                    'token': token
+                })
+
+            else:
+                logger.warning(f" Invalid credentials for email: {email}")
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
         except Exception as e:
-            logger.error(f"Error: {e}")
+            logger.error(f" Unexpected error during login: {str(e)}", exc_info=True)
             return JsonResponse({'error': str(e)}, status=500)
 
 
