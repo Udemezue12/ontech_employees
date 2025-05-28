@@ -9,13 +9,18 @@ export const fetchCSRFToken = async () => {
     const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       withCredentials: true,
     });
-    console.log("CSRF endpoint response:", response.data); // Debug response
-    const csrfToken = cookies.get("csrftoken");
+    console.log("CSRF endpoint response:", response.data);
+    console.log("CSRF response headers:", response.headers);
+    if (typeof response.data === 'string' && response.data.includes('<!doctype html')) {
+      console.error("Received HTML response instead of JSON from /api/csrf/");
+      throw new Error("Invalid response from CSRF endpoint");
+    }
+    const csrfToken = response.data.csrfToken || cookies.get("csrftoken");
     if (!csrfToken) {
-      console.error("CSRF token not found in cookies after fetching.");
+      console.error("CSRF token not found in response or cookies.");
       throw new Error("CSRF token not found");
     }
-    console.log("Fetched CSRF Token:", csrfToken); // Debug token
+    console.log("Fetched CSRF Token:", csrfToken);
     return csrfToken;
   } catch (err) {
     console.error("CSRF fetch error:", err);
@@ -87,7 +92,7 @@ const RegisterFingerprint = () => {
   try {
     const credential = await navigator.credentials.create({
       publicKey: {
-        rp: { name: "Astro", id: "ontech-systems.onrender.com" }, // Match WEBAUTHN_RP_ID
+        rp: { name: "Astro", id: "ontech-systems.onrender.com" },
         user: {
           id: new TextEncoder().encode(userId.toString()),
           name: userId,
@@ -118,7 +123,7 @@ const RegisterFingerprint = () => {
       String.fromCharCode(...new Uint8Array(attestationObject))
     );
 
-    console.log("Sending POST with CSRF Token:", csrfToken); // Debug token
+    console.log("Sending POST with CSRF Token:", csrfToken);
     const response = await axios.post(
       "https://ontech-systems.onrender.com/api/create/fingerprint/",
       {
@@ -140,7 +145,7 @@ const RegisterFingerprint = () => {
     window.location.reload();
   } catch (error) {
     console.error("Error creating Passkey:", error);
-    if (error.message === "Failed to fetch CSRF token") {
+    if (error.message === "Failed to fetch CSRF token" || error.message === "Invalid response from CSRF endpoint") {
       alert("Failed to fetch CSRF token. Please refresh and try again.");
     } else if (error.response && error.response.status === 403) {
       alert("CSRF token error. Please refresh and try again.");
