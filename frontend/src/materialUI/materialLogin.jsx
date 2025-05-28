@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -89,7 +88,7 @@ const MaterialLogin = () => {
         style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h4 className="text-center fw-bold mb-4">Login for Auth App</h4>
+          <h4 className="text-center fw-bold mb-4">LOGIN</h4>
 
           {/* Email Field */}
           <div className="mb-3">

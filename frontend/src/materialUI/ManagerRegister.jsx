@@ -3,27 +3,27 @@ import BootstrapTextFields from "./forms/BootstrapTextFields";
 import BootstrapPasswordFields from "./forms/BootstrapPasswordFields";
 import BootstrapButtonFields from "./forms/BootstrapButtonFields";
 import BootstrapSelect from "./forms/BootstrapDropDown";
-import './bootstrap_style.css';
+import "./bootstrap_style.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { validateRegisterForm } from "./formValidators";
 import axios from "axios";
 
-import {cookies} from './Cookie'
-export const fetchCSRFToken = async () => {
-  try {
-    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-      withCredentials: true,
-       headers: {
-          Accept: "application/json",
-        },
-    });
-    return cookies.get("csrftoken");
-  } catch (err) {
-    console.error("CSRF fetch error:", err);
-    return null;
-  }
-};
+import { cookies } from "./Cookie";
+// export const fetchCSRFToken = async () => {
+//   try {
+//     await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+//       withCredentials: true,
+//       headers: {
+//         Accept: "application/json",
+//       },
+//     });
+//     return cookies.get("csrftoken");
+//   } catch (err) {
+//     console.error("CSRF fetch error:", err);
+//     return null;
+//   }
+// };
 
 // export const fetchCSRFToken = async () => {
 //   try {
@@ -59,8 +59,17 @@ function ManagerRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
-
+  async function fetchCSRFToken() {
+    try {
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true,
+      });
+      return cookies.get("csrftoken");
+    } catch (err) {
+      console.error("Failed to get CSRF token", err);
+      return null;
+    }
+  }
   const submit = async (formData) => {
     setError("");
     setMessage("");
@@ -74,7 +83,7 @@ function ManagerRegister() {
       setMessage(validation.message);
     }
     const csrfToken = await fetchCSRFToken();
-    
+
     try {
       const payload = {
         username: formData.username,
@@ -121,107 +130,107 @@ function ManagerRegister() {
     }
   };
 
- return (
-  <div className="container-fluid fringer min-vh-100 d-flex justify-content-center align-items-center">
-    <div
-      className="card shadow-lg p-4 rounded-4 border-0 w-100"
-      style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
-    >
-      <form onSubmit={handleSubmit(submit)}>
-        <h4 className="text-center fw-bold mb-4">Login for Auth App</h4>
+  return (
+    <div className="container-fluid fringer min-vh-100 d-flex justify-content-center align-items-center">
+      <div
+        className="card shadow-lg p-4 rounded-4 border-0 w-100"
+        style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
+      >
+        <form onSubmit={handleSubmit(submit)}>
+          <h4 className="text-center fw-bold mb-4">REGISTER</h4>
 
-        {error && (
-          <div className="alert alert-danger text-center py-2" role="alert">
-            {error}
+          {error && (
+            <div className="alert alert-danger text-center py-2" role="alert">
+              {error}
+            </div>
+          )}
+
+          {message && (
+            <div className="alert alert-success text-center py-2" role="alert">
+              {message}
+            </div>
+          )}
+
+          <div className="mb-3">
+            <BootstrapTextFields
+              label="Email"
+              name="email"
+              control={control}
+              placeholder="Enter your email"
+            />
           </div>
-        )}
 
-        {message && (
-          <div className="alert alert-success text-center py-2" role="alert">
-            {message}
+          <div className="mb-3">
+            <BootstrapTextFields
+              label="Username"
+              name="username"
+              control={control}
+              placeholder="Enter your username"
+            />
           </div>
-        )}
 
-        <div className="mb-3">
-          <BootstrapTextFields
-            label="Email"
-            name="email"
-            control={control}
-            placeholder="Enter your email"
-          />
-        </div>
+          <div className="mb-3">
+            <BootstrapPasswordFields
+              label="Password"
+              name="password"
+              control={control}
+              placeholder="Enter your password"
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapTextFields
-            label="Username"
-            name="username"
-            control={control}
-            placeholder="Enter your username"
-          />
-        </div>
+          <div className="mb-3">
+            <BootstrapPasswordFields
+              label="Confirm Password"
+              name="confirmPassword"
+              control={control}
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapPasswordFields
-            label="Password"
-            name="password"
-            control={control}
-            placeholder="Enter your password"
-          />
-        </div>
+          <div className="mb-3">
+            <BootstrapTextFields
+              label="Name"
+              name="name"
+              control={control}
+              placeholder="Enter your name"
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapPasswordFields
-            label="Confirm Password"
-            name="confirmPassword"
-            control={control}
-          />
-        </div>
+          <div className="mb-3">
+            <BootstrapTextFields
+              label="Phone Number"
+              name="phone_number"
+              control={control}
+              placeholder="Enter your phone number"
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapTextFields
-            label="Name"
-            name="name"
-            control={control}
-            placeholder="Enter your name"
-          />
-        </div>
+          <div className="mb-3">
+            <BootstrapSelect
+              label="Department"
+              name="department"
+              control={control}
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapTextFields
-            label="Phone Number"
-            name="phone_number"
-            control={control}
-            placeholder="Enter your phone number"
-          />
-        </div>
+          <div className="d-grid mb-3">
+            <BootstrapButtonFields
+              label="Login"
+              type="submit"
+              className="btn btn-primary rounded-pill"
+            />
+          </div>
 
-        <div className="mb-3">
-          <BootstrapSelect
-            label="Department"
-            name="department"
-            control={control}
-          />
-        </div>
-
-        <div className="d-grid mb-3">
-          <BootstrapButtonFields
-            label="Login"
-            type="submit"
-            className="btn btn-primary rounded-pill"
-          />
-        </div>
-
-        <div className="text-center">
-          <small>
-            <Link to="/login" className="text-decoration-none">
-              Already have an account?
-            </Link>
-          </small>
-        </div>
-      </form>
+          <div className="text-center">
+            <small>
+              <Link to="/login" className="text-decoration-none">
+                Already have an account?
+              </Link>
+            </small>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default ManagerRegister;

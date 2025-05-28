@@ -10,21 +10,21 @@ import BootstrapPasswordFields from "./forms/BootstrapPasswordFields";
 import BootstrapButtonFields from "./forms/BootstrapButtonFields";
 import BootstrapSelect from "./forms/BootstrapDropDown";
 import "./bootstrap_style.css";
-import {cookies} from './Cookie'
-export const fetchCSRFToken = async () => {
-  try {
-    await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-      withCredentials: true,
-       headers: {
-          Accept: "application/json",
-        },
-    });
-    return cookies.get("csrftoken");
-  } catch (err) {
-    console.error("CSRF fetch error:", err);
-    return null;
-  }
-};
+import { cookies } from "./Cookie";
+// export const fetchCSRFToken = async () => {
+//   try {
+//     await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+//       withCredentials: true,
+//       headers: {
+//         Accept: "application/json",
+//       },
+//     });
+//     return cookies.get("csrftoken");
+//   } catch (err) {
+//     console.error("CSRF fetch error:", err);
+//     return null;
+//   }
+// };
 // export const fetchCSRFToken = async () => {
 //   try {
 //     const response = await axios.get(
@@ -61,7 +61,17 @@ function MaterialEmployeeRegister() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
+  async function fetchCSRFToken() {
+    try {
+      await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
+        withCredentials: true,
+      });
+      return cookies.get("csrftoken");
+    } catch (err) {
+      console.error("Failed to get CSRF token", err);
+      return null;
+    }
+  }
   const onSubmit = async (formData) => {
     setError("");
     setMessage("");
@@ -129,7 +139,7 @@ function MaterialEmployeeRegister() {
         style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h4 className="text-center fw-bold mb-4">Login for Auth App</h4>
+          <h4 className="text-center fw-bold mb-4">REGISTER</h4>
 
           {error && (
             <div className="alert alert-danger text-center py-2" role="alert">
