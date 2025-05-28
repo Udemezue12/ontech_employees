@@ -8,22 +8,27 @@ export const fetchCSRFToken = async () => {
   try {
     const response = await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
       withCredentials: true,
+      headers: {
+        "Accept": "application/json",
+      }
     });
-    console.log("CSRF endpoint response:", response.data);
-    console.log("CSRF response headers:", response.headers);
-    if (typeof response.data === 'string' && response.data.includes('<!doctype html')) {
-      console.error("Received HTML response instead of JSON from /api/csrf/");
-      throw new Error("Invalid response from CSRF endpoint");
+
+    if (
+      typeof response.data === "string" &&
+      response.data.includes("<!doctype html")
+    ) {
+      throw new Error("Received HTML instead of JSON");
     }
-    const csrfToken = response.data.csrfToken || cookies.get("csrftoken");
+
+    const csrfToken = response.data.csrfToken;
+
     if (!csrfToken) {
-      console.error("CSRF token not found in response or cookies.");
-      throw new Error("CSRF token not found");
+      throw new Error("CSRF token not found in response");
     }
-    console.log("Fetched CSRF Token:", csrfToken);
+
     return csrfToken;
-  } catch (err) {
-    console.error("CSRF fetch error:", err);
+  } catch (error) {
+    console.error("Failed to fetch CSRF token:", error);
     return null;
   }
 };

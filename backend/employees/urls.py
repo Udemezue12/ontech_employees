@@ -95,7 +95,7 @@ urlpatterns = [
     path('get/tax/deductions/', views.get_tax_deductions,
          name='get_tax_deductions'),
     path('create/profile', CreateProfileAPIView.as_view(), name='create_profile'),
-    path("csrf/", GetCRSFToken.as_view),
+    path("api/csrf/", GetCRSFToken.as_view()),
 #     path('api/csrf/', get_csrf_token, name='get-csrf-token'),
     path('payroll/login_view/', login_view, name='login_view'),
     path('payroll/logout_view/', logout_view, name='logout_view'),

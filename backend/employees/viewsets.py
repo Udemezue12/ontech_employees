@@ -1,4 +1,5 @@
 
+
 from datetime import date
 # adjust import as needed
 import json
@@ -37,6 +38,7 @@ from .serializers import *
 from .permissions import *
 from .logger import logger
 from .base_code import base64url_encode
+
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -217,20 +219,40 @@ class LoginViewSet(viewsets.ViewSet):
 #         return JsonResponse({"error": str(e)}, status=500)
 
 
+
+
+# @method_decorator(ensure_csrf_cookie, name='dispatch')
+# class GetCRSFToken(APIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def get(self, request, format=None):
+#         try:
+#             logger.debug("Setting CSRF cookie for request: %s", request)
+#             return Response({
+#                 'success': 'CSRF cookie set'
+#             })
+#         except Exception as e:
+#             logger.error("Error setting CSRF cookie: %s", str(e))
+#             return Response({
+#                 'error': str(e)
+#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCRSFToken(APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, format=None):
         try:
+            csrf_token = get_token(request)
+            logger.debug("Setting CSRF cookie for request: %s, token: %s", request, csrf_token)
             return Response({
-                'success': 'CSRF cookie set'
+                'success': 'CSRF cookie set',
+                'csrfToken': csrf_token
             })
         except Exception as e:
+            logger.error("Error setting CSRF cookie: %s", str(e))
             return Response({
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class CustomLogoutView(KnoxLogoutView):
     permission_classes = [permissions.IsAuthenticated]
