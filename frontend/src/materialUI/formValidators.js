@@ -23,7 +23,7 @@ export const validateRegisterForm = (formData) => {
     !formData.username ||
     !formData.password ||
     !formData.confirmPassword ||
-    !formData.phone_number 
+    !formData.phone_number
   ) {
     return { valid: false, message: "All fields are required." };
   }
@@ -54,9 +54,12 @@ export const validateRegisterForm = (formData) => {
     return { valid: false, message: "Passwords do not match." };
   }
 
-  //   if (!isValidPhoneNumber(formData.phone_number)) {
-  //     return { valid: false, message: "Invalid Phone Number. Please enter a valid number." };
-  //   }
+  // if (!isValidPhoneNumber(formData.phone_number)) {
+  //   return {
+  //     valid: false,
+  //     message: "Invalid Phone Number. Please enter a valid number.",
+  //   };
+  // }
 
-  return { valid: true, message: "Validation passed." }; // ✅ Success message
+  return { valid: true, message: "" }; // No need to show a "Validation passed" message
 };

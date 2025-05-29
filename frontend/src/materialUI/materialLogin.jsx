@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import BootstrapButtonFields from "./forms/BootstrapButtonFields";
@@ -11,6 +11,9 @@ import "./bootstrap_style.css";
 const MaterialLogin = () => {
   const { handleSubmit, control } = useForm();
   const navigate = useNavigate();
+
+  
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function fetchCSRFToken() {
     try {
@@ -25,7 +28,7 @@ const MaterialLogin = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log("Login Data:", data);
+    setErrorMessage(""); // Clear any existing errors
     const csrfToken = await fetchCSRFToken();
 
     try {
@@ -49,7 +52,7 @@ const MaterialLogin = () => {
         throw new Error("User data missing in response");
       }
 
-      // 2. Save Knox token and user info
+      // Store user data
       localStorage.setItem("Token", token);
       localStorage.setItem("UserId", user.id);
       localStorage.setItem("UserEmail", user.email);
@@ -57,11 +60,9 @@ const MaterialLogin = () => {
       localStorage.setItem("UserName", user.name);
       localStorage.setItem("UserDepartment", user.department);
 
-      console.log("Login successful:", response.data);
-
+      // Start session
       await axios.post(
         "https://ontech-systems.onrender.com/api/session-login/",
-
         {
           email: data.email,
           password: data.password,
@@ -70,14 +71,15 @@ const MaterialLogin = () => {
           headers: {
             "X-CSRFToken": csrfToken,
           },
-
           withCredentials: true,
         }
       );
 
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      console.error("Login failed:", error.response?.data || error.message);
+      const backendError = error.response?.data?.detail || "Login failed. Please check your credentials.";
+      console.error("Login failed:", backendError);
+      setErrorMessage(backendError); 
     }
   };
 
@@ -89,6 +91,13 @@ const MaterialLogin = () => {
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <h4 className="text-center fw-bold mb-4">LOGIN</h4>
+
+          {/* Error Message */}
+          {errorMessage && (
+            <div className="alert alert-danger py-2 text-center" role="alert">
+              {errorMessage}
+            </div>
+          )}
 
           {/* Email Field */}
           <div className="mb-3">

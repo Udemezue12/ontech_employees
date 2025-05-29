@@ -11,50 +11,7 @@ import BootstrapButtonFields from "./forms/BootstrapButtonFields";
 import BootstrapSelect from "./forms/BootstrapDropDown";
 import "./bootstrap_style.css";
 import { cookies } from "./Cookie";
-// export const fetchCSRFToken = async () => {
-//   try {
-//     await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-//       withCredentials: true,
-//       headers: {
-//         Accept: "application/json",
-//       },
-//     });
-//     return cookies.get("csrftoken");
-//   } catch (err) {
-//     console.error("CSRF fetch error:", err);
-//     return null;
-//   }
-// };
-// export const fetchCSRFToken = async () => {
-//   try {
-//     const response = await axios.get(
-//       "https://ontech-systems.onrender.com/api/csrf/",
-//       {
-//         withCredentials: true,
-//         headers: {
-//           Accept: "application/json",
-//         },
-//       }
-//     );
 
-//     if (
-//       typeof response.data === "string" &&
-//       response.data.includes("<!doctype html")
-//     ) {
-//       throw new Error("Received HTML instead of JSON");
-//     }
-
-//     const csrfToken = response.data.csrfToken;
-
-//     if (!csrfToken) {
-//       throw new Error("CSRF token not found in response");
-//     }
-
-//     return csrfToken;
-//   } catch (error) {
-//     console.error("Failed to fetch CSRF token:", error);
-//     return null;
-//   }
 // };
 function MaterialEmployeeRegister() {
   const navigate = useNavigate();
@@ -79,11 +36,9 @@ function MaterialEmployeeRegister() {
     const validation = validateRegisterForm(formData);
     if (!validation.valid) {
       setError(validation.message);
-      setMessage(validation.message);
+    
       return;
-    } else {
-      setMessage(validation.message);
-    }
+    } 
     const csrfToken = await fetchCSRFToken();
 
     try {
@@ -216,7 +171,7 @@ function MaterialEmployeeRegister() {
 
           <div className="d-grid mb-3">
             <BootstrapButtonFields
-              label="Login"
+              label="Register"
               type="submit"
               className="btn btn-primary rounded-pill"
             />

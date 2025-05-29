@@ -71,7 +71,7 @@ function MaterialHrRegister() {
   }
 
   const submit = async (formData) => {
-    console.log("Form Data Submitted:", formData);
+    // console.log("Form Data Submitted:", formData);
 
     setError("");
     setMessage("");
@@ -79,10 +79,8 @@ function MaterialHrRegister() {
     const validation = validateRegisterForm(formData);
     if (!validation.valid) {
       setError(validation.message);
-      setMessage(validation.message);
+
       return;
-    } else {
-      setMessage(validation.message);
     }
 
     try {
@@ -217,7 +215,7 @@ function MaterialHrRegister() {
 
           <div className="d-grid mb-3">
             <BootstrapButtonFields
-              label="Login"
+              label="Register"
               type="submit"
               className="btn btn-primary rounded-pill"
             />

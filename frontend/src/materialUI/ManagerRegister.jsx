@@ -77,10 +77,8 @@ function ManagerRegister() {
     const validation = validateRegisterForm(formData);
     if (!validation.valid) {
       setError(validation.message);
-      setMessage(validation.message);
+
       return;
-    } else {
-      setMessage(validation.message);
     }
     const csrfToken = await fetchCSRFToken();
 
@@ -214,7 +212,7 @@ function ManagerRegister() {
 
           <div className="d-grid mb-3">
             <BootstrapButtonFields
-              label="Login"
+              label="Register"
               type="submit"
               className="btn btn-primary rounded-pill"
             />
