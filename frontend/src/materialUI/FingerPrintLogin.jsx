@@ -81,7 +81,8 @@ function FingerprintLogin() {
       localStorage.setItem("Role", role);
       localStorage.setItem("Department", department);
 
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
+      
     } catch (err) {
       console.error("Fingerprint login failed:", err);
       if (err.response && err.response.data?.error) {

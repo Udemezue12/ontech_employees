@@ -283,7 +283,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
 
     # queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         # Override to prevent accessing the list of users
@@ -319,18 +319,18 @@ class HrManagerRegisterViewSet(viewsets.ModelViewSet):
 
     # queryset = CustomUser.objects.all()
     serializer_class = HrManagerRegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
 
         return CustomUser.objects.none()
 
-    # def get_permissions(self):
+    def get_permissions(self):
 
-    #     if self.action == 'create':
+        if self.action == 'create':
 
-    #         return [permissions.AllowAny()]
-    #     return [permissions.IsAuthenticated()]
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         try:
@@ -389,18 +389,18 @@ class EmployeeRegisterViewSet(viewsets.ModelViewSet):
 
     # queryset = CustomUser.objects.all()
     serializer_class = EmployeeRegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
 
         return CustomUser.objects.none()
 
-    # def get_permissions(self):
+    def get_permissions(self):
 
-    #     if self.action == 'create':
+        if self.action == 'create':
 
-    #         return [permissions.AllowAny()]
-    #     return [permissions.IsAuthenticated()]
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         try:
@@ -424,18 +424,18 @@ class OverallAdminRegisterViewSet(viewsets.ModelViewSet):
 
     # queryset = CustomUser.objects.all()
     serializer_class = OverallAdminRegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
 
         return CustomUser.objects.none()
 
-    # def get_permissions(self):
+    def get_permissions(self):
 
-    #     if self.action == 'create':
+        if self.action == 'create':
 
-    #         return [permissions.AllowAny()]
-    #     return [permissions.IsAuthenticated()]
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         try:
