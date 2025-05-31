@@ -127,9 +127,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 WSGI_APPLICATION = 'payroll_system.wsgi.application'
 AUTH_USER_MODEL = 'employees.CustomUser'
 
-AUTHENICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend"
+AUTHENTICATION_BACKENDS = [
+    'employees.auth_backend.Email_Backend',
+    'django.contrib.auth.backends.ModelBackend'
 ]
+
+
 
 DATABASES = {
     'default': {

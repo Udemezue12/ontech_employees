@@ -70,7 +70,10 @@ function ManagerRegister() {
       return null;
     }
   }
+
   const submit = async (formData) => {
+    // console.log("Form Data Submitted:", formData);
+
     setError("");
     setMessage("");
 
@@ -80,7 +83,6 @@ function ManagerRegister() {
 
       return;
     }
-    const csrfToken = await fetchCSRFToken();
 
     try {
       const payload = {
@@ -90,17 +92,20 @@ function ManagerRegister() {
         role: "Manager",
         phone_number: formData.phone_number,
         name: formData.name,
+
         department: formData.department,
       };
+      const csrfToken = await fetchCSRFToken();
 
       // console.log("Payload being sent:", payload);
+      // console.log("CSRF Token:", csrfToken);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/manager_register/",
         payload,
         {
           headers: {
-            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+            "X-CSRFToken": csrfToken,
           },
           withCredentials: true,
         }

@@ -91,7 +91,8 @@ function MaterialHrRegister() {
         role: "Hr_Manager",
         phone_number: formData.phone_number,
         name: formData.name,
-        department: "Human Resources",
+        // department: "Human Resources",
+        department: formData.department,
       };
       const csrfToken = await fetchCSRFToken();
 

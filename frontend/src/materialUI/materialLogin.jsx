@@ -12,7 +12,6 @@ const MaterialLogin = () => {
   const { handleSubmit, control } = useForm();
   const navigate = useNavigate();
 
-  
   const [errorMessage, setErrorMessage] = useState("");
 
   async function fetchCSRFToken() {
@@ -77,9 +76,11 @@ const MaterialLogin = () => {
 
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      const backendError = error.response?.data?.detail || "Login failed. Please check your credentials.";
+      const backendError =
+        error.response?.data?.detail ||
+        "Login failed. Please check your credentials.";
       console.error("Login failed:", backendError);
-      setErrorMessage(backendError); 
+      setErrorMessage(backendError);
     }
   };
 

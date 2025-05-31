@@ -170,10 +170,11 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 WSGI_APPLICATION = 'payroll_system.wsgi.application'
 AUTH_USER_MODEL = 'employees.CustomUser'
-AUTHENICATION_BACKENDS = [
-    # 'employees.auth_backend.Email_Backend'
-    "django.contrib.auth.backends.ModelBackend"
+AUTHENTICATION_BACKENDS = [
+    'employees.auth_backend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend'
 ]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

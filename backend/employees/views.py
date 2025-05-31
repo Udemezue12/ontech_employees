@@ -29,7 +29,7 @@ from django.utils import timezone
 from django.core.files.base import ContentFile
 from django.core.mail import EmailMessage
 from django.views.decorators.http import require_POST
-from .serializers import ManualAttendanceSerializer
+from .serializers import *
 from .forms import *
 from .models import *
 from .user_pass import *

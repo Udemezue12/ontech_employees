@@ -108,83 +108,92 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class HrManagerRegisterSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'name', 'phone_number',
                   'email', 'password', 'role', "department"]
         extra_kwargs = {
-            'password': {
-                'write_only': True
-            },
+            'password': {'write_only': True},
             'role': {'read_only': True},
             'email': {'error_messages': {'unique': 'This email is already registered.'}},
             'username': {'error_messages': {'unique': 'This username is taken.'}},
-            'phone_number': {
-                'error_messages': {'unique': 'This phone number is already registered.'}
-            },
-            # 'name': {
-            #     'error_messages': {'unique': 'This name is already registered.'}
-            # }
-
+            'phone_number': {'error_messages': {'unique': 'This phone number is already registered.'}},
         }
 
-    def validate_role(self, value):
-        if value != 'Hr_Manager':
-            raise serializers.ValidationError(
-                "Only 'Hr_Manager' role is allowed for registration.")
-        return value
-
-    def validate_department(self, value):
-        if value != 'Human Resources':
-            raise serializers.ValidationError(
-                "Only those in 'Human Resources' department are allowed for registration.")
-        return value
-
+    # def validate_department(self, value):
+    #     if value != 'Human Resources':
+    #         raise serializers.ValidationError(
+    #             "Only those in 'Human Resources' department are allowed for registration.")
+    #     return value
+    # def validate_role(self, value):
     def create(self, validated_data):
-        # validated_data('password2')
+        password = validated_data.pop('password')
         validated_data['role'] = 'Hr_Manager'
-        validated_data['department'] = 'Human Resources'
-        user = CustomUser.objects.create_user(**validated_data)
-
-        user.save()
+        # validated_data['department'] = 'Human Resources'
+        user = CustomUser.objects.create_user(password=password, **validated_data)
         return user
 
 
-class ManagerRegisterSerializer(serializers.ModelSerializer):
 
+# class ManagerRegisterSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = CustomUser
+#         fields = ['id', 'username', 'name', 'phone_number',
+#                   'email', 'password', 'role', "department"]
+#         extra_kwargs = {
+#             'password': {
+#                 'write_only': True
+#             },
+#             'role': {'read_only': True},
+#             'email': {'error_messages': {'unique': 'This email is already registered.'}},
+#             'username': {'error_messages': {'unique': 'This username is taken.'}},
+#             'phone_number': {
+#                 'error_messages': {'unique': 'This phone number is already registered.'}
+#             },
+#             # 'name': {
+#             #     'error_messages': {'unique': 'This name is already registered.'}
+#             # }
+
+#         }
+
+#     def validate_role(self, value):
+#         if value != 'Manager':
+#             raise serializers.ValidationError(
+#                 "Only 'Manager' role is allowed for registration.")
+#         return value
+
+#     def create(self, validated_data):
+#         # validated_data('password2')
+#         validated_data['role'] = 'Manager'
+#         user = CustomUser.objects.create_user(**validated_data)
+
+#         user.save()
+#         return user
+class ManagerRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'name', 'phone_number',
                   'email', 'password', 'role', "department"]
         extra_kwargs = {
-            'password': {
-                'write_only': True
-            },
+            'password': {'write_only': True},
             'role': {'read_only': True},
             'email': {'error_messages': {'unique': 'This email is already registered.'}},
             'username': {'error_messages': {'unique': 'This username is taken.'}},
-            'phone_number': {
-                'error_messages': {'unique': 'This phone number is already registered.'}
-            },
-            # 'name': {
-            #     'error_messages': {'unique': 'This name is already registered.'}
-            # }
-
+            'phone_number': {'error_messages': {'unique': 'This phone number is already registered.'}},
         }
 
-    def validate_role(self, value):
-        if value != 'Manager':
-            raise serializers.ValidationError(
-                "Only 'Manager' role is allowed for registration.")
-        return value
+    # def validate_department(self, value):
+    #     if value != 'Human Resources':
+    #         raise serializers.ValidationError(
+    #             "Only those in 'Human Resources' department are allowed for registration.")
+    #     return value
 
     def create(self, validated_data):
-        # validated_data('password2')
+        password = validated_data.pop('password')
         validated_data['role'] = 'Manager'
-        user = CustomUser.objects.create_user(**validated_data)
-
-        user.save()
+        # validated_data['department'] = 'Human Resources'
+        user = CustomUser.objects.create_user(password=password, **validated_data)
         return user
 
 
@@ -210,18 +219,17 @@ class EmployeeRegisterSerializer(serializers.ModelSerializer):
 
         }
 
-    def validate_role(self, value):
-        if value != 'Employee':
-            raise serializers.ValidationError(
-                "Only 'Employees' role is allowed for registration.")
-        return value
+    # def validate_role(self, value):
+    #     if value != 'Employee':
+    #         raise serializers.ValidationError(
+    #             "Only 'Employees' role is allowed for registration.")
+    #     return value
 
     def create(self, validated_data):
-        # validated_data('password2')
+        password = validated_data.pop('password')
         validated_data['role'] = 'Employee'
-        user = CustomUser.objects.create_user(**validated_data)
-
-        user.save()
+        # validated_data['department'] = 'Human Resources'
+        user = CustomUser.objects.create_user(password=password, **validated_data)
         return user
 
 
@@ -247,18 +255,11 @@ class OverallAdminRegisterSerializer(serializers.ModelSerializer):
 
         }
 
-    def validate_role(self, value):
-        if value != 'Overall_Admin':
-            raise serializers.ValidationError(
-                "Only 'Admins' role is allowed for registration.")
-        return value
-
     def create(self, validated_data):
-        # validated_data('password2')
+        password = validated_data.pop('password')
         validated_data['role'] = 'Overall_Admin'
-        user = CustomUser.objects.create_user(**validated_data)
-
-        user.save()
+        # validated_data['department'] = 'Human Resources'
+        user = CustomUser.objects.create_user(password=password, **validated_data)
         return user
 
 

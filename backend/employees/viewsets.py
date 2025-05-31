@@ -40,7 +40,6 @@ from .logger import logger
 from .base_code import base64url_encode
 
 
-
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
         return
@@ -197,7 +196,8 @@ class LoginViewSet(viewsets.ViewSet):
             user = authenticate(request, email=email, password=password)
 
             if user:
-                logger.info(f" Authentication successful for user: {user.email}")
+                logger.info(
+                    f" Authentication successful for user: {user.email}")
 
                 django_login(request, user)
                 logger.info(f" User {user.email} logged in to session")
@@ -205,7 +205,8 @@ class LoginViewSet(viewsets.ViewSet):
                 _, token = AuthToken.objects.create(user)
                 user_data = UserDetailSerializer(user).data
 
-                logger.info(f" Token generated and user data serialized for {user.email}")
+                logger.info(
+                    f" Token generated and user data serialized for {user.email}")
 
                 return Response({
                     'user': user_data,
@@ -217,7 +218,8 @@ class LoginViewSet(viewsets.ViewSet):
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
         except Exception as e:
-            logger.error(f" Unexpected error during login: {str(e)}", exc_info=True)
+            logger.error(
+                f" Unexpected error during login: {str(e)}", exc_info=True)
             return JsonResponse({'error': str(e)}, status=500)
 
 
@@ -228,8 +230,6 @@ class LoginViewSet(viewsets.ViewSet):
 #         return JsonResponse({"detail": "CSRF cookie set"})
 #     except Exception as e:
 #         return JsonResponse({"error": str(e)}, status=500)
-
-
 
 
 # @method_decorator(ensure_csrf_cookie, name='dispatch')
@@ -254,7 +254,8 @@ class GetCRSFToken(APIView):
     def get(self, request, format=None):
         try:
             csrfToken = get_token(request)
-            logger.debug("Setting CSRF cookie for request: %s, token: %s", request, csrfToken)
+            logger.debug(
+                "Setting CSRF cookie for request: %s, token: %s", request, csrfToken)
             return Response({
                 'success': 'CSRF cookie set',
                 'csrfToken': csrfToken
@@ -264,6 +265,7 @@ class GetCRSFToken(APIView):
             return Response({
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class CustomLogoutView(KnoxLogoutView):
     permission_classes = [permissions.IsAuthenticated]
@@ -387,7 +389,6 @@ class ManagerRegisterViewSet(viewsets.ModelViewSet):
 
 class EmployeeRegisterViewSet(viewsets.ModelViewSet):
 
-    # queryset = CustomUser.objects.all()
     serializer_class = EmployeeRegisterSerializer
     # permission_classes = [permissions.AllowAny]
 

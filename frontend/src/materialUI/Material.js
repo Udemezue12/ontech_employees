@@ -17,7 +17,7 @@ import BiometricAttendance from "./BiometricAttendance";
 import MaterialLogin from "./materialLogin";
 import MaterialHome from "./materialHome";
 import { MaterialAbout } from "./materialHome";
-import MaterialHrRegister from "./hrRegister";
+import MaterialHrRegister from "./HR_Register";
 import ProtectedRoutes from "./ProtectedRoutes";
 import MaterialNavBars from "./materialNavBars";
 import PasswordResetRequest from "./PasswordResetRequest";

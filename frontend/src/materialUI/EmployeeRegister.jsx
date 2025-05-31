@@ -29,17 +29,19 @@ function MaterialEmployeeRegister() {
       return null;
     }
   }
-  const onSubmit = async (formData) => {
+
+  const submit = async (formData) => {
+    // console.log("Form Data Submitted:", formData);
+
     setError("");
     setMessage("");
 
     const validation = validateRegisterForm(formData);
     if (!validation.valid) {
       setError(validation.message);
-    
+
       return;
-    } 
-    const csrfToken = await fetchCSRFToken();
+    }
 
     try {
       const payload = {
@@ -51,11 +53,13 @@ function MaterialEmployeeRegister() {
         name: formData.name,
         department: formData.department,
       };
+      const csrfToken = await fetchCSRFToken();
 
       // console.log("Payload being sent:", payload);
+      // console.log("CSRF Token:", csrfToken);
 
       await axios.post(
-        "https://ontech-systems.onrender.com/api/employee_register",
+        "https://ontech-systems.onrender.com/api/employee_register/",
         payload,
         {
           headers: {
@@ -93,7 +97,7 @@ function MaterialEmployeeRegister() {
         className="card shadow-lg p-4 rounded-4 border-0 w-100"
         style={{ maxWidth: "420px", transition: "all 0.3s ease-in-out" }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(submit)}>
           <h4 className="text-center fw-bold mb-4">REGISTER</h4>
 
           {error && (

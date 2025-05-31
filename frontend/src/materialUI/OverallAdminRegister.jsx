@@ -71,7 +71,10 @@ function OverallAdminRegister() {
       return null;
     }
   }
+
   const submit = async (formData) => {
+    // console.log("Form Data Submitted:", formData);
+
     setError("");
     setMessage("");
 
@@ -86,15 +89,17 @@ function OverallAdminRegister() {
       const payload = {
         username: formData.username,
         email: formData.email,
-        password: formData.password,
         role: "Overall_Admin",
+        password: formData.password,
         phone_number: formData.phone_number,
         name: formData.name,
+
         department: formData.department,
       };
       const csrfToken = await fetchCSRFToken();
 
       // console.log("Payload being sent:", payload);
+      // console.log("CSRF Token:", csrfToken);
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/overallAdmin_register/",
