@@ -273,7 +273,7 @@ def create_salary(request, user_id):
             employee=request.user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
         ).first()
         manual_attendance = ManualAttendance.objects.filter(
-            employee=request.useruser, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
+            employee=request.user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
         ).first()
 
         if not (biometric_attendance or manual_attendance):
@@ -1228,7 +1228,7 @@ def create_tax_deduction(request, employee_id):
         messages.error(
             request, "An Error Occured")
 
-        return redirect('create_tax_deductions')
+        return redirect('ontech_dashboard')
 
 
 def get_user_deductions(user):
@@ -1455,10 +1455,10 @@ def update_leave_balance(request, employee_id):
     try:
 
         biometric_attendance = BiometricAttendance.objects.filter(
-            employee=user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
+            employee=request.user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
         ).first()
         manual_attendance = ManualAttendance.objects.filter(
-            employee=user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
+            employee=request.user, date=timezone.now().date(), check_in__isnull=False, check_out__isnull=True
         ).first()
 
         if not (biometric_attendance or manual_attendance):
@@ -1975,7 +1975,7 @@ def hr_employee_list(request):
 
         if not (biometric_attendance or manual_attendance):
             return render(request, 'access_denied.html', {'message': 'You must check in first.'})
-        if user.role != [CustomUser.HR_MANAGER, CustomUser.OVERALL_ADMIN]:
+        if user.role != [CustomUser.HR_MANAGER, CustomUser.OVERALL_ADMIN, CustomUser.MANAGER]:
             return render(request, 'access_denied.html', {"message": 'Access Denied'})
 
         employees = CustomUser.objects.filter(
