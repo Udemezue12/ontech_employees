@@ -128,7 +128,7 @@ WSGI_APPLICATION = 'payroll_system.wsgi.application'
 AUTH_USER_MODEL = 'employees.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
-    'employees.auth_backend.Email_Backend',
+    'employees.auth_backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend'
 ]
 
