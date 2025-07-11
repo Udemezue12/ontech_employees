@@ -1087,9 +1087,7 @@ class CreateCompanyProfile(viewsets.ModelViewSet):
 class CreateWebAuthnCredentialViewSet(viewsets.ModelViewSet):
     serializer_class = WebAuthnCredentialCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
-    # queryset = WebAuthnCredential.objects.all()
-
-    # In your WebAuthnCredential viewset (DRF)
+  
     def get_queryset(self):
         return WebAuthnCredential.objects.filter(user=self.request.user)
 
@@ -1156,15 +1154,15 @@ class FingerprintAuthenticateView(APIView):
             return Response({'error': 'Credential ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Search by credential ID (assumed to be a base64url string)
+          
             credential = WebAuthnCredential.objects.get(
                 credential_id=credential_id)
             user = credential.user
 
-            # Log the user in
-            django_login(request, user)
+           
+            django_login(request, user, backend='employees.auth_backend.EmailBackend')
 
-            # Generate auth token
+           
             token = AuthToken.objects.create(user=user)
 
             return Response({
