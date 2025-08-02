@@ -110,12 +110,12 @@ const Profile = () => {
       personal_details: formData.personal_details,
       resume: formData.resume?.name || null,
       picture: formData.picture?.name || null,
-      // signature: formData.signature?.name || null,
+     
       country: formData.country?.name || null,
       state: formData.state?.name || null,
     };
 
-    console.log("Payload being sent (file names only):", debugPayload);
+    
     const csrfToken = await fetchCSRFToken();
   
 

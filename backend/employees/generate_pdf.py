@@ -56,13 +56,13 @@ def generate_salary_slip(request, employee_id):
         styles = getSampleStyleSheet()
         elements = []
 
-        # Add logo
+       
         if company_profile.company_logo:
             elements.append(
                 Image(company_profile.company_logo.path, width=2*inch, height=2*inch))
             elements.append(Spacer(1, 0.1 * inch))
 
-        # Company Info
+      
         elements += [
             Paragraph(f"<b>{company_profile.company_name}</b>",
                       styles['Title']),
@@ -86,7 +86,6 @@ def generate_salary_slip(request, employee_id):
             Spacer(1, 0.2 * inch),
         ]
 
-        # Profile Info
         profile = getattr(employee, 'profile', None)
         if profile:
             elements += [
@@ -103,7 +102,7 @@ def generate_salary_slip(request, employee_id):
                 elements.append(Image(profile.signature.path,
                                 width=1.5*inch, height=0.5*inch))
 
-        # Manager Signature
+    
         manager_profile = Profile.objects.filter(
             user__role='Manager', user__department=employee.department).first()
         if manager_profile and manager_profile.signature:
@@ -112,7 +111,7 @@ def generate_salary_slip(request, employee_id):
             elements.append(Image(manager_profile.signature.path,
                             width=1.5*inch, height=0.5*inch))
 
-        # HR Signature
+        
         hr_profile = Profile.objects.filter(
             user__role='HR_Manager', user__department=employee.department).first()
         if hr_profile and hr_profile.signature:
@@ -121,7 +120,7 @@ def generate_salary_slip(request, employee_id):
             elements.append(Image(hr_profile.signature.path,
                             width=1.5*inch, height=0.5*inch))
 
-        # QR Code (Optional)
+        
         qr_data = f"{employee.username}_{month}_{year}"
         qr_image = generate_qr_code(qr_data)
         elements.append(Spacer(1, 0.3 * inch))
@@ -132,7 +131,7 @@ def generate_salary_slip(request, employee_id):
         doc.build(elements)
         buffer.seek(0)
 
-        # Save the file to SalarySlip
+       
         pdf_filename = f"salary_slip_{employee.username}_m{month}_{year}.pdf"
         slip = SalarySlip.objects.create(
             employee=employee,
@@ -141,7 +140,7 @@ def generate_salary_slip(request, employee_id):
         )
         slip.file.save(pdf_filename, buffer)
 
-        # Email it (optional)
+      
         send_salary_slip_email(employee.email, pdf_filename, buffer.getvalue())
 
         response = HttpResponse(

@@ -15,7 +15,7 @@ export const fetchCountries = async () => {
 export const fetchStates = async (country) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/state/get_states/${country}`);  
-        console.log('States API Response:', response.data);
+       
         return response.data;  
     } catch (error) {
         console.error('Error fetching states:', error);

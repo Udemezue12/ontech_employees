@@ -4,85 +4,10 @@ import "./material.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
-// function PasswordResetToken() {
-//   const location = useLocation();
-//   const queryParams = new URLSearchParams(location.search);
-//   const token = queryParams.get("token");
 
-//   const navigate = useNavigate();
-//   console.log(token);
-//   const { control, handleSubmit } = useForm();
-//   const [showMessage, setShowMessage] = React.useState(false);
-
-//   const submit = async (data) => {
-//   if (data.password !== data.password2) {
-//     alert("Passwords do not match");
-//     return;
-//   }
-
-//   try {
-//     const response = await axios.post("https://ontech-systems.onrender.com/api/password_reset/confirm/", {
-//       email: queryParams.get("email"), // ✅ Include email
-//       token: queryParams.get("token"), // ✅ Include token
-//       password: data.password,
-//     });
-
-//     setShowMessage(true);
-//     setTimeout(() => {
-//       navigate("/login");
-//     }, 2000);
-//   } catch (error) {
-//     console.error("Password reset error:", error.response?.data || error);
-//   }
-// };
-
-//   return (
-//     <div className="background">
-//       {showMessage ? (
-//         <MyMessage
-//           text={
-//             "Your Password Reset was Successfull, you will be redirected to the login page in a second"
-//           }
-//         />
-//       ) : null}
-//       <form onSubmit={handleSubmit(submit)}>
-//         <Box className="whiteBox">
-//           <Box className="itemBox">
-//             <Box className="title">Reset Password</Box>
-//           </Box>
-
-//           <Box className="itemBox">
-//             <PasswordFields
-//               label="Password"
-//               name="password"
-//               control={control}
-//             />
-//           </Box>
-//           <Box className="itemBox">
-//             <PasswordFields
-//               label="Confirm Password"
-//               name="password2"
-//               control={control}
-//             />
-//           </Box>
-
-//           <Box className="itemBox">
-//             <ButtonFields label="Reset Password" type="submit" />
-//           </Box>
-
-//           <Box className="itemBox"></Box>
-//         </Box>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default PasswordResetToken;
-
-////////////////////////////////////////////
 
 export const PasswordReset = () => {
   const location = useLocation();

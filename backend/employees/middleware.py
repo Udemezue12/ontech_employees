@@ -13,16 +13,16 @@ class CheckFrontendAccessMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Allowed frontend origin (can be the same as the domain in production)
-        allowed_frontend_url = 'https://yourdomain.com'  # Use your production domain
+       
+        allowed_frontend_url = 'https://yourdomain.com'  
 
-        # Get the Origin and Referer headers
+       
         origin = request.META.get('HTTP_ORIGIN')
         referer = request.META.get('HTTP_REFERER')
 
-        # Check if the request is coming from the frontend app
+      
         if (origin and allowed_frontend_url not in origin) and (referer and allowed_frontend_url not in referer):
-            # Block direct access to the API
+           
             return JsonResponse({'detail': 'Access Forbidden'}, status=403)
 
         response = self.get_response(request)

@@ -34,12 +34,8 @@ const CurrentUser = () => {
 
   // Function to fetch current user
   const fetchCurrentUser = async () => {
-    const csrfToken = fetchCSRFToken(); // Get the CSRF token from cookies
-    console.log("CSRF Token:", csrfToken); // Log CSRF token to check if it's present
-    console.log("Token", token);
-    console.log("Email:", user_email);
-
-    console.log("Role:", user_role);
+    const csrfToken = fetchCSRFToken(); 
+   
 
     if (!csrfToken) {
       console.error("CSRF Token is missing.");
@@ -52,21 +48,21 @@ const CurrentUser = () => {
         "https://ontech-systems.onrender.com/current_user/",
         {
           headers: {
-            "X-CSRFToken": csrfToken, // Send the CSRF token in the request header
+            "X-CSRFToken": csrfToken, 
             Authorization: `Token ${token}`,
           },
         }
       );
 
-      console.log("Response from /current_user:", res); // Log full response
+      
 
       if (res.data && res.data.user) {
-        setUser(res.data.user); // Set the user data if available
+        setUser(res.data.user); 
       } else {
         setError("No user data returned.");
       }
     } catch (error) {
-      console.error("Error fetching current user:", error); // Log error if fetch fails
+      console.error("Error fetching current user:", error); 
 
       if (error.response && error.response.status === 401) {
         setError("User not authenticated.");

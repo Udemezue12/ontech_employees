@@ -1,7 +1,6 @@
 
 
 from datetime import date
-# adjust import as needed
 import json
 from webauthn import generate_authentication_options
 from knox.views import LogoutView as KnoxLogoutView

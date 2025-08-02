@@ -128,7 +128,7 @@ const RegisterFingerprint = () => {
       String.fromCharCode(...new Uint8Array(attestationObject))
     );
 
-    console.log("Sending POST with CSRF Token:", csrfToken);
+    
     const response = await axios.post(
       "https://ontech-systems.onrender.com/api/create/fingerprint/",
       {
@@ -145,7 +145,7 @@ const RegisterFingerprint = () => {
       }
     );
 
-    console.log("Backend response:", response.data);
+   
     alert("Passkey created successfully!");
     window.location.reload();
   } catch (error) {

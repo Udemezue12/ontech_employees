@@ -31,7 +31,7 @@ function MaterialEmployeeRegister() {
   }
 
   const submit = async (formData) => {
-    // console.log("Form Data Submitted:", formData);
+    
 
     setError("");
     setMessage("");
@@ -55,8 +55,7 @@ function MaterialEmployeeRegister() {
       };
       const csrfToken = await fetchCSRFToken();
 
-      // console.log("Payload being sent:", payload);
-      // console.log("CSRF Token:", csrfToken);
+   
 
       await axios.post(
         "https://ontech-systems.onrender.com/api/employee_register/",

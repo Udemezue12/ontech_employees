@@ -62,7 +62,7 @@ const CompanyProfileForm = () => {
     });
     const csrfToken = await fetchCSRFToken();
 
-    console.log("CSRF Token:", csrfToken);
+   
 
     try {
       await axios.post(

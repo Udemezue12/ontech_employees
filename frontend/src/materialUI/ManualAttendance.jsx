@@ -60,7 +60,7 @@ const ManualAttendanceForm = () => {
     setError(null);
     try {
       const response = await axiosInstance.get("");
-      console.log("API Response:", response.data);
+     
       setAttendance({
         should_show_check_in: response.data.should_show_check_in || false,
         should_show_check_out: response.data.should_show_check_out || false,
@@ -91,7 +91,7 @@ const ManualAttendanceForm = () => {
     }
   }, [axiosInstance]);
 
-  // Fetch on mount and poll every 30 seconds if checked in
+  
   useEffect(() => {
     fetchAttendance();
     const interval = setInterval(() => {
@@ -108,7 +108,7 @@ const ManualAttendanceForm = () => {
     setSuccess(null);
     try {
       const payload = { action };
-      console.log("Sending Payload:", payload);
+      
       const response = await axiosInstance.post("", payload, {
         headers: {
           Authorization: `Token ${token}`,
@@ -117,12 +117,7 @@ const ManualAttendanceForm = () => {
         },
         withCredentials: true,
       });
-      console.log("Action Response:", {
-        status: response.status,
-        data: response.data,
-        check_in: response.data.check_in,
-        check_out: response.data.check_out,
-      });
+     
       setAttendance({
         should_show_check_in: response.data.should_show_check_in || false,
         should_show_check_out: response.data.should_show_check_out || false,

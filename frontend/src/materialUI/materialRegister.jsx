@@ -53,7 +53,7 @@ function MaterialRegister() {
         department: formData.department,
       };
 
-      // console.log("Payload being sent:", payload);
+   
       const csrfToken = await fetchCSRFToken();
 
       await axios.post(

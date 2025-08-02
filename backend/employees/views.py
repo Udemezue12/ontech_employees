@@ -38,8 +38,7 @@ from .user_pass import *
 logger = logging.getLogger(__name__)
 
 
-# def hi(request):
-#     return render(request, 'index.html')
+
 def index(request):
     return render(request, 'index.html')
 
@@ -215,12 +214,12 @@ def manual_check_in(request):
     user = request.user
     today = date.today()
 
-    # Reject if biometric used today
+    
     if ManualAttendance.objects.filter(employee=user, date=today, method="biometric").exists():
         return Response({"detail": "Biometric attendance used. Please continue with biometric."},
                         status=status.HTTP_400_BAD_REQUEST)
 
-    # Prevent multiple check-ins
+    
     attendance, created = ManualAttendance.objects.get_or_create(
         employee=user, date=today, method="manual")
 
@@ -238,7 +237,7 @@ def manual_check_out(request):
     user = request.user
     today = date.today()
 
-    # Reject if biometric used today
+   
     if ManualAttendance.objects.filter(employee=user, date=today, method="biometric").exists():
         return Response({"detail": "Biometric attendance used. Please continue with biometric."},
                         status=status.HTTP_400_BAD_REQUEST)
@@ -251,7 +250,7 @@ def manual_check_out(request):
     if attendance.check_out is not None:
         return Response({"detail": "Already checked out."}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Check if eligible to check out (after 1 hour)
+  
     if not attendance.can_check_out():
         return Response({"detail": "Check-out not allowed yet. Please wait."},
                         status=status.HTTP_400_BAD_REQUEST)
@@ -417,7 +416,7 @@ def salary_list(request):
 
         for salary in salaries:
             employee = salary.employee
-            # Default permissions
+           
             salary.can_edit = False
             salary.can_delete = False
 
@@ -431,7 +430,7 @@ def salary_list(request):
             elif request.user.role == 'HR_MANAGER':
                 if employee.department == request.user.department and employee.role not in ['MANAGER', 'OVERALL_ADMIN']:
                     salary.can_edit = True
-                    # HR_MANAGERs don't get delete rights
+                 
         months = [
 
             "January", "February", "March", "April", "May", "June",
@@ -492,8 +491,7 @@ def edit_salary(request, salary_id):
             if form.is_valid():
                 salary = form.save(commit=False)
 
-              # Recalculate salary as in create view...
-            # Save and notify
+              
                 Notification.notify_user(
                     recipient=target_user,
                     message=f"Your salary record has been updated by {request.user.name}.")
@@ -530,13 +528,13 @@ def delete_salary(request, salary_id):
         salary = get_object_or_404(Salary, id=salary_id)
         target_user = salary.employee
 
-        # Prevent self-deletion
+     
         if request.user == target_user:
             messages.error(
                 request, "You cannot delete your own salary record.")
             return redirect('salary_list')
 
-        # Check delete permissions
+       
         can_delete = False
 
         if request.user.role == 'OVERALL_ADMIN':
@@ -562,7 +560,6 @@ def delete_salary(request, salary_id):
         return redirect('/dashboard')
 
 
-# ///
 
 
 @login_required
@@ -727,9 +724,6 @@ def user_list(request):
         users = CustomUser.objects.all()
 
     return render(request, 'user_list.html', {'users': users})
-# ///////////////
-
-# Leave Requests
 
 
 def create_leave_request(request):
@@ -863,7 +857,7 @@ def approve_leave_request(request, leave_id):
             leave.hr_approved = True
             leave.status = LeaveRequest.HR_APPROVED
 
-            # Escalate to Manager
+           
             next_reviewer = CustomUser.objects.filter(
                 role=CustomUser.MANAGER,
                 department=leave.employee.department

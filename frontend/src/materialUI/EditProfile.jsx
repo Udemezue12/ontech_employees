@@ -64,7 +64,7 @@ const EditProfile = () => {
     const fetchProfile = async () => {
       const csrfToken = await fetchCSRFToken();
 
-      console.log("CSRF Token:", csrfToken);
+      
       setIsLoading(true);
       if (!token) return;
       try {
@@ -169,7 +169,7 @@ const EditProfile = () => {
     data.append("user", userId);
     const csrfToken = await fetchCSRFToken();
 
-    console.log("CSRF Token:", csrfToken);
+    
 
     try {
       const profileId = localStorage.getItem("ProfileId");

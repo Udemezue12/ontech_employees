@@ -23,7 +23,7 @@ export default class CookieApp extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+       
         if (data.isAuthenticated) {
           this.setState({
             isAuthenticated: true,
@@ -36,7 +36,7 @@ export default class CookieApp extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
   whoami = () => {
@@ -48,7 +48,7 @@ export default class CookieApp extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+      
         if (data.isAuthenticated) {
           this.setState({
             isAuthenticated: true,
@@ -61,7 +61,7 @@ export default class CookieApp extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
   handlePasswordChange = (e) => {
@@ -94,7 +94,7 @@ export default class CookieApp extends Component {
     })
       .then(this.IsResponseOk)
       .then((data) => {
-        console.log(data);
+        
         this.setState({
           isAuthenticated: true,
           email: "",
@@ -103,7 +103,7 @@ export default class CookieApp extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        
         this.setState({
           isAuthenticated: false,
           error: "Invalid email or password",
@@ -120,13 +120,13 @@ export default class CookieApp extends Component {
     })
       .then(this.IsResponseOk)
       .then((data) => {
-        console.log(data);
+       
         this.setState({
           isAuthenticated: false,
         });
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
   render() {

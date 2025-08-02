@@ -34,7 +34,7 @@ function FingerprintLogin() {
   const handleFingerprintLogin = async () => {
     const csrfToken = await fetchCSRFToken();
 
-    console.log("CSRF Token:", csrfToken);
+   
 
     setError("");
 
@@ -46,7 +46,7 @@ function FingerprintLogin() {
             "X-CSRFToken": csrfToken,
             "Content-Type": "multipart/form-data",
           },
-          withCredentials: true, // include cookies for CSRF
+          withCredentials: true, 
         }
       );
       const publicKey = response.data.publicKey;

@@ -38,7 +38,7 @@ export const updateUserProfile = async (formData) => {
         },
       }
     );
-    console.log("Profile updated successfully");
+   
     return response.data;
   } catch (error) {
     console.error("Error updating profile:", error);
@@ -46,38 +46,18 @@ export const updateUserProfile = async (formData) => {
   }
 };
 
-// export const handleProfileUpdate = async (formData) => {
-//   try {
-//     const response = await updateUserProfile(formData);
-//     console.log("Profile updated: ", response);
-//   } catch (error) {
-//     console.error("Failed to update profile", error);
-//   }
-// };
-// export const handleProfileUpdate = async (formData) => {
-//   // const navigate = useNavigate();
-//   try {
-//     const response = await updateUserProfile(formData);
-//     console.log("Profile updated successfully:", response);
-//     alert("Profile updated successfully!");
-//     // navigate("/view/profile");
-//   } catch (error) {
-//     console.error("Failed to update profile:", error);
-//     alert("An error occurred while updating your profile.");
-//   }
-// };
+
 
 export const handleProfileUpdate = async (formData, navigate, setIsLoading) => {
-  setIsLoading(true); // Show loading state while updating
+  setIsLoading(true);
   try {
-    const response = await updateUserProfile(formData); // Call the update function
-    // console.log("Profile updated successfully:", response);
-    // alert("Profile updated successfully!");
-    navigate("/view/profile"); // Navigate to the profile view page
+    const response = await updateUserProfile(formData); 
+   
+    navigate("/view/profile"); 
   } catch (error) {
     console.error("Failed to update profile:", error);
     alert("An error occurred while updating your profile.");
   } finally {
-    setIsLoading(false); // Hide loading state
+    setIsLoading(false);
   }
 };

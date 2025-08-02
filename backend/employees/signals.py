@@ -24,7 +24,7 @@ def prevent_unauthorized_deduction(sender, instance, **kwargs):
     employee = instance.employee
 
     if not creator:
-        return  # Can't validate without creator context
+        return  
 
     if creator == employee and creator.role != CustomUser.OVERALL_ADMIN:
         raise ValidationError("You cannot assign deductions to yourself.")
@@ -89,9 +89,9 @@ def send_reset_email(context, user_email):
         msg.attach_alternative(html_message, 'text/html')
         msg.send()
 
-        logger.info(f"✅ Password reset email successfully sent to: {user_email}")
+        logger.info(f"Password reset email successfully sent to: {user_email}")
     except Exception as e:
-        logger.error(f"❌ Failed to send password reset email to {user_email}. Error: {str(e)}")
+        logger.error(f" Failed to send password reset email to {user_email}. Error: {str(e)}")
 
 
 @receiver(reset_password_token_created)
@@ -115,7 +115,7 @@ def password_reset_token_created(sender, reset_password_token, **kwargs):
 
 @receiver(pre_save, sender=BiometricAttendance)
 def submit_tasks_on_biometric_checkout(sender, instance, **kwargs):
-    # Ensure the instance already exists (update, not creation)
+
     
     if instance.pk:
         old_instance = BiometricAttendance.objects.get(pk=instance.pk)
@@ -129,11 +129,11 @@ def submit_tasks_on_biometric_checkout(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=ManualAttendance)
 def submit_tasks_on_manual_checkout(sender, instance, **kwargs):
-    # Ensure the instance already exists (update, not creation)
+   
     if instance.pk:
         old_instance = ManualAttendance.objects.get(pk=instance.pk)
         if old_instance.check_out is None and instance.check_out is not None:
-            # Check-out is being set; submit associated tasks
+          
             Task.objects.filter(
                 manual_attendance=instance,
                 status__in=['pending', 'in_progress']
