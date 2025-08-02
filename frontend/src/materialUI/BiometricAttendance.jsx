@@ -37,7 +37,7 @@ export default function BiometricAttendance() {
   const [useManual, setUseManual] = useState(false);
   
 
-  // Update clock every second
+
   useEffect(() => {
     const interval = setInterval(() => {
       setClock(new Date().toLocaleTimeString());

@@ -54,9 +54,7 @@ const MaterialLogin = () => {
       // Store user data
       localStorage.setItem("Token", token);
       localStorage.setItem("UserId", user.id);
-      localStorage.setItem("UserEmail", user.email);
       localStorage.setItem("UserRole", user.role);
-      localStorage.setItem("UserName", user.name);
       localStorage.setItem("UserDepartment", user.department);
 
       // Start session

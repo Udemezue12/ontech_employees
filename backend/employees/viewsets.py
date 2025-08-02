@@ -62,7 +62,6 @@ class SessionLoginView(View):
             return JsonResponse({'error': str(e)}, status=500)
 
 
-# Ensures CSRF cookie is set
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class SessionView(APIView):
     permission_classes = []  # Allow all users (unauthenticated) to access
@@ -74,7 +73,6 @@ class SessionView(APIView):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 django_login(request, user)
-                # Optional: regenerate CSRF after login
                 csrf_token = get_token(request)
                 return Response({'message': 'Session login successful', 'csrfToken': csrf_token})
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
@@ -122,10 +120,10 @@ def logout_view(request):
         request._auth.delete()
         AuthToken.objects.filter(user=request.user).delete()
 
-        # Django session logout
+       
         django_logout(request)
 
-        # Clear cookies
+       
         response = Response({'message': 'Logout successful'}, status=200)
         response.delete_cookie('sessionid')
         response.delete_cookie('csrftoken')
@@ -165,7 +163,7 @@ def current_user(request):
     if request.user.is_authenticated:
         return JsonResponse({
             'user': {
-                # 'id': request.user.id,
+               
                 'email': request.user.email,
             }
         })
@@ -190,22 +188,20 @@ class LoginViewSet(viewsets.ViewSet):
 
             email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            logger.debug(f" Authenticating user with email: {email}")
+            
 
             user = authenticate(request, email=email, password=password)
 
             if user:
-                logger.info(
-                    f" Authentication successful for user: {user.email}")
+              
 
                 django_login(request, user)
-                logger.info(f" User {user.email} logged in to session")
+               
 
                 _, token = AuthToken.objects.create(user)
                 user_data = UserDetailSerializer(user).data
 
-                logger.info(
-                    f" Token generated and user data serialized for {user.email}")
+              
 
                 return Response({
                     'user': user_data,
@@ -222,30 +218,7 @@ class LoginViewSet(viewsets.ViewSet):
             return JsonResponse({'error': str(e)}, status=500)
 
 
-# @ensure_csrf_cookie
-# def get_csrf_token(request):
-#     try:
 
-#         return JsonResponse({"detail": "CSRF cookie set"})
-#     except Exception as e:
-#         return JsonResponse({"error": str(e)}, status=500)
-
-
-# @method_decorator(ensure_csrf_cookie, name='dispatch')
-# class GetCRSFToken(APIView):
-#     permission_classes = [permissions.AllowAny]
-
-#     def get(self, request, format=None):
-#         try:
-#             logger.debug("Setting CSRF cookie for request: %s", request)
-#             return Response({
-#                 'success': 'CSRF cookie set'
-#             })
-#         except Exception as e:
-#             logger.error("Error setting CSRF cookie: %s", str(e))
-#             return Response({
-#                 'error': str(e)
-#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCRSFToken(APIView):
     permission_classes = [permissions.AllowAny]
@@ -282,21 +255,14 @@ class CustomLogoutView(KnoxLogoutView):
 
 class RegisterViewSet(viewsets.ModelViewSet):
 
-    # queryset = CustomUser.objects.all()
+   
     serializer_class = RegisterSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Override to prevent accessing the list of users
-        # This will return an empty queryset, effectively blocking the list view.
+     
         return CustomUser.objects.none()
 
-    # def get_permissions(self):
-    #     # This ensures that only the `create` action is accessible, blocking `list` and `retrieve`
-    #     if self.action == 'create':
-    #         # You can replace this with your desired permission
-    #         return [permissions.AllowAny()]
-    #     return [permissions.IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         try:
@@ -318,9 +284,9 @@ class RegisterViewSet(viewsets.ModelViewSet):
 
 class HrManagerRegisterViewSet(viewsets.ModelViewSet):
 
-    # queryset = CustomUser.objects.all()
+   
     serializer_class = HrManagerRegisterSerializer
-    # permission_classes = [permissions.AllowAny]
+  
 
     def get_queryset(self):
 
@@ -1167,7 +1133,6 @@ class FingerprintAuthenticateView(APIView):
             return Response({
                 'token': token[1],
                 'user_id': user.id,
-                'email': user.email,
                 'role': user.role,
                 'department': user.department,
 

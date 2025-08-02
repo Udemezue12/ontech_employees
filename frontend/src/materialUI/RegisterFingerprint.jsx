@@ -129,7 +129,7 @@ const RegisterFingerprint = () => {
     );
 
     
-    const response = await axios.post(
+   await axios.post(
       "https://ontech-systems.onrender.com/api/create/fingerprint/",
       {
         credential_id: credentialId,

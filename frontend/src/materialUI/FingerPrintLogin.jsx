@@ -74,10 +74,9 @@ function FingerprintLogin() {
         }
       );
 
-      const { token, user_id, email, role, department } = authResponse.data;
+      const { token, user_id, role, department } = authResponse.data;
       localStorage.setItem("Token", token);
       localStorage.setItem("UserId", user_id);
-      localStorage.setItem("Email", email);
       localStorage.setItem("Role", role);
       localStorage.setItem("Department", department);
 
