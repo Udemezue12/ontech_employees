@@ -106,14 +106,7 @@ const Profile = () => {
     data.append("state", formData.state);
     data.append("user", userId);
 
-    const debugPayload = {
-      personal_details: formData.personal_details,
-      resume: formData.resume?.name || null,
-      picture: formData.picture?.name || null,
-     
-      country: formData.country?.name || null,
-      state: formData.state?.name || null,
-    };
+  
 
     
     const csrfToken = await fetchCSRFToken();

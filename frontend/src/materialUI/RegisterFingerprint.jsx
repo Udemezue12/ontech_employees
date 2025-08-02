@@ -73,17 +73,7 @@ const RegisterFingerprint = () => {
     loadFingerprintAndCheck();
   }, [token]);
 
-  // async function fetchCSRFToken() {
-  //   try {
-  //     await axios.get("https://ontech-systems.onrender.com/api/csrf/", {
-  //       withCredentials: true,
-  //     });
-  //     return cookies.get("csrftoken");
-  //   } catch (err) {
-  //     console.error("Failed to get CSRF token", err);
-  //     return null;
-  //   }
-  // }
+
 
   const registerFingerprint = async () => {
   setIsSubmitting(true);

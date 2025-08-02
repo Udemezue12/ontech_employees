@@ -159,7 +159,7 @@ const EditProfile = () => {
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      // Only append file if it's a File object, else append string/empty
+     
       if (value instanceof File) {
         data.append(key, value);
       } else if (value !== null) {
